@@ -1,7 +1,7 @@
 
 function App(){
     <div>
-{/* test */}
+        {/* test */}
     </div>
 }
 export default App;
