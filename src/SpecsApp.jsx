@@ -1,7 +1,8 @@
+import SpecObject from "./components/SpecObject";
+import "./SpecObject.css"
 
 function App(){
     <div>
-        {/* test app */}
+        <SpecObject/>
     </div>
-}
-export default App;
+};
