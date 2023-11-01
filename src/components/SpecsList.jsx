@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Task from './Task';
 import AddTaskButton from './AddTaskButton';
 
-function App() {
+function SpecsList() {
     const [tasks, setTasks] = useState([]);
 
     const addNewTask = () => {
@@ -34,5 +34,5 @@ function App() {
     );
 }
 
-export default App;
+export default SpecsList;
 
