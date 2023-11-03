@@ -12,7 +12,11 @@ function SpecsList() {
       <br />
       <Link to="./SpecKpi">kpi</Link>
       {/* <BasicStack /> */}
-      {/* <SpecObject/> */}
+
+
+
+      
+      <SpecObject/>
     </div>
   );
 }

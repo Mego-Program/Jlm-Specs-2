@@ -1,21 +1,19 @@
-import React from "react";
+import { Box, ListItem, Typography } from "@mui/material";
 
-export default function SpecObject() {
+
+function SpecObject() {
   let date = new Date();
   let currectDay = date.toLocaleDateString();
   return (
-    <>
-      <div>
-        <p>{currectDay}</p>
-        <div
-          style={{
-            width: "90%",
-            height: "15vh",
-            border: "1px solid orange",
-            backgroundColor: "darkblue",
-            color: "white",
-          }}
-        >
+      <ListItem sx={{bgcolor:'b1', color:'#fff', display:'flex', alignItems:'flex-start', padding:'0'}}>
+        <Box sx={{textAlign:'center', width:'10vw'}}>
+        <Typography >{currectDay}</Typography>
+        </Box>
+        <Box sx={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center', paddingTop:'4px', width:'2vw'}}>
+              <Box sx={{bgcolor:'b2', width:'15px', height:'15px', borderRadius:'50%'}}/>
+              <Box sx={{bgcolor:'b2', width:'2px', height:'10vh'}}/>
+        </Box>
+        <Box sx={{bgcolor:'b2', border:1, borderColor:'y', borderRadius:1, width:'80%', display:'flex', height:'10vh', margin:'5px 10px'}}>
           <h2 className="white">TITLE</h2>
           <h5 className="white">TEXT</h5>
 
@@ -31,9 +29,10 @@ export default function SpecObject() {
             <option value="Done">Done</option>
           </select>
 
-          <button type="reset">delete</button>
-        </div>
-      </div>
-    </>
+        </Box>
+        <button type="reset">delete</button>
+
+      </ListItem>
   );
 }
+export default SpecObject;
