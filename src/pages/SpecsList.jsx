@@ -1,7 +1,6 @@
 // import React, { useState } from 'react';
 import { Button } from "@mui/material";
 import SpecObject from "../components/SpecObject";
-import BasicStack from "../components/test";
 import { Link } from "react-router-dom";
 
 function SpecsList() {
@@ -16,6 +15,7 @@ function SpecsList() {
 
 
       
+      <SpecObject/>
       <SpecObject/>
     </div>
   );
