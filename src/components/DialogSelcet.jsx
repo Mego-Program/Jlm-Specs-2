@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 function DialogSelect(props) {
   const [open, setOpen] = useState(false);
-  const [status, setStatus] = useState('');
+  const [status, setStatus] = useState(props.status);
 
   const handleChange = (event) => {
     setStatus(event.target.value);
@@ -23,28 +23,28 @@ function DialogSelect(props) {
 
   return (
     <Box sx={{height:'100%', display:'flex', alignItems:'center' }}>
-      <Button sx={{color:'text.primary', fontWeight:'700', fontSize:11}} id='status' onClick={handleClickOpen}>check</Button>
+      <Button sx={{color:'text.primary', fontWeight:'700', fontSize:11}} id='status' onClick={handleClickOpen}>{status}</Button>
       <Dialog disableEscapeKeyDown open={open} onClose={handleClose}>
-        <DialogTitle>status</DialogTitle>
-        <DialogContent>
+        <DialogTitle  sx={{bgcolor:'background.y', color:'#121231'}}>status</DialogTitle>
+        <DialogContent sx={{bgcolor:'background.y'}}>
           <Box component="form" sx={{ display: 'flex', flexWrap: 'wrap' }}>
             <FormControl sx={{ m: 1, minWidth: 120 }}>
-              <InputLabel htmlFor="demo-dialog-native">Status</InputLabel>
+              <InputLabel sx={{color:'text.primary'}} htmlFor="demo-dialog-native">Status</InputLabel>
               <Select
                 native
                 value={status}
                 onChange={handleChange}
-                input={<OutlinedInput label="Status" id="demo-dialog-native" />}
+                input={<OutlinedInput sx={{color:'#121231'}} label="Status" id="demo-dialog-native" />}
               >
-                <option selected value={'1'}>1</option>
-                <option value={'2'}>2</option>
-                <option value={'3'}>3</option>
+                <option selected value={props.first}>{props.first}</option>
+                <option value={props.second}>{props.second}</option>
+                <option value={props.third}>{props.third}</option>
               </Select>
             </FormControl>
           </Box>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Ok</Button>
+        <DialogActions sx={{bgcolor:'background.y'}}>
+          <Button sx={{bgcolor:'background.b2', color:'text.primary'}} onClick={handleClose}>Ok</Button>
         </DialogActions>
       </Dialog>
     </Box>
