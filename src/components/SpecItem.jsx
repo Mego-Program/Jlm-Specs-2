@@ -1,5 +1,5 @@
 import { Box, Button, Typography, ListItem, Avatar } from "@mui/material";
-import DialogSelect from "./DialogSelcet";
+import DialogSelect from "./DialogSelect";
 import { Info } from "@mui/icons-material";
 
 function SpecObject(item) {
@@ -60,7 +60,7 @@ function SpecObject(item) {
             {item.info}
           </Typography>
         </Box>
-        <DialogSelect first='todo' second='in progress' third='done' status='todo'/>
+        <DialogSelect stat='todo'/>
         <Box sx={{display:'flex', alignItems:'center', justifyContent:'center'}}>
           <Button sx={{ color: "text.primary", fontSize: 11, fontWeight: 700 }}>
             Edit
