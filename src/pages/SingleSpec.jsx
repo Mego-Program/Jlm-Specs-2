@@ -10,20 +10,23 @@ import SpecUsers from "../components/SpecComponents/SpecUsers";
 import EditableField from "../components/EditableField";
 import { useState } from "react";
 
-
 const pageStyle = {
-  backgroundColor: "#21213E",
-  padding: "16px",
+  backgroundColor: "background.b1",
+  paddingX:15,
+  paddingY:5,
   color: "white",
+  minHeight:'100vh',
+  boxSizing:'border-box'
 };
 
 const componentStyle = {
-  backgroundColor: "#0A0A1B",
+  backgroundColor: "background.b2",
   padding: "16px",
   marginBottom: "16px",
+  borderRadius:2
 };
 
-function SingleSpecPage() {
+function SingleSpec() {
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [title, setTitle] = useState("Project Specification A");
   const handleSaveTitle = (newTitle) => {
@@ -60,7 +63,7 @@ function SingleSpecPage() {
   const [users, setUsers] = useState([
     { name: "John Doe" },
     { name: "Jane Smith" },
-    { name: "Alice Johnson" }
+    { name: "Alice Johnson" },
   ]);
   const handleSaveUsers = (newUsers) => {
     setUsers(newUsers);
@@ -159,7 +162,14 @@ function SingleSpecPage() {
           />
         ) : (
           <>
-            <SpecOwner owner={owner} /> {/* Passer 'owner' à SpecOwner */}
+
+
+
+
+
+
+
+            <SpecOwner owner={owner} /> {/*Passer 'owner' à SpecOwner*/}
             <Button
               variant="contained"
               color="primary"
@@ -173,32 +183,33 @@ function SingleSpecPage() {
       </Box>
 
       <Box sx={componentStyle}>
-  {isEditingUsers ? (
-    <EditableField
-      content={users.map(user => user.name).join(", ")} 
-      onSave={(newContent) => {
-        const newUsers = newContent.split(',').map(user => ({ name: user.trim() }));
-        setUsers(newUsers);
-        setIsEditingUsers(false);
-      }}
-    />
-  ) : (
-    <>
-      <SpecUsers users={users.map(user => user.name)} />
-      <Button
-        variant="contained"
-        color="primary"
-        startIcon={<EditIcon />}
-        onClick={() => setIsEditingUsers(true)}
-      >
-        Edit
-      </Button>
-    </>
-  )}
-</Box>
-
+        {isEditingUsers ? (
+          <EditableField
+            content={users.map((user) => user.name).join(", ")}
+            onSave={(newContent) => {
+              const newUsers = newContent
+                .split(",")
+                .map((user) => ({ name: user.trim() }));
+              setUsers(newUsers);
+              setIsEditingUsers(false);
+            }}
+          />
+        ) : (
+          <>
+            <SpecUsers users={users.map((user) => user.name)} />
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<EditIcon />}
+              onClick={() => setIsEditingUsers(true)}
+            >
+              Edit
+            </Button>
+          </>
+        )}
+      </Box>
     </Box>
   );
 }
 
-export default SingleSpecPage;
+export default SingleSpec;

@@ -10,10 +10,10 @@ import ArrowBackIosNewSharpIcon from "@mui/icons-material/ArrowBackIosNewSharp";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import DoneSharpIcon from "@mui/icons-material/DoneSharp";
 import { useNavigate } from "react-router-dom";
-import FormDetails from "../components/FormDetails";
-import FormKpi from "../components/FormKpi";
-import FormTeam from "../components/FormTeam";
-import FormSubmit from "../components/FormSubmit";
+import FormDetails from "../components/Form/FormDetails";
+import FormKpi from "../components/Form/FormKpi";
+import FormTeam from "../components/Form/FormTeam";
+import FormSubmit from "../components/Form/FormSubmit";
 const steps = ["Details", "KPIs", "Team", "Submit"];
 
 

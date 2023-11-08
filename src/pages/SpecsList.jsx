@@ -7,7 +7,7 @@ import axios from "axios";
 
 function SpecsList() {
   const [specsList, setSpecsList] = useState([]);
-  
+
   useEffect(() => {
     axios
       .get("http://localhost:4000/specs/tasks-info")
@@ -35,8 +35,6 @@ function SpecsList() {
   // ];
   // specsList = []
 
-
-  
   return (
     <Box sx={{ height: "100vh", bgcolor: "background.b1" }}>
       <Box sx={{ bgcolor: "background.b1", padding: 3 }}>
@@ -61,6 +59,9 @@ function SpecsList() {
             </Box>
           </Button>
         </Link>
+        <Button variant="contained">
+          <Link to={"../SingleSpec"}>test</Link>
+        </Button>
       </Box>
 
       <List sx={{ padding: 0, textAlign: "center" }}>

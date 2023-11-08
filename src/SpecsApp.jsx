@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material";
 import SpecsList from "./pages/SpecsList";
 import SpecInput from "./pages/SpecInput";
-import SpecInfo from "./pages/SpecInfo";
+import SingleSpec from "./pages/SingleSpec";
 
 const theme = createTheme({
   
@@ -37,7 +37,7 @@ function SpecsApp() {
             <Route path="/" element={<SpecsList />} />
             <Route path="/SpecsList" element={<SpecsList />} />
             <Route path="/SpecInput" element={<SpecInput />} />
-            <Route path="/SpecInfo/:id" element={<SpecInfo />} />
+            <Route path="/SingleSpec" element={<SingleSpec />} />
           </Routes>
         </div>
       </Router>

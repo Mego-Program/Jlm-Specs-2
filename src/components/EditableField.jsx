@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Editor, EditorState, ContentState, convertToRaw } from 'draft-js';
+import { Button } from '@mui/material';
+import { Box } from '@mui/system';
 
 function EditableField({ content, onSave }) {
   const [editorState, setEditorState] = useState(
@@ -13,12 +15,18 @@ function EditableField({ content, onSave }) {
 
   return (
     <div>
+      <Box sx={{padding:1, borderBottom:1, borderColor:'background.y'}} bgcolor={'secondary.light'}>
       <Editor
         editorState={editorState}
         onChange={(newEditorState) => setEditorState(newEditorState)}
       />
-      <button onClick={handleSave}>Save</button>
+      </Box>
+      <Button sx={{marginTop:2}} variant="contained" onClick={handleSave}>
+        Save
+        </Button>
     </div>
+    
+  
   );
 }
 
