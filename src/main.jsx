@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import SpecsApp from "./SpecsApp";
+import SingleSpecPage from "./pages/SingleSpecPage";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <SpecsApp />
+    <SingleSpecPage />
   </React.StrictMode>
 );
