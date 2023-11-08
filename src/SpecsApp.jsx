@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material";
 import SpecsList from "./pages/SpecsList";
-import SpecsKpi from "./pages/SpecKpi";
+import SpecInput from "./pages/SpecInput";
 import SpecInfo from "./pages/SpecInfo";
 
 const theme = createTheme({
@@ -35,8 +35,9 @@ function SpecsApp() {
         <div>
           <Routes>
             <Route path="/" element={<SpecsList />} />
-            <Route path="/specKpi" element={<SpecsKpi />} />
-            <Route path="/specInfo" element={<SpecInfo />} />
+            <Route path="/SpecsList" element={<SpecsList />} />
+            <Route path="/SpecInput" element={<SpecInput />} />
+            <Route path="/SpecInfo/:id" element={<SpecInfo />} />
           </Routes>
         </div>
       </Router>
