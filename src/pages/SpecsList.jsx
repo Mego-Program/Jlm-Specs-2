@@ -52,7 +52,7 @@ function SpecsList() {
             date={spec.date}
             title={spec.title}
             info={spec.info}
-            id={index}
+            key={index}
           />
         ))}
       </List>

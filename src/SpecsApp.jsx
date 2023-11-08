@@ -7,6 +7,15 @@ import SpecInfo from "./pages/SpecInfo";
 const theme = createTheme({
   
   palette: {
+    primary:{
+      main:'#f6c927'
+    },
+    secondary:{
+      main:'#121231'
+    },
+    info:{
+      main:'#ffffff'
+    },
     background: {
       y: "#F6C927",
       b1: "#21213E",
