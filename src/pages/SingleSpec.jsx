@@ -9,11 +9,14 @@ import SpecOwner from "../components/SpecComponents/SpecOwner";
 import SpecUsers from "../components/SpecComponents/SpecUsers";
 import EditableField from "../components/EditableField";
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
+import KeyboardBackspaceOutlinedIcon from '@mui/icons-material/KeyboardBackspaceOutlined';
 
 const pageStyle = {
   backgroundColor: "background.b1",
   paddingX:15,
-  paddingY:5,
+  paddingBottom:5,
+  paddingTop:0,
   color: "white",
   minHeight:'100vh',
   boxSizing:'border-box'
@@ -79,6 +82,9 @@ function SingleSpec() {
 
   return (
     <Box sx={pageStyle}>
+      <NavLink to='../SpecsList'>
+      <KeyboardBackspaceOutlinedIcon color="primary" sx={{ margin:0, fontSize:'3rem', fontWeight:700, '&:hover':{color:'primary.dark'}, '&:active':{color:'primary.light'}}}/>
+      </NavLink>
       <Box sx={componentStyle}>
         {isEditingTitle ? (
           <EditableField

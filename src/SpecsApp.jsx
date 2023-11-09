@@ -37,7 +37,7 @@ function SpecsApp() {
             <Route path="/" element={<SpecsList />} />
             <Route path="/SpecsList" element={<SpecsList />} />
             <Route path="/SpecInput" element={<SpecInput />} />
-            <Route path="/SingleSpec" element={<SingleSpec />} />
+            <Route path="/SingleSpec/:id" element={<SingleSpec />} />
           </Routes>
         </div>
       </Router>

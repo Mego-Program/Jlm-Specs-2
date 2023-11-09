@@ -59,19 +59,17 @@ function SpecsList() {
             </Box>
           </Button>
         </Link>
-        <Button variant="contained">
-          <Link to={"../SingleSpec"}>test</Link>
-        </Button>
       </Box>
 
       <List sx={{ padding: 0, textAlign: "center" }}>
         {specsList.length > 0 ? (
-          specsList.map((spec) => (
+          specsList.map((spec, index) => (
             <SpecItem
               date={spec.creationDate}
               title={spec.title}
               info={spec.description}
               key={spec.id}
+              id={spec.id}
               avater={spec.creator}
             />
           ))
