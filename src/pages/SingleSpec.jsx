@@ -31,7 +31,11 @@ const componentStyle = {
 
 function SingleSpec() {
   const [isEditingTitle, setIsEditingTitle] = useState(false);
-  const [title, setTitle] = useState("Project Specification A");
+  const [title, setTitle] = useState("Project Refael A");
+
+
+
+
   const handleSaveTitle = (newTitle) => {
     setTitle(newTitle);
     setIsEditingTitle(false);

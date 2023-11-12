@@ -1,10 +1,12 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+import React, { useState } from "react";
+import {
+  Box,
+  Stepper,
+  Step,
+  StepLabel,
+  Button,
+  Typography,
+} from "@mui/material";
 import KeyboardBackspaceSharpIcon from "@mui/icons-material/KeyboardBackspaceSharp";
 import ArrowBackIosNewSharpIcon from "@mui/icons-material/ArrowBackIosNewSharp";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
@@ -14,14 +16,24 @@ import FormDetails from "../components/Form/FormDetails";
 import FormKpi from "../components/Form/FormKpi";
 import FormTeam from "../components/Form/FormTeam";
 import FormSubmit from "../components/Form/FormSubmit";
-const steps = ["Details", "KPIs", "Team", "Submit"];
+import axios from "axios";
 
+const steps = ["Details", "KPIs", "Team", "Submit"];
 
 export default function SpecInput() {
   const navigate = useNavigate();
 
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
+  const [item, setItem] = React.useState({
+    title: "",
+    description: "",
+    content: "",
+    date: "",
+    team: [],
+    deadLine: null,
+    startLine: null,
+  });
 
   const isStepSkipped = (step) => {
     return skipped.has(step);
@@ -42,12 +54,34 @@ export default function SpecInput() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
+  const handleReturn = () => {
+    setItem({
+      ...item,
+      title: "",
+      description: "",
+      content: "",
+      date: "",
+      team: [],
+      deadLine: Object,
+      startLine: Object,
+    });
+    navigate("../SpecsList");
   };
 
-  const handelCancel = () => {
-    navigate('../SpecsList')
+  const handleCancel = () => {
+    navigate("../SpecsList");
+  };
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/specs/new-spec",
+        item
+      );
+      console.log(response.data);
+      handleNext();
+    } catch (error) {
+      console.error("Error sending object to srver: ", error);
+    }
   };
 
   return (
@@ -93,7 +127,7 @@ export default function SpecInput() {
               marginTop: 5,
             }}
           >
-            All steps completed - you&apos;re finished
+            New spec added successfully
           </Typography>
           <Box
             sx={{
@@ -109,10 +143,10 @@ export default function SpecInput() {
             <Box sx={{ flex: "1 1 auto" }} />
             <Button
               variant="contained"
-              sx={{ margin: 1 }}
-              onClick={handleReset}
+              sx={{ margin: 1 , fontWeight:700}}
+              onClick={handleReturn}
             >
-              Reset
+              Return to list
             </Button>
           </Box>
         </React.Fragment>
@@ -131,10 +165,10 @@ export default function SpecInput() {
               marginTop: 5,
             }}
           >
-            {activeStep === 0 && <FormDetails/>}
-            {activeStep === 1 && <FormKpi/>}
-            {activeStep === 2 && <FormTeam/>}
-            {activeStep === 3 && <FormSubmit/>}
+            {activeStep === 0 && <FormDetails info={item} set={setItem} />}
+            {activeStep === 1 && <FormKpi info={item} set={setItem} />}
+            {activeStep === 2 && <FormTeam info={item} set={setItem} />}
+            {activeStep === 3 && <FormSubmit info={item} set={setItem} />}
           </Box>
           <Box
             sx={{
@@ -147,7 +181,8 @@ export default function SpecInput() {
               borderBottomRightRadius: 5,
             }}
           >
-            <Button onClick={handelCancel}
+            <Button
+              onClick={handleCancel}
               sx={{
                 margin: 1,
                 fontWeight: 700,
@@ -171,7 +206,7 @@ export default function SpecInput() {
               <Button
                 sx={{ margin: 1 }}
                 variant="contained"
-                onClick={handleNext}
+                onClick={handleSubmit}
               >
                 <DoneSharpIcon sx={{ marginRight: 1 }} />
                 Create
