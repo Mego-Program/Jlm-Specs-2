@@ -1,9 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import SingleSpecPage from "./pages/SingleSpecPage";
+import SpecsApp from "./SpecsApp";
+import { Margin } from "@mui/icons-material";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <SingleSpecPage />
+    <SpecsApp />
   </React.StrictMode>
 );
+
+
+
+

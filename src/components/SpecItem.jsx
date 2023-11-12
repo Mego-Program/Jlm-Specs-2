@@ -1,8 +1,20 @@
 import { Box, Button, Typography, ListItem, Avatar } from "@mui/material";
-import DialogSelect from "./DialogSelcet";
+import DialogSelect from "./DialogSelect";
 import { Info } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
-function SpecObject(item) {
+
+
+
+function SpecItem(item) {
+
+  const navigate = useNavigate();
+
+  const handelItem = () =>{
+    navigate('../SingleSpec/'+ item.id)
+
+  };
+
   return (
     <ListItem
       sx={{
@@ -39,8 +51,9 @@ function SpecObject(item) {
         <Box sx={{ bgcolor: "background.b2", width: "2px", height: "70px" }} />
       </Box>
       <Button
+        onClick={() => handelItem()}
         sx={{
-          color:'text.primary',
+          color: "text.primary",
           bgcolor: "background.b2",
           border: 1,
           borderColor: "background.y",
@@ -49,27 +62,32 @@ function SpecObject(item) {
           display: "flex",
           height: "80%",
           margin: "5px 10px",
-          justifyContent:'space-between',
+          justifyContent: "space-between",
         }}
       >
-        <Box  sx={{  width:'50%', textAlign:'start', height:'100%'}}>
-          <Typography onClick='' sx={{ margin: 0, padding: 0, fontWeight: 700 }}>
+        <Box sx={{ width: "50%", textAlign: "start", height: "100%" }}>
+          <Typography
+            sx={{ margin: 0, padding: 0, fontWeight: 700 }}
+          >
             {item.title}
           </Typography>
-          <Typography  sx={{ fontSize: 9 }}>
-            {item.info}
-          </Typography>
+          <Typography sx={{ fontSize: 9 }}>{item.info}</Typography>
         </Box>
-        <DialogSelect first='todo' second='in progress' third='done' status='todo'/>
-        <Box sx={{display:'flex', alignItems:'center', justifyContent:'center'}}>
+        <DialogSelect stat="todo" />
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <Button sx={{ color: "text.primary", fontSize: 11, fontWeight: 700 }}>
             Edit
           </Button>
         </Box>
         <Avatar>f</Avatar>
-
       </Button>
-      
+
       <Box
         sx={{
           display: "flex",
@@ -85,9 +103,8 @@ function SpecObject(item) {
         >
           Delete
         </Button>
-        
       </Box>
     </ListItem>
   );
 }
-export default SpecObject;
+export default SpecItem;

@@ -9,21 +9,27 @@ import SpecOwner from "../components/SpecComponents/SpecOwner";
 import SpecUsers from "../components/SpecComponents/SpecUsers";
 import EditableField from "../components/EditableField";
 import { useState } from "react";
-
+import { NavLink } from "react-router-dom";
+import KeyboardBackspaceOutlinedIcon from '@mui/icons-material/KeyboardBackspaceOutlined';
 
 const pageStyle = {
-  backgroundColor: "#21213E",
-  padding: "16px",
+  backgroundColor: "background.b1",
+  paddingX:15,
+  paddingBottom:5,
+  paddingTop:0,
   color: "white",
+  minHeight:'100vh',
+  boxSizing:'border-box'
 };
 
 const componentStyle = {
-  backgroundColor: "#0A0A1B",
+  backgroundColor: "background.b2",
   padding: "16px",
   marginBottom: "16px",
+  borderRadius:2
 };
 
-function SingleSpecPage() {
+function SingleSpec() {
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [title, setTitle] = useState("Project Specification A");
   const handleSaveTitle = (newTitle) => {
@@ -60,7 +66,7 @@ function SingleSpecPage() {
   const [users, setUsers] = useState([
     { name: "John Doe" },
     { name: "Jane Smith" },
-    { name: "Alice Johnson" }
+    { name: "Alice Johnson" },
   ]);
   const handleSaveUsers = (newUsers) => {
     setUsers(newUsers);
@@ -76,6 +82,9 @@ function SingleSpecPage() {
 
   return (
     <Box sx={pageStyle}>
+      <NavLink to='../SpecsList'>
+      <KeyboardBackspaceOutlinedIcon color="primary" sx={{ margin:0, fontSize:'3rem', fontWeight:700, '&:hover':{color:'primary.dark'}, '&:active':{color:'primary.light'}}}/>
+      </NavLink>
       <Box sx={componentStyle}>
         {isEditingTitle ? (
           <EditableField
@@ -159,7 +168,14 @@ function SingleSpecPage() {
           />
         ) : (
           <>
-            <SpecOwner owner={owner} /> {/* Passer 'owner' à SpecOwner */}
+
+
+
+
+
+
+
+            <SpecOwner owner={owner} /> {/*Passer 'owner' à SpecOwner*/}
             <Button
               variant="contained"
               color="primary"
@@ -173,32 +189,33 @@ function SingleSpecPage() {
       </Box>
 
       <Box sx={componentStyle}>
-  {isEditingUsers ? (
-    <EditableField
-      content={users.map(user => user.name).join(", ")} 
-      onSave={(newContent) => {
-        const newUsers = newContent.split(',').map(user => ({ name: user.trim() }));
-        setUsers(newUsers);
-        setIsEditingUsers(false);
-      }}
-    />
-  ) : (
-    <>
-      <SpecUsers users={users.map(user => user.name)} />
-      <Button
-        variant="contained"
-        color="primary"
-        startIcon={<EditIcon />}
-        onClick={() => setIsEditingUsers(true)}
-      >
-        Edit
-      </Button>
-    </>
-  )}
-</Box>
-
+        {isEditingUsers ? (
+          <EditableField
+            content={users.map((user) => user.name).join(", ")}
+            onSave={(newContent) => {
+              const newUsers = newContent
+                .split(",")
+                .map((user) => ({ name: user.trim() }));
+              setUsers(newUsers);
+              setIsEditingUsers(false);
+            }}
+          />
+        ) : (
+          <>
+            <SpecUsers users={users.map((user) => user.name)} />
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<EditIcon />}
+              onClick={() => setIsEditingUsers(true)}
+            >
+              Edit
+            </Button>
+          </>
+        )}
+      </Box>
     </Box>
   );
 }
 
-export default SingleSpecPage;
+export default SingleSpec;
