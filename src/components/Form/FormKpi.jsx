@@ -19,19 +19,12 @@ const inputStyle = {
 
 
 export default function FormKpi(item) {
-  const [date1, setDate1] = React.useState(item.info.startLine || dayjs());
-  const [date2, setDate2] = React.useState(item.info.deadLine);
+  const [date1, setDate1] = React.useState(item.info.startDate || dayjs());
+  const [date2, setDate2] = React.useState(item.info.endDate);
 
-  
-
-
-  // {date1 == null && setDate1(dayjs())}
-
-
-  console.log(date1, date2);
 
   const handleTime = (newDate) => {
-    item.set({ ...item.info, startLine: newDate[0], deadLine: newDate[1] });
+    item.set({ ...item.info, startDate: newDate[0], endDate: newDate[1] });
   };
 
   return (
