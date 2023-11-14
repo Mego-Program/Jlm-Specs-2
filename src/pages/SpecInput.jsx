@@ -45,6 +45,7 @@ export default function SpecInput() {
     task: [],
     team: [],
     date: dayjs(),
+    ownwr: 'test-name'
     
 
   });
@@ -173,7 +174,7 @@ export default function SpecInput() {
           >
             {activeStep === 0 && <FormDetails info={item} set={setItem} />}
             {activeStep === 1 && <FormKpi info={item} set={setItem} />}
-            {activeStep === 2 && <FormTask info={item} set={setItem} disabled={setDisabled}/>}
+            {activeStep === 2 && <FormTask info={item} set={setItem} />}
             {activeStep === 3 && <FormTeam info={item} set={setItem} />}
             {activeStep === 4 && <FormSubmit info={item} set={setItem} disabled={setDisabled}/>}
           </Box>
