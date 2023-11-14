@@ -1,11 +1,11 @@
 import React from 'react';
 
-function SpecUsers({ users }) {
+function SpecTeam({ team }) {
   return (
     <div>
-      <h3>Users:</h3>
+      <h3>Team:</h3>
       <ul>
-        {users.map((user, index) => (
+        {team.map((user, index) => (
           <li key={index}>{user}</li>
         ))}
       </ul>
@@ -13,5 +13,5 @@ function SpecUsers({ users }) {
   );
 }
 
-export default SpecUsers;
+export default SpecTeam;
 
