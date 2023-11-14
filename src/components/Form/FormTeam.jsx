@@ -27,15 +27,18 @@ export default function FormTeam(item) {
   return (
     <Box>
       <Box sx={{ display: "flex", justifyContent: "center" }}>
+
         <TextField
           sx={{
             bgcolor: "secondary.light",
             marginY: 2,
             borderRadius: 1,
+
             width: "70%",
             "& label": {
               color: "info.main",
             },
+
           }}
           value={name}
           onChange={handleName}
@@ -54,6 +57,7 @@ export default function FormTeam(item) {
         {item.info.team.map((i, index) => (
           <Item name={i} id={index} del={delItem} />
         ))}
+
       </List>
     </Box>
   );

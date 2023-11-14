@@ -2,6 +2,7 @@ import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
 const boxStyle = {
+
   bgcolor: "secondary.light",
   marginBottom: 1,
   borderRadius: 1,
@@ -56,6 +57,7 @@ export default function FormSubmit(item) {
           </Box>
         </Box>
       )}
+
     </Box>
   );
 }

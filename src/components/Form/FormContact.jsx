@@ -24,6 +24,3 @@ export default function Item(item) {
       </ListItemAvatar>
       <ListItemText primary={item.name} />
       <Button sx={{fontSize:11}} onClick={delItem}>Delete</Button>
-    </ListItem>
-  );
-}
