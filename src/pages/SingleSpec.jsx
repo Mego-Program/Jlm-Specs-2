@@ -57,6 +57,7 @@ function SingleSpec() {
       [field]: newValue,
     }));
   };
+  
 
   const handleSaveTitle = (newTitle) => {
     console.log("New title content :", newTitle);
