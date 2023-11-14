@@ -8,11 +8,9 @@ import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
 
 export default function Item(item) {
-
-
   const delItem = () => {
-    item.del(item.id)
-  }
+    item.del(item.id);
+  };
 
   return (
     <ListItem
@@ -23,4 +21,9 @@ export default function Item(item) {
         <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
       </ListItemAvatar>
       <ListItemText primary={item.name} />
-      <Button sx={{fontSize:11}} onClick={delItem}>Delete</Button>
+      <Button sx={{ fontSize: 11 }} onClick={delItem}>
+        Delete
+      </Button>
+    </ListItem>
+  );
+}
