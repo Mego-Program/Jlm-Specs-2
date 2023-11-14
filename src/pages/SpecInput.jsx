@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "dayjs/locale/en-gb";
 
@@ -44,7 +44,8 @@ export default function SpecInput() {
     endDate: null,
     task: [],
     team: [],
-    date: dayjs(),
+    // date: dayjs(),
+    // ownwr: 'test-name'
     
 
   });
@@ -76,8 +77,8 @@ export default function SpecInput() {
 
     try {
       const response = await axios.post(
-        "http://localhost:4000/specs/new-spec",
-        item
+        "http://localhost:4000/specs/addSpec",
+        JSON.stringify(item)
       );
       console.log(response.data);
       handleNext();
@@ -173,7 +174,8 @@ export default function SpecInput() {
           >
             {activeStep === 0 && <FormDetails info={item} set={setItem} />}
             {activeStep === 1 && <FormKpi info={item} set={setItem} />}
-            {activeStep === 2 && <FormTask info={item} set={setItem} disabled={setDisabled}/>}
+            {activeStep === 2 && <FormTask info={item} set={setItem} />}
+
             {activeStep === 3 && <FormTeam info={item} set={setItem} />}
             {activeStep === 4 && <FormSubmit info={item} set={setItem} disabled={setDisabled}/>}
           </Box>
