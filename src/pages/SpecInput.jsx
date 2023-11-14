@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { json, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "dayjs/locale/en-gb";
 
@@ -74,11 +74,10 @@ export default function SpecInput() {
 
   const handleSubmit = async () => {
     setLoading(true);
-
     try {
       const response = await axios.post(
         "http://localhost:4000/specs/addSpec",
-        JSON.stringify(item)
+        item
       );
       console.log(response.data);
       handleNext();

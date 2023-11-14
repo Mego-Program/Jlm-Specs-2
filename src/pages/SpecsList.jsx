@@ -12,13 +12,17 @@ function SpecsList() {
     axios
       .get("http://localhost:4000/specs/findByValue")
       .then((response) => {
-        console.log(response.data);
         setSpecsList(response.data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
   }, []);
+
+  const delSpec = (id) => {
+    let newList = specsList.filter((item) => id !== item._id )
+    setSpecsList(newList)
+  }
 
  
   return (
@@ -57,6 +61,7 @@ function SpecsList() {
               info={spec.description}
               key={spec._id}
               id={spec._id}
+              del={delSpec}
               // avater={spec.creator}
             />
           ))

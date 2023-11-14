@@ -38,7 +38,6 @@ function SingleSpec() {
     axios.get(`http://localhost:4000/spec/${id}`)
       .then((response) => {
         const data = response.data;
-        console.log("Spec data :", data);
         setSpecData(data);
       })
       .catch((error) => {

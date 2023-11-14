@@ -55,7 +55,7 @@ export default function FormTeam(item) {
       </Box>
       <List sx={{ width: "100%", bgcolor: "secondary.light", borderRadius: 2 }}>
         {item.info.team.map((i, index) => (
-          <Item name={i} id={index} del={delItem} />
+          <Item name={i} key={index} id={index} del={delItem} />
         ))}
 
       </List>
