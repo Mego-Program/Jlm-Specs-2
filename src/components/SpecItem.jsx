@@ -11,7 +11,7 @@ function SpecItem(item) {
   const navigate = useNavigate();
 
   const handelItem = () =>{
-    navigate('../SingleSpec/'+ item.id)
+    navigate('/SingleSpec/'+ item.id)
 
   };
 
@@ -51,7 +51,7 @@ function SpecItem(item) {
         <Box sx={{ bgcolor: "background.b2", width: "2px", height: "70px" }} />
       </Box>
       <Button
-        onClick={() => handelItem()}
+        onClick={handelItem}
         sx={{
           color: "text.primary",
           bgcolor: "background.b2",
