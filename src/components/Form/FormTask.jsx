@@ -29,7 +29,7 @@ export default function FormTask(item) {
   const addTask = () => {
     if (task) {
       console.log('task: ',task);
-    item.set({ ...item.info, task: [...item.info.team, task] });
+    // item.set({ ...item.info, task: [...item.info.team, task] });
     setTask(null)
     setState(false)
     }
