@@ -1,27 +1,53 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "dayjs/locale/en-gb";
+
+
+import {
+  Box,
+  Stepper,
+  Step,
+  StepLabel,
+  Button,
+  Typography,
+} from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
+
+
 import KeyboardBackspaceSharpIcon from "@mui/icons-material/KeyboardBackspaceSharp";
 import ArrowBackIosNewSharpIcon from "@mui/icons-material/ArrowBackIosNewSharp";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import DoneSharpIcon from "@mui/icons-material/DoneSharp";
-import { useNavigate } from "react-router-dom";
+
 import FormDetails from "../components/Form/FormDetails";
 import FormKpi from "../components/Form/FormKpi";
 import FormTeam from "../components/Form/FormTeam";
 import FormSubmit from "../components/Form/FormSubmit";
-const steps = ["Details", "KPIs", "Team", "Submit"];
+import dayjs from "dayjs";
 
+
+const steps = ["Details", "KPIs", "Team", "Submit"];
 
 export default function SpecInput() {
   const navigate = useNavigate();
 
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = useState(null);
+  const [disabled, setDisabled] = useState(false);
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
+  const [item, setItem] = React.useState({
+    title: "",
+    description: "",
+    startDate: null,
+    endDate: null,
+    task: "",
+    team: [],
+    date: dayjs(),
+    
+
+  });
 
   const isStepSkipped = (step) => {
     return skipped.has(step);
@@ -33,7 +59,6 @@ export default function SpecInput() {
       newSkipped = new Set(newSkipped.values());
       newSkipped.delete(activeStep);
     }
-
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setSkipped(newSkipped);
   };
@@ -42,12 +67,26 @@ export default function SpecInput() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
+  const handleCancel = () => {
+    navigate("../SpecsList");
   };
 
-  const handelCancel = () => {
-    navigate('../SpecsList')
+  const handleSubmit = async () => {
+    setLoading(true);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/specs/new-spec",
+        item
+      );
+      console.log(response.data);
+      handleNext();
+    } catch (error) {
+      console.error("Error sending object to srver: ", error);
+      setError("try again");
+    }
+    setLoading(false);
+
   };
 
   return (
@@ -93,7 +132,7 @@ export default function SpecInput() {
               marginTop: 5,
             }}
           >
-            All steps completed - you&apos;re finished
+            New spec added successfully
           </Typography>
           <Box
             sx={{
@@ -109,10 +148,11 @@ export default function SpecInput() {
             <Box sx={{ flex: "1 1 auto" }} />
             <Button
               variant="contained"
-              sx={{ margin: 1 }}
-              onClick={handleReset}
+              sx={{ margin: 1, fontWeight: 700 }}
+              onClick={handleCancel}
+
             >
-              Reset
+              Return to list
             </Button>
           </Box>
         </React.Fragment>
@@ -131,10 +171,11 @@ export default function SpecInput() {
               marginTop: 5,
             }}
           >
-            {activeStep === 0 && <FormDetails/>}
-            {activeStep === 1 && <FormKpi/>}
-            {activeStep === 2 && <FormTeam/>}
-            {activeStep === 3 && <FormSubmit/>}
+            {activeStep === 0 && <FormDetails info={item} set={setItem} />}
+            {activeStep === 1 && <FormKpi info={item} set={setItem} />}
+            {activeStep === 2 && <FormTeam info={item} set={setItem} />}
+            {activeStep === 3 && <FormSubmit info={item} set={setItem} disabled={setDisabled}/>}
+
           </Box>
           <Box
             sx={{
@@ -147,7 +188,8 @@ export default function SpecInput() {
               borderBottomRightRadius: 5,
             }}
           >
-            <Button onClick={handelCancel}
+            <Button
+              onClick={handleCancel}
               sx={{
                 margin: 1,
                 fontWeight: 700,
@@ -168,14 +210,42 @@ export default function SpecInput() {
               Back
             </Button>
             {activeStep === steps.length - 1 ? (
-              <Button
-                sx={{ margin: 1 }}
+              <LoadingButton
+                color="primary"
+                sx={{
+                  margin: 1,
+                  paddingX: 3,
+                  "&.Mui-disabled": {
+                    border: 1,
+                    borderColor: "primary.main",
+                    ".MuiCircularProgress-circle": {
+                      color: "primary.main",
+                    },
+                  },
+                }}
                 variant="contained"
-                onClick={handleNext}
+                onClick={handleSubmit}
+                size="small"
+                startIcon={<DoneSharpIcon />}
+                loading={loading}
+                disabled={disabled}
+
               >
-                <DoneSharpIcon sx={{ marginRight: 1 }} />
                 Create
-              </Button>
+                {error && (
+                  <Typography
+                    sx={{
+                      position: "absolute",
+                      top: -20,
+                      color: "red",
+                      fontSize: 11,
+                      fontWeight: 700,
+                    }}
+                  >
+                    {error}
+                  </Typography>
+                )}
+              </LoadingButton>
             ) : (
               <Button onClick={handleNext}>
                 Next

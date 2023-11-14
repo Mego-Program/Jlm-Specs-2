@@ -22,7 +22,7 @@ function SimpleDialog(props) {
   };
 
   return (
-    <Dialog onClose={handleClose} open={open}>
+    <Dialog component='span' onClose={handleClose} open={open}>
       <DialogTitle
         sx={{
           bgcolor: "background.b3",
