@@ -5,9 +5,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import EditableField from "../components/EditableField";
 import SpecTitle from "../components/SpecComponents/SpecTitle";
 import SpecDescription from "../components/SpecComponents/SpecDescription";
-import SpecContent from "../components/SpecComponents/SpecContent";
-import SpecOwner from "../components/SpecComponents/SpecOwner";
-import SpecUsers from "../components/SpecComponents/SpecUsers";
+import SpecTasks from "../components/SpecComponents/SpecTasks";
+import SpecTeam from "../components/SpecComponents/Specteam";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
@@ -36,6 +35,7 @@ function SingleSpec() {
 
   useEffect(() => {
     axios.get(`http://localhost:4000/spec/${id}`)
+
       .then((response) => {
         const data = response.data;
         setSpecData(data);
@@ -44,13 +44,11 @@ function SingleSpec() {
         console.error("Error when retrieving spec data :", error);
       });
   }, [id]);
-  
 
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [isEditingDescription, setIsEditingDescription] = useState(false);
-  const [isEditingContent, setIsEditingContent] = useState(false);
-  const [isEditingOwner, setIsEditingOwner] = useState(false);
-  const [isEditingUsers, setIsEditingUsers] = useState(false);
+  const [isEditingTasks, setIsEditingTasks] = useState(false);
+  const [isEditingTeam, setIsEditingTeam] = useState(false);
 
   const updateSpecData = (field, newValue) => {
     setSpecData((prevData) => ({
@@ -58,14 +56,13 @@ function SingleSpec() {
       [field]: newValue,
     }));
   };
-
+  
 
   const handleSaveTitle = (newTitle) => {
     console.log("New title content :", newTitle);
     updateSpecData("title", newTitle);
     setIsEditingTitle(false);
   };
-    
 
   const handleSaveDescription = (newDescription) => {
     console.log("New description content :", newDescription);
@@ -73,22 +70,16 @@ function SingleSpec() {
     setIsEditingDescription(false);
   };
 
-  const handleSaveContent = (newContent) => {
-    console.log("New content :", newContent);
-    updateSpecData("content", newContent);
-    setIsEditingContent(false);
+  const handleSaveTasks = (newTasks) => {
+    console.log("New tasks content:", newTasks);
+    updateSpecData("tasks", newTasks);
+    setIsEditingTasks(false);
   };
 
-  const handleSaveOwner = (newOwner) => {
-    console.log("New owner :", newOwner);
-    updateSpecData("owner", newOwner);
-    setIsEditingOwner(false);
-  };
-
-  const handleSaveUsers = (newUsers) => {
-    console.log("New users :", newUsers);
-    updateSpecData("users", newUsers);
-    setIsEditingUsers(false);
+  const handleSaveTeam = (newTeam) => {
+    console.log("New team content:", newTeam);
+    updateSpecData("team", newTeam);
+    setIsEditingTeam(false);
   };
 
   const handleEditClick = (field) => {
@@ -100,13 +91,10 @@ function SingleSpec() {
         setIsEditingDescription(true);
         break;
       case "content":
-        setIsEditingContent(true);
+        setIsEditingTasks(true);
         break;
-      case "owner":
-        setIsEditingOwner(true);
-        break;
-      case "users":
-        setIsEditingUsers(true);
+      case "team":
+        setIsEditingTeam(true);
         break;
       default:
         break;
@@ -119,7 +107,6 @@ function SingleSpec() {
 
   return (
     <Box sx={pageStyle}>
-      {/* <NavLink to="../SpecsList"> */}
       <NavLink to="../SpecsList">
         <KeyboardBackspaceOutlinedIcon
           color="primary"
@@ -133,25 +120,39 @@ function SingleSpec() {
         />
       </NavLink>
 
-      <Box sx={componentStyle}>
+      <Box
+        sx={{
+          ...componentStyle,
+          position: "relative",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         {isEditingTitle ? (
           <EditableField content={specData.title} onSave={handleSaveTitle} />
         ) : (
           <>
             <SpecTitle title={specData.title} />
             <Button
-              variant="contained"
+              variant="outlined"
               color="primary"
               startIcon={<EditIcon />}
               onClick={() => handleEditClick("title")}
-            >
-              Edit
-            </Button>
+            ></Button>
           </>
         )}
       </Box>
 
-      <Box sx={componentStyle}>
+      <Box
+        sx={{
+          ...componentStyle,
+          position: "relative",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         {isEditingDescription ? (
           <EditableField
             content={specData.description}
@@ -161,74 +162,55 @@ function SingleSpec() {
           <>
             <SpecDescription description={specData.description} />
             <Button
-              variant="contained"
+              variant="outlined"
               color="primary"
               startIcon={<EditIcon />}
               onClick={() => handleEditClick("description")}
-            >
-              Edit
-            </Button>
+            ></Button>
           </>
         )}
       </Box>
 
       <Box sx={componentStyle}>
-        {isEditingContent ? (
+        {isEditingTasks ? (
           <EditableField
-            content={specData.content}
-            onSave={handleSaveContent}
+            tasks={specData.tasks}
+            onSave={handleSaveTasks}
+            field="tasks"
           />
         ) : (
-          <>
-            <SpecContent content={specData.content} />
-            <Button
-              variant="contained"
-              color="primary"
-              startIcon={<EditIcon />}
-              onClick={() => handleEditClick("content")}
-            >
-              Edit
-            </Button>
-          </>
+          specData.tasks && (
+            <>
+              <SpecTasks tasks={specData.tasks} />
+              <Button
+                variant="outlined"
+                color="primary"
+                startIcon={<EditIcon />}
+                onClick={() => handleEditClick("tasks")}
+              ></Button>
+            </>
+          )
         )}
       </Box>
 
       <Box sx={componentStyle}>
-        {isEditingOwner ? (
-          <EditableField content={specData.owner} onSave={handleSaveOwner} />
-        ) : (
-          <>
-            <SpecOwner owner={specData.owner} />
-            <Button
-              variant="contained"
-              color="primary"
-              startIcon={<EditIcon />}
-              onClick={() => handleEditClick("owner")}
-            >
-              Edit
-            </Button>
-          </>
-        )}
-      </Box>
-
-      <Box sx={componentStyle}>
-        {isEditingUsers ? (
+        {isEditingTeam ? (
           <EditableField
-            content={specData.users.join(", ")}
-            onSave={handleSaveUsers}
+            content={specData.team.join(", ")}
+            onSave={handleSaveTeam}
           />
-        ) : (specData.users &&
-          <>
-            <SpecUsers users={specData.users} />
-            <Button
-              variant="contained"
-              color="primary"
-              startIcon={<EditIcon />}
-              onClick={() => handleEditClick("users")}
-            >
-              Edit
-            </Button>
-          </>
+        ) : (
+          specData.team && (
+            <>
+              <SpecUsers team={specData.team} />
+              <Button
+                variant="outlined"
+                color="primary"
+                startIcon={<EditIcon />}
+                onClick={() => handleEditClick("team")}
+              ></Button>
+            </>
+          )
         )}
       </Box>
     </Box>
