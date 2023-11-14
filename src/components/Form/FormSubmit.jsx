@@ -17,7 +17,6 @@ export default function FormSubmit(item) {
   return (
     <Box>
       {item.info.title === "" ||
-      item.info.description === "" ||
       item.info.team.length == 0 ||
       item.info.startDate === null ||
       item.info.endDate === null ? (
