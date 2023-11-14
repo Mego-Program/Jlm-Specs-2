@@ -53,28 +53,42 @@ function SingleSpec() {
   const [isEditingOwner, setIsEditingOwner] = useState(false);
   const [isEditingUsers, setIsEditingUsers] = useState(false);
 
+  const updateSpecData = (field, newValue) => {
+    setSpecData((prevData) => ({
+      ...prevData,
+      [field]: newValue,
+    }));
+  };
+  
+
   const handleSaveTitle = (newTitle) => {
     console.log("New title content :", newTitle);
+    updateSpecData("title", newTitle);
     setIsEditingTitle(false);
   };
+    
 
   const handleSaveDescription = (newDescription) => {
     console.log("New description content :", newDescription);
+    updateSpecData("description", newDescription);
     setIsEditingDescription(false);
   };
 
   const handleSaveContent = (newContent) => {
     console.log("New content :", newContent);
+    updateSpecData("content", newContent);
     setIsEditingContent(false);
   };
 
   const handleSaveOwner = (newOwner) => {
     console.log("New owner :", newOwner);
+    updateSpecData("owner", newOwner);
     setIsEditingOwner(false);
   };
 
   const handleSaveUsers = (newUsers) => {
     console.log("New users :", newUsers);
+    updateSpecData("users", newUsers);
     setIsEditingUsers(false);
   };
 
