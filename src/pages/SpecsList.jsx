@@ -10,8 +10,9 @@ function SpecsList() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/specs/tasks-info")
+      .get("http://localhost:4000/specs/findByValue")
       .then((response) => {
+        console.log(response.data);
         setSpecsList(response.data);
       })
       .catch((error) => {
@@ -19,22 +20,7 @@ function SpecsList() {
       });
   }, []);
 
-  // let specsList = [
-  //   {
-  //     date: "11.11.11",
-  //     title: "test",
-  //     team:['a','b','c'],
-  //     info: "lorexdfd dvbdgb fhn db xbgf n bn b gb gfb sn s bd b  nfjn fsj bd bj bjf b gbjs bjjb js bs jb sbdhn dhdhg ddhn nn dgndhg ndh ndh md hmd ghnd hg dh ndg nd",
-  //   },
-  //   {
-  //     date: "11.11.11",
-  //     title: "test",
-  //     team:['a','b','c'],
-  //     info: "check",
-  //   },
-  // ];
-  // specsList = []
-
+ 
   return (
     <Box sx={{ height: "100vh", bgcolor: "background.b1" }}>
       <Box sx={{ bgcolor: "background.b1", padding: 3 }}>
@@ -62,15 +48,16 @@ function SpecsList() {
       </Box>
 
       <List sx={{ padding: 0, textAlign: "center" }}>
+
         {specsList.length > 0 ? (
           specsList.map((spec, index) => (
             <SpecItem
-              date={spec.creationDate}
+              date={spec.startDate}
               title={spec.title}
               info={spec.description}
-              key={spec.id}
-              id={spec.id}
-              avater={spec.creator}
+              key={spec._id}
+              id={spec._id}
+              // avater={spec.creator}
             />
           ))
         ) : (

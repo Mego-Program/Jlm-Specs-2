@@ -6,7 +6,7 @@ export default function FormTask() {
   return (
     <Box>
       <Box>
-        {/* <TextEditor /> */}
+        <TextEditor />
       </Box>
       <Divider
         sx={{ height: 1.5, borderRadius: 5 }}

@@ -268,6 +268,7 @@ const Toolbar = ({ editorState, setEditorState }) => {
     <div className="toolbar-grid">
       {tools.map((item, idx) => (
         <button
+          className="btn"
           style={{
             color: isActive(item.style, item.method)
               ? "rgba(0, 0, 0, 1)"
