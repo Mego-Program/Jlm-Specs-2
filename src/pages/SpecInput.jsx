@@ -20,11 +20,12 @@ import DoneSharpIcon from "@mui/icons-material/DoneSharp";
 
 import FormDetails from "../components/Form/FormDetails";
 import FormKpi from "../components/Form/FormKpi";
+import FormTask from "../components/Form/FormTask";
 import FormTeam from "../components/Form/FormTeam";
 import FormSubmit from "../components/Form/FormSubmit";
 import dayjs from "dayjs";
 
-const steps = ["Details", "KPIs", "Team", "Submit"];
+const steps = ["Details", "KPIs", "Task", "Team", "Submit"];
 
 export default function SpecInput() {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ export default function SpecInput() {
     description: "",
     startDate: null,
     endDate: null,
-    task: "",
+    task: [],
     team: [],
     date: dayjs(),
     
@@ -166,8 +167,9 @@ export default function SpecInput() {
           >
             {activeStep === 0 && <FormDetails info={item} set={setItem} />}
             {activeStep === 1 && <FormKpi info={item} set={setItem} />}
-            {activeStep === 2 && <FormTeam info={item} set={setItem} />}
-            {activeStep === 3 && <FormSubmit info={item} set={setItem} disabled={setDisabled}/>}
+            {activeStep === 2 && <FormTask info={item} set={setItem} disabled={setDisabled}/>}
+            {activeStep === 3 && <FormTeam info={item} set={setItem} />}
+            {activeStep === 4 && <FormSubmit info={item} set={setItem} disabled={setDisabled}/>}
           </Box>
           <Box
             sx={{
