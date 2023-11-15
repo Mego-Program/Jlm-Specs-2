@@ -28,8 +28,8 @@ export default function FormTask(item) {
 
   const addTask = () => {
     if (task) {
-      console.log('task: ',task);
-    // item.set({ ...item.info, task: [...item.info.team, task] });
+    item.set({ ...item.info, task: [...item.info.task, task] });
+    console.log(item.info);
     setTask(null)
     setState(false)
     }
@@ -81,7 +81,7 @@ export default function FormTask(item) {
     <Box>
       <Box>
         <React.Fragment key={"top"}>
-          <Button startIcon={<AddIcon/>} variant="contained" sx={{fontWeight:700}} onClick={toggleDrawer(true)}>New Task</Button>
+          <Button startIcon={<AddIcon/>} variant="contained" sx={{fontWeight:700, marginBottom:2}} onClick={toggleDrawer(true)}>New Task</Button>
           <SwipeableDrawer anchor={"top"} open={state}>
             {list()}
           </SwipeableDrawer>
