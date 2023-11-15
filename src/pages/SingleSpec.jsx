@@ -6,7 +6,7 @@ import EditableField from "../components/EditableField";
 import SpecTitle from "../components/SpecComponents/SpecTitle";
 import SpecDescription from "../components/SpecComponents/SpecDescription";
 import SpecTasks from "../components/SpecComponents/SpecTasks";
-import SpecTeam from "../components/SpecComponents/Specteam";
+import SpecTeam from "../components/SpecComponents/SpecTeam";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
