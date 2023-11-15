@@ -38,7 +38,6 @@ function SingleSpec() {
 
       .then((response) => {
         const data = response.data;
-        console.log("Spec data :", data);
         setSpecData(data);
       })
       .catch((error) => {
@@ -203,7 +202,7 @@ function SingleSpec() {
         ) : (
           specData.team && (
             <>
-              <SpecUsers team={specData.team} />
+              <SpecTeam team={specData.team} />
               <Button
                 variant="outlined"
                 color="primary"

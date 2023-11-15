@@ -2,6 +2,7 @@ import { Box, Button, Typography, ListItem, Avatar } from "@mui/material";
 import DialogSelect from "./DialogSelect";
 import { Info } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 
 
@@ -14,6 +15,16 @@ function SpecItem(item) {
     navigate('/SingleSpec/'+ item.id)
 
   };
+  const delSpec = () => {
+    try{
+      axios.get(`http://localhost:4000/removeSpec/${item.id}`)
+      item.del(item.id)
+    }catch (error){
+      console.log('faild to delete item: ', error);
+    }
+      
+      
+  }
 
   return (
     <ListItem
@@ -99,6 +110,7 @@ function SpecItem(item) {
         <Button
           margin="0"
           padding="0"
+          onClick={delSpec}
           sx={{ color: "text.primary", fontSize: 11, fontWeight: 700 }}
         >
           Delete
