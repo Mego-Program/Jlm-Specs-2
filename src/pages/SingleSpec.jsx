@@ -57,29 +57,44 @@ function SingleSpec() {
     }));
   };
   
-
-  const handleSaveTitle = (newTitle) => {
-    console.log("New title content :", newTitle);
-    updateSpecData("title", newTitle);
-    setIsEditingTitle(false);
+  const handleSaveTitle = async (newTitle) => {
+    try {
+      await axios.put(`http://localhost:4000/spec/${id}`, { title: newTitle });
+      updateSpecData('title', newTitle);
+      setIsEditingTitle(false);
+    } catch (error) {
+      console.error('Error saving title:', error);
+    }
   };
 
-  const handleSaveDescription = (newDescription) => {
-    console.log("New description content :", newDescription);
-    updateSpecData("description", newDescription);
-    setIsEditingDescription(false);
+  const handleSaveDescription = async (newDescription) => {
+    try {
+      await axios.put(`http://localhost:4000/spec/${id}`, { description: newDescription });
+      updateSpecData('description', newDescription);
+      setIsEditingDescription(false);
+    } catch (error) {
+      console.error('Error saving description:', error);
+    }
   };
 
-  const handleSaveTasks = (newTasks) => {
-    console.log("New tasks content:", newTasks);
-    updateSpecData("tasks", newTasks);
-    setIsEditingTasks(false);
+  const handleSaveTasks = async (newTasks) => {
+    try {
+      await axios.put(`http://localhost:4000/spec/${id}`, { tasks: newTasks });
+      updateSpecData('tasks', newTasks);
+      setIsEditingDescription(false);
+    } catch (error) {
+      console.error('Error saving tasks:', error);
+    }
   };
 
-  const handleSaveTeam = (newTeam) => {
-    console.log("New team content:", newTeam);
-    updateSpecData("team", newTeam);
-    setIsEditingTeam(false);
+  const handleSaveTeam = async (newTeam) => {
+    try {
+      await axios.put(`http://localhost:4000/spec/${id}`, { team: newTeam });
+      updateSpecData('team', newTeam);
+      setIsEditingDescription(false);
+    } catch (error) {
+      console.error('Error saving team:', error);
+    }
   };
 
   const handleEditClick = (field) => {
@@ -193,7 +208,13 @@ function SingleSpec() {
         )}
       </Box>
 
-      <Box sx={componentStyle}>
+      <Box sx={{
+          ...componentStyle,
+          position: "relative",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}>
         {isEditingTeam ? (
           <EditableField
             content={specData.team.join(", ")}

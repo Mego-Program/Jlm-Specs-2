@@ -19,12 +19,21 @@ function SpecsList() {
       });
   }, []);
 
-  const delSpec = (id) => {
-    let newList = specsList.filter((item) => id !== item._id )
-    setSpecsList(newList)
-  }
+  const delSpec = async (id) => {
+    try {
+      const confirmDelete = window.confirm(
+        "Are you sure you want to delete this spec?"
+      );
+      if (confirmDelete) {
+        await axios.delete(`http://localhost:4000/specs/removeSpec/${id}`);
+        let newList = specsList.filter((item) => id !== item._id);
+        setSpecsList(newList);
+      }
+    } catch (error) {
+      console.error("Error deleting spec:", error);
+    }
+  };
 
- 
   return (
     <Box sx={{ height: "100vh", bgcolor: "background.b1" }}>
       <Box sx={{ bgcolor: "background.b1", padding: 3 }}>
@@ -52,7 +61,6 @@ function SpecsList() {
       </Box>
 
       <List sx={{ padding: 0, textAlign: "center" }}>
-
         {specsList.length > 0 ? (
           specsList.map((spec, index) => (
             <SpecItem
