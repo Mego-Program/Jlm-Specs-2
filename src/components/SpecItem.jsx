@@ -17,8 +17,13 @@ function SpecItem(item) {
   };
   const delSpec = () => {
     try{
-      axios.get(`http://localhost:4000/removeSpec/${item.id}`)
+      const confirmDelete = window.confirm(
+        "Are you sure you want to delete this spec?"
+      );
+      if (confirmDelete) {
+      axios.delete(`http://localhost:4000/specs/${item.id}`)
       item.del(item.id)
+      }
     }catch (error){
       console.log('faild to delete item: ', error);
     }

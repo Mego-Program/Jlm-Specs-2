@@ -76,7 +76,7 @@ export default function SpecInput() {
     setLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:4000/addSpec",
+        "http://localhost:4000/Specs",
         item
       );
       console.log(response.data);

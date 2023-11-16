@@ -127,7 +127,7 @@ const TextEditor = (edit) => {
           onChange={(editorState) => {
             const contentState = editorState.getCurrentContent();
             // console.log(convertToRaw(contentState));
-            edit.set(convertToRaw(contentState))
+            edit.set(convertToRaw(contentState).blocks)
             setEditorState(editorState);
           }}
         />

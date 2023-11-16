@@ -59,7 +59,7 @@ function SingleSpec() {
   
   const handleSaveTitle = async (newTitle) => {
     try {
-      await axios.put(`http://localhost:4000/spec/${id}`, { title: newTitle });
+      await axios.put(`http://localhost:4000/specs/${id}`, { title: newTitle });
       updateSpecData('title', newTitle);
       setIsEditingTitle(false);
     } catch (error) {
@@ -69,7 +69,7 @@ function SingleSpec() {
 
   const handleSaveDescription = async (newDescription) => {
     try {
-      await axios.put(`http://localhost:4000/spec/${id}`, { description: newDescription });
+      await axios.put(`http://localhost:4000/specs/${id}`, { description: newDescription });
       updateSpecData('description', newDescription);
       setIsEditingDescription(false);
     } catch (error) {
@@ -79,7 +79,7 @@ function SingleSpec() {
 
   const handleSaveTasks = async (newTasks) => {
     try {
-      await axios.put(`http://localhost:4000/spec/${id}`, { tasks: newTasks });
+      await axios.put(`http://localhost:4000/specs/${id}`, { tasks: newTasks });
       updateSpecData('tasks', newTasks);
       setIsEditingDescription(false);
     } catch (error) {
@@ -89,7 +89,7 @@ function SingleSpec() {
 
   const handleSaveTeam = async (newTeam) => {
     try {
-      await axios.put(`http://localhost:4000/spec/${id}`, { team: newTeam });
+      await axios.put(`http://localhost:4000/specs/${id}`, { team: newTeam });
       updateSpecData('team', newTeam);
       setIsEditingDescription(false);
     } catch (error) {
