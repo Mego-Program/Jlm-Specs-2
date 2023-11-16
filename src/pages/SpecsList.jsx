@@ -10,28 +10,18 @@ function SpecsList() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/specs/findByValue")
+      .get("http://localhost:4000/specs")
       .then((response) => {
-        setSpecsList(response.data);
+        setSpecsList(response.data.reverse());
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
   }, []);
 
-  const delSpec = async (id) => {
-    try {
-      const confirmDelete = window.confirm(
-        "Are you sure you want to delete this spec?"
-      );
-      if (confirmDelete) {
-        await axios.delete(`http://localhost:4000/specs/removeSpec/${id}`);
-        let newList = specsList.filter((item) => id !== item._id);
-        setSpecsList(newList);
-      }
-    } catch (error) {
-      console.error("Error deleting spec:", error);
-    }
+  const delSpec =  (id) => {
+    let newList = specsList.filter((item) => item._id !== id);
+    setSpecsList(newList);
   };
 
   return (
