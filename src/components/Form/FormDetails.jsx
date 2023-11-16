@@ -13,13 +13,13 @@ const inputStyle = {
   }
 };
 
-export default function FormDetails(item) {
+export default function FormDetails(props) {
   
   const handleTitle = (e) => {
-    item.set({ ...item.info, title: e.target.value });
+    props.set({ ...props.info, title: e.target.value });
   };
   const handleDesc = (e) => {
-    item.set({ ...item.info, description: e.target.value });
+    props.set({ ...props.info, description: e.target.value });
   };
 
   return (
@@ -30,7 +30,7 @@ export default function FormDetails(item) {
         label="Spec Title"
         variant="filled"
         onChange={handleTitle}
-        value={item.info.title}
+        value={props.info.title}
       />
       <TextField
         sx={inputStyle}
@@ -39,7 +39,7 @@ export default function FormDetails(item) {
         multiline
         rows={2}
         onChange={handleDesc}
-        value={item.info.description}
+        value={props.info.description}
       />
 
     </Box>

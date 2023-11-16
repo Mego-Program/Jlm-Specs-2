@@ -5,7 +5,7 @@ import { Box } from "@mui/system";
 import { Button, TextField } from "@mui/material";
 import { useState } from "react";
 
-export default function FormTeam(item) {
+export default function FormTeam(props) {
   const [name, setName] = useState("");
 
   const handleName = (e) => {
@@ -14,20 +14,19 @@ export default function FormTeam(item) {
 
   const handleTeam = () => {
     if (name.length > 0) {
-      item.set({ ...item.info, team: [...item.info.team, name] });
+      props.set({ ...props.info, team: [...props.info.team, name] });
       setName("");
     }
   };
 
   const delItem = (id) => {
-    let newTeam = item.info.team.filter((item, index) => id !== index )
-    item.set({...item, team: newTeam})
-  }
+    let newTeam = props.info.team.filter((item, index) => id !== index);
+    props.set({ ...props, team: newTeam });
+  };
 
   return (
     <Box>
       <Box sx={{ display: "flex", justifyContent: "center" }}>
-
         <TextField
           sx={{
             bgcolor: "secondary.light",
@@ -38,7 +37,6 @@ export default function FormTeam(item) {
             "& label": {
               color: "info.main",
             },
-
           }}
           value={name}
           onChange={handleName}
@@ -54,10 +52,9 @@ export default function FormTeam(item) {
         </Button>
       </Box>
       <List sx={{ width: "100%", bgcolor: "secondary.light", borderRadius: 2 }}>
-        {item.info.team.map((i, index) => (
+        {props.info.team.map((i, index) => (
           <Item name={i} key={index} id={index} del={delItem} />
         ))}
-
       </List>
     </Box>
   );
