@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "dayjs/locale/en-gb";
 
-
 import {
   Box,
   Stepper,
@@ -13,7 +12,6 @@ import {
   Typography,
 } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
-
 
 import KeyboardBackspaceSharpIcon from "@mui/icons-material/KeyboardBackspaceSharp";
 import ArrowBackIosNewSharpIcon from "@mui/icons-material/ArrowBackIosNewSharp";
@@ -38,16 +36,14 @@ export default function SpecInput() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const [item, setItem] = React.useState({
-    title: "",
+    title:'',
     description: "",
     startDate: null,
     endDate: null,
     task: [],
-    team: [],
+    team: []
     // date: dayjs(),
     // ownwr: 'test-name'
-    
-
   });
 
   const isStepSkipped = (step) => {
@@ -74,11 +70,10 @@ export default function SpecInput() {
 
   const handleSubmit = async () => {
     setLoading(true);
+    console.log(item);
     try {
-      const response = await axios.post(
-        "http://localhost:4000/Specs",
-        item
-      );
+      const response = await axios.post("http://localhost:4000/specs", item);
+      console.log("test");
       console.log(response.data);
       handleNext();
     } catch (error) {
@@ -86,7 +81,6 @@ export default function SpecInput() {
       setError("try again");
     }
     setLoading(false);
-
   };
 
   return (
@@ -150,7 +144,6 @@ export default function SpecInput() {
               variant="contained"
               sx={{ margin: 1, fontWeight: 700 }}
               onClick={handleCancel}
-
             >
               Return to list
             </Button>
@@ -176,7 +169,9 @@ export default function SpecInput() {
             {activeStep === 2 && <FormTask info={item} set={setItem} />}
 
             {activeStep === 3 && <FormTeam info={item} set={setItem} />}
-            {activeStep === 4 && <FormSubmit info={item} set={setItem} disabled={setDisabled}/>}
+            {activeStep === 4 && (
+              <FormSubmit info={item} set={setItem} disabled={setDisabled} />
+            )}
           </Box>
           <Box
             sx={{
@@ -230,7 +225,6 @@ export default function SpecInput() {
                 startIcon={<DoneSharpIcon />}
                 loading={loading}
                 disabled={disabled}
-
               >
                 Create
                 {error && (

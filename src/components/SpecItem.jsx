@@ -1,6 +1,5 @@
 import { Box, Button, Typography, ListItem, Avatar } from "@mui/material";
 import DialogSelect from "./DialogSelect";
-import { Info } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -12,6 +11,7 @@ function SpecItem(item) {
   const navigate = useNavigate();
 
   const handelItem = () =>{
+    console.log(item);
     navigate('/SingleSpec/'+ item.id)
 
   };

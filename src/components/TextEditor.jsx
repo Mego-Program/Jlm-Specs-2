@@ -1,21 +1,3 @@
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-// import {Editor, EditorState} from 'draft-js';
-// import 'draft-js/dist/Draft.css';
-
-// export default function TextEditor() {
-//   const [editorState, setEditorState] = React.useState(
-//     () => EditorState.createEmpty(),
-//   );
-
-//   return <Editor editorState={editorState} onChange={setEditorState} />;
-// }
-
-// // ReactDOM.render(<MyEditor />, document.getElementById('container'));
-
-
-
-
 import React, { useEffect, useRef, useState } from "react";
 import {
   Editor,
@@ -26,15 +8,13 @@ import {
 } from "draft-js";
 import Toolbar from "./Toolbar";
 import "./TextEditor.css";
+import { stateToHTML } from "draft-js-export-html";
 
-
-const TextEditor = (edit) => {
+const TextEditor = (props) => {
   const [editorState, setEditorState] = useState(
     EditorState.createWithContent(
       convertFromRaw({
-        blocks: [
-          
-        ],
+        blocks: [],
         entityMap: {},
       })
     )
@@ -126,8 +106,8 @@ const TextEditor = (edit) => {
           blockStyleFn={myBlockStyleFn}
           onChange={(editorState) => {
             const contentState = editorState.getCurrentContent();
-            // console.log(convertToRaw(contentState));
-            edit.set(convertToRaw(contentState).blocks)
+            props.set(convertToRaw(contentState));
+
             setEditorState(editorState);
           }}
         />

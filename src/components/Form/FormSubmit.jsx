@@ -13,46 +13,61 @@ const boxStyle = {
   },
 };
 
-export default function FormSubmit(item) {
+export default function FormSubmit(props) {
   return (
     <Box>
-      {item.info.title === "" ||
-      item.info.team.length == 0 ||
-      item.info.startDate === null ||
-      item.info.endDate === null ? (
+      {props.info.title === "" ||
+      props.info.team.length == 0 ||
+      props.info.task.length == 0 ||
+      props.info.startDate === null ||
+      props.info.endDate === null ? (
         <Typography sx={{ fontFamily: "monospace" }}>
           Please fill up the form
-          {item.disabled(true)}
+          {props.disabled(true)}
         </Typography>
       ) : (
         <Box>
-          {item.disabled(false)}
+          {props.disabled(false)}
           <Typography>Title</Typography>
           <Box sx={boxStyle}>
             <Typography sx={{ fontFamily: "monospace" }}>
-              {item.info.title}
+              {props.info.title}
             </Typography>
           </Box>
           <Typography>Description</Typography>
           <Box sx={boxStyle}>
             <Typography sx={{ fontFamily: "monospace" }}>
-              {item.info.description}
+              {props.info.description}
             </Typography>
           </Box>
           <Typography>Team</Typography>
           <Box sx={boxStyle}>
             <Typography sx={{ fontFamily: "monospace" }}>
-              {item.info.team.map((item) => (
-                <span>{item} </span>
+              {props.info.team.map((props, i) => (
+                <span key={i}>{props} </span>
               ))}
             </Typography>
           </Box>
+          {/* <Typography>Task</Typography>
+          <Box sx={boxStyle}>
+            <Typography sx={{ fontFamily: "monospace" }}>
+              {props.info.task.map((props, i) => {
+                const object = convertFromRaw(tsk);
+                const html = stateToHTML(object);
+                return (
+                    <Typography
+                      sx={{ wordWrap: "break-word" }}
+                      dangerouslySetInnerHTML={{ __html: html }}
+                    />)
+              })}
+            </Typography>
+          </Box> */}
           <Typography>Time Line</Typography>
           <Box sx={boxStyle}>
             <Typography sx={{ fontFamily: "monospace" }}>
-              {item.info.startDate.$D}/{item.info.startDate.$M + 1}/
-              {item.info.startDate.$y} - {item.info.endDate.$D}/
-              {item.info.endDate.$M + 1}/{item.info.endDate.$y}
+              {props.info.startDate.$D}/{props.info.startDate.$M + 1}/
+              {props.info.startDate.$y} - {props.info.endDate.$D}/
+              {props.info.endDate.$M + 1}/{props.info.endDate.$y}
             </Typography>
           </Box>
         </Box>

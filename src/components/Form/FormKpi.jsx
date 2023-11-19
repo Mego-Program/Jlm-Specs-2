@@ -18,12 +18,12 @@ const inputStyle = {
 };
 
 
-export default function FormKpi(item) {
-  const [date1, setDate1] = React.useState(item.info.startDate || dayjs());
-  const [date2, setDate2] = React.useState(item.info.endDate);
+export default function FormKpi(props) {
+  const [date1, setDate1] = React.useState(props.info.startDate || dayjs());
+  const [date2, setDate2] = React.useState(props.info.endDate);
 
   const handleTime = (newDate) => {
-    item.set({ ...item.info, startDate: newDate[0], endDate: newDate[1] });
+    props.set({ ...props.info, startDate: newDate[0], endDate: newDate[1] });
   };
 
   return (
