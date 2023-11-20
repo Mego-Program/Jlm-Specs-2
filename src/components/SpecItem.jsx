@@ -31,6 +31,9 @@ function SpecItem(item) {
       
   }
 
+  const dateobject = new Date()
+  const dateString = dateobject.getDay() + '.' + dateobject.getMonth() + '.' + dateobject.getFullYear()
+  
   return (
     <ListItem
       sx={{
@@ -44,7 +47,7 @@ function SpecItem(item) {
       }}
     >
       <Box sx={{ textAlign: "center", marginX: 1 }}>
-        <Typography sx={{ fontSize: 11 }}>{item.date}</Typography>
+        <Typography sx={{ fontSize: 11 }}>{dateString}</Typography>
       </Box>
       <Box
         sx={{

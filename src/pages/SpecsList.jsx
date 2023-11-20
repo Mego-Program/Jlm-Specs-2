@@ -23,6 +23,7 @@ function SpecsList() {
     let newList = specsList.filter((item) => item._id !== id);
     setSpecsList(newList);
   };
+  
 
   return (
     <Box sx={{ height: "100vh", bgcolor: "background.b1" }}>
