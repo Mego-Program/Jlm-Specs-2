@@ -96,9 +96,9 @@ function SpecItem(item) {
             justifyContent: "center",
           }}
         >
-          <Button component='span' sx={{ color: "text.primary", fontSize: 11, fontWeight: 700 }}>
+          {/* <Button component='span' sx={{ color: "text.primary", fontSize: 11, fontWeight: 700 }}>
             Edit
-          </Button>
+          </Button> */}
         </Box>
         <Avatar>f</Avatar>
       </Button>
