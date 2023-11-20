@@ -2,6 +2,7 @@ import { Box, Button, Typography, ListItem, Avatar } from "@mui/material";
 import DialogSelect from "./DialogSelect";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import dayjs from "dayjs";
 
 
 
@@ -10,12 +11,7 @@ function SpecItem(item) {
 
   const navigate = useNavigate();
 
-  const handelItem = () =>{
-    console.log(item);
-    navigate('/SingleSpec/'+ item.id)
 
-  };
-  
   const delSpec = () => {
     try{
       const confirmDelete = window.confirm(
@@ -30,6 +26,9 @@ function SpecItem(item) {
     } 
   }
 
+  const dateobject = dayjs(item.date)
+  const dateString = dateobject.$D + '.' + dateobject.$M + '.' + dateobject.$y
+  
   return (
     <ListItem
       sx={{
@@ -43,7 +42,7 @@ function SpecItem(item) {
       }}
     >
       <Box sx={{ textAlign: "center", marginX: 1 }}>
-        <Typography sx={{ fontSize: 11 }}>{item.date}</Typography>
+        <Typography sx={{ fontSize: 11 }}>{dateString}</Typography>
       </Box>
       <Box
         sx={{
@@ -66,7 +65,7 @@ function SpecItem(item) {
         <Box sx={{ bgcolor: "background.b2", width: "2px", height: "70px" }} />
       </Box>
       <Button
-        onClick={handelItem}
+        onClick={() => {navigate('/SingleSpec/'+ item.id)}}
         sx={{
           color: "text.primary",
           bgcolor: "background.b2",
@@ -96,9 +95,9 @@ function SpecItem(item) {
             justifyContent: "center",
           }}
         >
-          <Button component='span' sx={{ color: "text.primary", fontSize: 11, fontWeight: 700 }}>
+          {/* <Button component='span' sx={{ color: "text.primary", fontSize: 11, fontWeight: 700 }}>
             Edit
-          </Button>
+          </Button> */}
         </Box>
         <Avatar>f</Avatar>
       </Button>
