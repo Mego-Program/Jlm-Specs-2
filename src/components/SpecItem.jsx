@@ -15,6 +15,7 @@ function SpecItem(item) {
     navigate('/SingleSpec/'+ item.id)
 
   };
+  
   const delSpec = () => {
     try{
       const confirmDelete = window.confirm(
@@ -26,9 +27,7 @@ function SpecItem(item) {
       }
     }catch (error){
       console.log('faild to delete item: ', error);
-    }
-      
-      
+    } 
   }
 
   return (

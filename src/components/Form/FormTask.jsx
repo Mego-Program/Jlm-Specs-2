@@ -8,7 +8,12 @@ import KeyboardBackspaceSharpIcon from "@mui/icons-material/KeyboardBackspaceSha
 import DoneSharpIcon from "@mui/icons-material/DoneSharp";
 import AddIcon from "@mui/icons-material/Add";
 import { stateToHTML } from "draft-js-export-html";
-import { convertFromRaw, ContentState } from "draft-js";
+import { convertFromRaw } from "draft-js";
+// import { DateTimePicker, LocalizationProvider, AdapterDayjs  ,DemoContainer} from "@mui/x-date-pickers";
+
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DateField } from "@mui/x-date-pickers";
 
 export default function FormTask(props) {
   const [state, setState] = React.useState(false);
@@ -99,34 +104,48 @@ export default function FormTask(props) {
           </SwipeableDrawer>
         </React.Fragment>
       </Box>
-      <Box>
-        {/* {item.info.task.map((i) =>
-          i.map((block, index) => {
-            {
-              return (
-                <Box key={index}>
-                  <Typography style={block.style}>{block.text}</Typography>
-                  <Divider
-                    sx={{ height: 1.5, borderRadius: 5 }}
-                    color="#f6c927"
-                    orientation="horizontal"
-                    variant="fullWidth"
-                  />
-                </Box>
-              );
-            }
-          })
-        )} */}
-
+      <Box sx={{ overflowY: "scroll", maxHeight: "40vh" }}>
         {props.info.task.map((item, index) => {
           const object = convertFromRaw(item);
           const html = stateToHTML(object);
           return (
             <Box key={index}>
-              <Typography
-                sx={{ wordWrap: "break-word" }}
-                dangerouslySetInnerHTML={{ __html: html }}
-              />
+              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                <Typography
+                  sx={{
+                    wordWrap: "break-word",
+                    overflowX: "hidden",
+                    overflowY: "scroll",
+                    maxHeight: "20vh",
+                  }}
+                  dangerouslySetInnerHTML={{ __html: html }}
+                />
+
+                <LocalizationProvider
+                  dateAdapter={AdapterDayjs}
+                  adapterLocale="en-gb"
+                >
+                  <DateField
+                    onChange={(date) => {
+                      props.info.task[index].deadline = date;
+                      console.log(props.info.task[index]);
+                    }}
+                    label="Deadline"
+                    sx={{
+                      minWidth: "fit-content",
+                      maxHeight: "3.5rem",
+                      marginLeft: 1,
+                      marginTop: 1,
+                      bgcolor: "secondary.light",
+                      padding: 0,
+                      "& label": {
+                        color: "info.main",
+                      },
+                    }}
+                  />
+                </LocalizationProvider>
+              </Box>
+
               <Divider
                 sx={{ height: 1.5, borderRadius: 5, marginY: 1 }}
                 color="#f6c927"
