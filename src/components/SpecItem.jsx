@@ -2,7 +2,7 @@ import { Box, Button, Typography, ListItem, Avatar } from "@mui/material";
 import DialogSelect from "./DialogSelect";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { NavLink } from "react-router-dom";
+import dayjs from "dayjs";
 
 
 
@@ -27,8 +27,8 @@ function SpecItem(item) {
       
   }
 
-  const dateobject = new Date()
-  const dateString = dateobject.getDay() + '.' + dateobject.getMonth() + '.' + dateobject.getFullYear()
+  const dateobject = dayjs(item.date)
+  const dateString = dateobject.$D + '.' + dateobject.$M + '.' + dateobject.$y
   
   return (
     <ListItem
