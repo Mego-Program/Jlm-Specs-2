@@ -2,6 +2,7 @@ import { Box, Button, Typography, ListItem, Avatar } from "@mui/material";
 import DialogSelect from "./DialogSelect";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { NavLink } from "react-router-dom";
 
 
 
@@ -10,11 +11,6 @@ function SpecItem(item) {
 
   const navigate = useNavigate();
 
-  const handelItem = () =>{
-    console.log(item);
-    navigate('/SingleSpec/'+ item.id)
-
-  };
   const delSpec = () => {
     try{
       const confirmDelete = window.confirm(
@@ -70,7 +66,7 @@ function SpecItem(item) {
         <Box sx={{ bgcolor: "background.b2", width: "2px", height: "70px" }} />
       </Box>
       <Button
-        onClick={handelItem}
+        onClick={() => {navigate('/SingleSpec/'+ item.id)}}
         sx={{
           color: "text.primary",
           bgcolor: "background.b2",
