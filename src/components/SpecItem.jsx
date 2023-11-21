@@ -11,6 +11,7 @@ function SpecItem(item) {
 
   const navigate = useNavigate();
 
+
   const delSpec = () => {
     try{
       const confirmDelete = window.confirm(
@@ -22,9 +23,7 @@ function SpecItem(item) {
       }
     }catch (error){
       console.log('faild to delete item: ', error);
-    }
-      
-      
+    } 
   }
 
   const dateobject = dayjs(item.date)

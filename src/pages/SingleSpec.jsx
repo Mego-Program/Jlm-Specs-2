@@ -34,7 +34,7 @@ function SingleSpec() {
   const [specData, setSpecData] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:4000/spec/${id}`)
+    axios.get(`http://localhost:4000/specs/${id}`)
 
       .then((response) => {
         const data = response.data;
