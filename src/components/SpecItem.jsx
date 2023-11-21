@@ -41,7 +41,7 @@ function SpecItem(item) {
         height: 100,
       }}
     >
-      <Box sx={{ textAlign: "center", marginX: 1 }}>
+      <Box sx={{ textAlign: "center", marginX: 1, width:'5vw'}}>
         <Typography sx={{ fontSize: 11 }}>{dateString}</Typography>
       </Box>
       <Box
@@ -79,13 +79,13 @@ function SpecItem(item) {
           justifyContent: "space-between",
         }}
       >
-        <Box sx={{ width: "50%", textAlign: "start", height: "100%" }}>
+        <Box sx={{ width: "70%", height: "100%", display:'flex', flexDirection:'column', justifyContent:'space-around', alignItems:'start',  wordWrap:'break-word', overflowX:'hidden', overflowY:'scroll', '::-webkit-scrollbar':{display:'none'}}}>
           <Typography
-            sx={{ margin: 0, padding: 0, fontWeight: 700 }}
+            sx={{ margin: 0, paddingTop: 1, fontWeight: 700 }}
           >
             {item.title}
           </Typography>
-          <Typography sx={{ fontSize: 9 }}>{item.info}</Typography>
+          <Typography sx={{ fontSize: 9, textAlign:'start', marginRight:1}}>{item.info}</Typography>
         </Box>
         {/* <DialogSelect  stat="todo" /> */}
         <Box
