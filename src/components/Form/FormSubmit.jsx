@@ -1,5 +1,7 @@
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import { convertFromRaw } from "draft-js";
+import { stateToHTML } from "draft-js-export-html";
 
 const boxStyle = {
 
@@ -26,7 +28,7 @@ export default function FormSubmit(props) {
           {props.disabled(true)}
         </Typography>
       ) : (
-        <Box>
+        <Box sx={{overflowY:'scroll', maxHeight:'45vh', paddingRight:1}}>
           {props.disabled(false)}
           <Typography>Title</Typography>
           <Box sx={boxStyle}>
@@ -48,20 +50,24 @@ export default function FormSubmit(props) {
               ))}
             </Typography>
           </Box>
-          {/* <Typography>Task</Typography>
+          <Typography>Task</Typography>
           <Box sx={boxStyle}>
-            <Typography sx={{ fontFamily: "monospace" }}>
-              {props.info.task.map((props, i) => {
-                const object = convertFromRaw(tsk);
+              {props.info.task.map((task, index) => {
+                const object = convertFromRaw(task);
                 const html = stateToHTML(object);
                 return (
+                    <Box sx={{display:'flex', justifyContent:'space-between', borderBottom:1}}>
                     <Typography
-                      sx={{ wordWrap: "break-word" }}
+                      key={index}
+                      sx={{ wordWrap: "break-word", fontFamily: "monospace", overflowX:'hidden'}}
                       dangerouslySetInnerHTML={{ __html: html }}
-                    />)
+                    />
+                    {task.deadline && <Typography sx={{fontFamily: "monospace"}}>Deadline:<br/>{task.deadline.$D}/{task.deadline.$M}/{task.deadline.$y}</Typography>}
+                    
+                    </Box>
+                    )
               })}
-            </Typography>
-          </Box> */}
+          </Box>
           <Typography>Time Line</Typography>
           <Box sx={boxStyle}>
             <Typography sx={{ fontFamily: "monospace" }}>

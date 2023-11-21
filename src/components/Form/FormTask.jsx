@@ -1,23 +1,35 @@
 import React from "react";
-import { Box } from "@mui/system";
-import Divider from "@mui/material/Divider";
 import TextEditor from "../TextEditor";
-import { Button, Typography } from "@mui/material";
-import SwipeableDrawer from "@mui/material/SwipeableDrawer";
+
+import { Box } from "@mui/system";
+import { Button, Typography, Divider, SwipeableDrawer } from "@mui/material";
 import KeyboardBackspaceSharpIcon from "@mui/icons-material/KeyboardBackspaceSharp";
 import DoneSharpIcon from "@mui/icons-material/DoneSharp";
 import AddIcon from "@mui/icons-material/Add";
-import { stateToHTML } from "draft-js-export-html";
-import { convertFromRaw } from "draft-js";
-// import { DateTimePicker, LocalizationProvider, AdapterDayjs  ,DemoContainer} from "@mui/x-date-pickers";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import EditIcon from "@mui/icons-material/Edit";
 
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DateField } from "@mui/x-date-pickers";
+import { LocalizationProvider, DateField} from "@mui/x-date-pickers";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { EditorState, convertFromRaw, convertToRaw } from "draft-js";
+import { stateToHTML } from "draft-js-export-html";
+
 
 export default function FormTask(props) {
+  const [disable, setDisable] = React.useState(false);
   const [state, setState] = React.useState(false);
-  const [task, setTask] = React.useState(null);
+  const [update, setUpdate] = React.useState(null);
+  const [editorState, setEditorState] = React.useState(
+    EditorState.createWithContent(
+      convertFromRaw({
+        blocks: [],
+        entityMap: {},
+      })
+    )
+  );
+
+
+
 
   const toggleDrawer = (open) => (event) => {
     if (
@@ -34,17 +46,49 @@ export default function FormTask(props) {
   const handleCancel = () => setState(false);
 
   const addTask = () => {
-    if (task) {
-      props.set({ ...props.info, task: [...props.info.task, task] });
-      setTask(null);
+    const contentState = editorState.getCurrentContent();
+    const contentObject = convertToRaw(contentState);
+    if (contentObject.blocks[0].text !== "") {
+      props.set({ ...props.info, task: [...props.info.task, contentObject] });
+      setEditorState(
+        EditorState.createWithContent(
+          convertFromRaw({
+            blocks: [],
+            entityMap: {},
+          })
+        )
+      );
       setState(false);
+    }
+  };
+  const updateTask = () => {
+    const contentState = editorState.getCurrentContent();
+    const contentObject = convertToRaw(contentState);
+    if (contentObject.blocks[0].text !== "") {
+      props.info.task[update] = contentObject
+      props.set({...props.info, task: props.info.task})
+      setEditorState(
+        EditorState.createWithContent(
+          convertFromRaw({
+            blocks: [],
+            entityMap: {},
+          })
+        )
+      );
+      setState(false);
+      setUpdate(null);
+      setDisable(true)
     }
   };
 
   const list = () => (
     <Box sx={{ bgcolor: "background.b1", width: "100vw" }} role="presentation">
       <Box sx={{ width: "80%", margin: "20vh auto 0" }}>
-        <TextEditor set={setTask} info={task} />
+        <TextEditor
+          set={setEditorState}
+          info={editorState}
+          setDisable={setDisable}
+        />
       </Box>
       <Box
         sx={{
@@ -66,18 +110,35 @@ export default function FormTask(props) {
         >
           cancel
         </Button>
-        <Button
-          sx={{
-            margin: 1,
-            fontWeight: 700,
-            "&:hover": { color: "background.b3", bgcolor: "primary.dark" },
-          }}
-          variant="contained"
-          startIcon={<DoneSharpIcon />}
-          onClick={addTask}
-        >
-          Add task
-        </Button>
+        {update !== null ? (
+          <Button
+            sx={{
+              margin: 1,
+              fontWeight: 700,
+              "&:hover": { color: "background.b3", bgcolor: "primary.dark" },
+            }}
+            variant="contained"
+            startIcon={<DoneSharpIcon />}
+            disabled={disable}
+            onClick={updateTask}
+          >
+            Update task
+          </Button>
+        ) : (
+          <Button
+            sx={{
+              margin: 1,
+              fontWeight: 700,
+              "&:hover": { color: "background.b3", bgcolor: "primary.dark" },
+            }}
+            variant="contained"
+            startIcon={<DoneSharpIcon />}
+            disabled={disable}
+            onClick={addTask}
+          >
+            Add task
+          </Button>
+        )}
       </Box>
     </Box>
   );
@@ -113,6 +174,7 @@ export default function FormTask(props) {
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                 <Typography
                   sx={{
+                    paddingX: 1,
                     wordWrap: "break-word",
                     overflowX: "hidden",
                     overflowY: "scroll",
@@ -120,30 +182,65 @@ export default function FormTask(props) {
                   }}
                   dangerouslySetInnerHTML={{ __html: html }}
                 />
-
-                <LocalizationProvider
-                  dateAdapter={AdapterDayjs}
-                  adapterLocale="en-gb"
-                >
-                  <DateField
-                    onChange={(date) => {
-                      props.info.task[index].deadline = date;
-                      console.log(props.info.task[index]);
-                    }}
-                    label="Deadline"
-                    sx={{
-                      minWidth: "fit-content",
-                      maxHeight: "3.5rem",
-                      marginLeft: 1,
-                      marginTop: 1,
-                      bgcolor: "secondary.light",
-                      padding: 0,
-                      "& label": {
-                        color: "info.main",
-                      },
-                    }}
-                  />
-                </LocalizationProvider>
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <LocalizationProvider
+                    dateAdapter={AdapterDayjs}
+                    adapterLocale="en-gb"
+                  >
+                    <DateField
+                      defaultValue={props.info.task[index].deadline}
+                      onChange={(date) => {
+                        props.info.task[index].deadline = date;
+                      }}
+                      label="Deadline"
+                      sx={{
+                        minWidth: "140px",
+                        maxWidth: "140px",
+                        maxHeight: "3.5rem",
+                        borderRadius: 1,
+                        marginX: 1,
+                        marginTop: 1,
+                        bgcolor: "secondary.light",
+                        padding: 0,
+                        "& label": {
+                          color: "info.main",
+                        },
+                      }}
+                    />
+                  </LocalizationProvider>
+                  <Box sx={{ display: "flex", flexDirection: "column"}}>
+                    <Button
+                      variant="outlined"
+                      sx={{ height: 30 }}
+                      onClick={() => {
+                        const newList = props.info.task.filter(
+                          (item, i) => i !== index
+                        );
+                        props.set({ ...props.info, task: newList });
+                      }}
+                    >
+                      {" "}
+                      <DeleteOutlineIcon sx={{ fontSize: 30 }} />
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      sx={{ height: 30, marginTop: 1 }}
+                      onClick={() => {
+                        setUpdate(index)
+                        setState(true);
+                        setEditorState(
+                          EditorState.createWithContent(
+                            convertFromRaw(props.info.task[index])
+                          )
+                        );
+                      }}
+                      
+                    >
+                      {" "}
+                      <EditIcon sx={{ fontSize: 24 }} />
+                    </Button>
+                  </Box>
+                </Box>
               </Box>
 
               <Divider
