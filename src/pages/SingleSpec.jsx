@@ -11,6 +11,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import KeyboardBackspaceOutlinedIcon from "@mui/icons-material/KeyboardBackspaceOutlined";
+import { Backdrop, CircularProgress } from "@mui/material";
 
 const pageStyle = {
   backgroundColor: "background.b1",
@@ -56,14 +57,14 @@ function SingleSpec() {
       [field]: newValue,
     }));
   };
-  
+
   const handleSaveTitle = async (newTitle) => {
     try {
       await axios.put(`http://localhost:4000/specs/${id}`, { title: newTitle });
       updateSpecData('title', newTitle);
       setIsEditingTitle(false);
     } catch (error) {
-      console.error('Error saving title:', error);
+      console.error("Error saving title:", error);
     }
   };
 
@@ -73,7 +74,7 @@ function SingleSpec() {
       updateSpecData('description', newDescription);
       setIsEditingDescription(false);
     } catch (error) {
-      console.error('Error saving description:', error);
+      console.error("Error saving description:", error);
     }
   };
 
@@ -83,7 +84,7 @@ function SingleSpec() {
       updateSpecData('tasks', newTasks);
       setIsEditingDescription(false);
     } catch (error) {
-      console.error('Error saving tasks:', error);
+      console.error("Error saving tasks:", error);
     }
   };
 
@@ -93,7 +94,7 @@ function SingleSpec() {
       updateSpecData('team', newTeam);
       setIsEditingDescription(false);
     } catch (error) {
-      console.error('Error saving team:', error);
+      console.error("Error saving team:", error);
     }
   };
 
@@ -117,7 +118,18 @@ function SingleSpec() {
   };
 
   if (!specData) {
-    return <div>Loading...</div>;
+    return (
+      <Backdrop
+        sx={{
+          bgcolor: "background.b1",
+          color: "primary.main",
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+        }}
+        open={true}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    );
   }
 
   return (
@@ -208,13 +220,15 @@ function SingleSpec() {
         )}
       </Box>
 
-      <Box sx={{
+      <Box
+        sx={{
           ...componentStyle,
           position: "relative",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-        }}>
+        }}
+      >
         {isEditingTeam ? (
           <EditableField
             content={specData.team.join(", ")}
