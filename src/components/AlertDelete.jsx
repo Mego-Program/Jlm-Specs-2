@@ -25,7 +25,6 @@ export default function AlertDialog(props) {
         margin="0"
         padding="0"
         onClick={handleClickOpen}
-        //   onClick={delSpec}
         sx={{ color: "text.primary", fontSize: 11, fontWeight: 700 }}
       >
         Delete
