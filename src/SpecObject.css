@@ -1,9 +1,0 @@
-p {color: black; font: bold}
-.box { 
-  width: '90%'; 
-  height: '15vh'; 
-  border: '1px solid orange';
-  background-color: 'darkblue'; 
-  color: white;
-}
-button {background-color: darkblue; color: white}
