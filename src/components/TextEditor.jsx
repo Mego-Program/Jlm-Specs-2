@@ -4,21 +4,14 @@ import {
   EditorState,
   RichUtils,
   convertToRaw,
-  convertFromRaw,
 } from "draft-js";
 import Toolbar from "./Toolbar";
 import "./TextEditor.css";
-import { stateToHTML } from "draft-js-export-html";
+
+
 
 const TextEditor = (props) => {
-  const [editorState, setEditorState] = useState(
-    EditorState.createWithContent(
-      convertFromRaw({
-        blocks: [],
-        entityMap: {},
-      })
-    )
-  );
+
   const editor = useRef(null);
 
   useEffect(() => {
@@ -30,9 +23,9 @@ const TextEditor = (props) => {
   };
 
   const handleKeyCommand = (command) => {
-    const newState = RichUtils.handleKeyCommand(editorState, command);
+    const newState = RichUtils.handleKeyCommand(props.info, command);
     if (newState) {
-      setEditorState(newState);
+      props.set(newState);
       return true;
     }
     return false;
@@ -95,20 +88,22 @@ const TextEditor = (props) => {
 
   return (
     <div className="editor-wrapper" onClick={focusEditor}>
-      <Toolbar editorState={editorState} setEditorState={setEditorState} />
+      <Toolbar editorState={props.info} setEditorState={props.set} />
       <div className="editor-container">
         <Editor
           ref={editor}
           placeholder="Write Here"
           handleKeyCommand={handleKeyCommand}
-          editorState={editorState}
+          editorState={props.info}
           customStyleMap={styleMap}
           blockStyleFn={myBlockStyleFn}
           onChange={(editorState) => {
             const contentState = editorState.getCurrentContent();
-            props.set(convertToRaw(contentState));
+            const contentObject = convertToRaw(contentState);
+            if (contentObject.blocks[0].text === '') {props.setDisable(true)}
+            else {props.setDisable(false)}
 
-            setEditorState(editorState);
+            props.set(editorState);
           }}
         />
       </div>

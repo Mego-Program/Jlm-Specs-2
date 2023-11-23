@@ -1,4 +1,11 @@
-import { Box, Button, List, Typography } from "@mui/material";
+import {
+  Backdrop,
+  Box,
+  Button,
+  CircularProgress,
+  List,
+  Typography,
+} from "@mui/material";
 import SpecItem from "../components/SpecItem";
 import { Link } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
@@ -7,6 +14,7 @@ import axios from "axios";
 
 function SpecsList() {
   const [specsList, setSpecsList] = useState([]);
+  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     // console.log(process.env.REACT_APP_API_URL);
@@ -16,13 +24,14 @@ function SpecsList() {
       .get(`${import.meta.env.VITE_API_URL}/specs`)
       .then((response) => {
         setSpecsList(response.data.reverse());
+        setSuccess(true);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
   }, []);
 
-  const delSpec =  (id) => {
+  const delSpec = (id) => {
     let newList = specsList.filter((item) => item._id !== id);
     setSpecsList(newList);
   };
@@ -53,34 +62,45 @@ function SpecsList() {
           </Button>
         </Link>
       </Box>
-
-      <List sx={{ padding: 0, textAlign: "center" }}>
-        {specsList.length > 0 ? (
-          specsList.map((spec, index) => (
-            <SpecItem
-              date={spec.startDate}
-              title={spec.title}
-              info={spec.description}
-              key={spec._id}
-              id={spec._id}
-              del={delSpec}
-              // avater={spec.creator}
-            />
-          ))
-        ) : (
-          <Typography
-            sx={{
-              bgcolor: "background.b2",
-              color: "background.y",
-              paddingY: 2,
-              fontSize: 24,
-              fontWeight: 700,
-            }}
-          >
-            No Specs currently available
-          </Typography>
-        )}
-      </List>
+      {success ? (
+        <List sx={{ padding: 0, textAlign: "center" }}>
+          {specsList.length > 0 ? (
+            specsList.map((spec, index) => (
+              <SpecItem
+                date={spec.startDate}
+                title={spec.title}
+                info={spec.description}
+                key={spec._id}
+                id={spec._id}
+                del={delSpec}
+                // avater={spec.creator}
+              />
+            ))
+          ) : (
+            <Typography
+              sx={{
+                bgcolor: "background.b2",
+                color: "background.y",
+                paddingY: 2,
+                fontSize: 24,
+                fontWeight: 700,
+              }}
+            >
+              No Specs currently available
+            </Typography>
+          )}
+        </List>
+      ) : (
+        <Backdrop
+          sx={{
+            color: "primary.main",
+            zIndex: (theme) => theme.zIndex.drawer + 1,
+          }}
+          open={true}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      )}
     </Box>
   );
 }
