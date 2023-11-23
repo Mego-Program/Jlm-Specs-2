@@ -3,10 +3,10 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import EditIcon from "@mui/icons-material/Edit";
 import EditableField from "../components/EditableField";
-import SpecTitle from "../components/SpecComponents/SpecTitle";
-import SpecDescription from "../components/SpecComponents/SpecDescription";
-import SpecTasks from "../components/SpecComponents/SpecTasks";
-import SpecTeam from "../components/SpecComponents/SpecTeam";
+import SpecTitle from "../components/SingleSpec/SpecTitle";
+import SpecDescription from "../components/SingleSpec/SpecDescription";
+import SpecTasks from "../components/SingleSpec/SpecTasks";
+import SpecTeam from "../components/SingleSpec/SpecTeam";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
@@ -35,7 +35,8 @@ function SingleSpec() {
   const [specData, setSpecData] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:4000/specs/${id}`)
+    axios
+      .get(`http://localhost:4000/specs/${id}`)
 
       .then((response) => {
         const data = response.data;
@@ -61,7 +62,8 @@ function SingleSpec() {
   const handleSaveTitle = async (newTitle) => {
     try {
       await axios.put(`http://localhost:4000/specs/${id}`, { title: newTitle });
-      updateSpecData('title', newTitle);
+      updateSpecData("title", newTitle);
+
       setIsEditingTitle(false);
     } catch (error) {
       console.error("Error saving title:", error);
@@ -70,8 +72,10 @@ function SingleSpec() {
 
   const handleSaveDescription = async (newDescription) => {
     try {
-      await axios.put(`http://localhost:4000/specs/${id}`, { description: newDescription });
-      updateSpecData('description', newDescription);
+      await axios.put(`http://localhost:4000/specs/${id}`, {
+        description: newDescription,
+      });
+      updateSpecData("description", newDescription);
       setIsEditingDescription(false);
     } catch (error) {
       console.error("Error saving description:", error);
@@ -79,19 +83,20 @@ function SingleSpec() {
   };
 
   const handleSaveTasks = async (newTasks) => {
-    try {
-      await axios.put(`http://localhost:4000/specs/${id}`, { tasks: newTasks });
-      updateSpecData('tasks', newTasks);
-      setIsEditingDescription(false);
-    } catch (error) {
-      console.error("Error saving tasks:", error);
-    }
+    setIsEditingTasks(false)
+    // try {
+    //   await axios.put(`http://localhost:4000/specs/${id}`, { tasks: newTasks });
+    //   updateSpecData("tasks", newTasks);
+    //   setIsEditingDescription(false);
+    // } catch (error) {
+    //   console.error("Error saving tasks:", error);
+    // }
   };
 
   const handleSaveTeam = async (newTeam) => {
     try {
       await axios.put(`http://localhost:4000/specs/${id}`, { team: newTeam });
-      updateSpecData('team', newTeam);
+      updateSpecData("team", newTeam);
       setIsEditingDescription(false);
     } catch (error) {
       console.error("Error saving team:", error);
@@ -111,6 +116,9 @@ function SingleSpec() {
         break;
       case "team":
         setIsEditingTeam(true);
+        break;
+      case "tasks":
+        setIsEditingTasks(true);
         break;
       default:
         break;
@@ -198,17 +206,23 @@ function SingleSpec() {
         )}
       </Box>
 
-      <Box sx={componentStyle}>
+      <Box
+        sx={{
+          ...componentStyle,
+          position: "relative",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "start",
+        }}
+      >
         {isEditingTasks ? (
-          <EditableField
-            tasks={specData.tasks}
-            onSave={handleSaveTasks}
-            field="tasks"
-          />
+          <Box>
+            <Button onClick={handleSaveTasks} variant="contained">Save</Button>
+          </Box>
         ) : (
-          specData.tasks && (
+          specData.task.length > 0 && (
             <>
-              <SpecTasks tasks={specData.tasks} />
+              <SpecTasks tasks={specData.task} />
               <Button
                 variant="outlined"
                 color="primary"
