@@ -9,8 +9,11 @@ function SpecsList() {
   const [specsList, setSpecsList] = useState([]);
 
   useEffect(() => {
+    // console.log(process.env.REACT_APP_API_URL);
     axios
-      .get("http://localhost:4000/specs")
+      // .get(`${process.env.REACT_APP_API_URL}/specs`)
+      // .get('https://jlm-specs-2-server.vercel.app/specs')
+      .get(`${import.meta.env.VITE_API_URL}/specs`)
       .then((response) => {
         setSpecsList(response.data.reverse());
       })
