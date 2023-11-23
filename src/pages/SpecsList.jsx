@@ -5,6 +5,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+
 function SpecsList() {
   const [specsList, setSpecsList] = useState([]);
 
@@ -13,6 +14,7 @@ function SpecsList() {
       .get("http://localhost:4000/specs")
       .then((response) => {
         setSpecsList(response.data.reverse());
+        console.log(response);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);

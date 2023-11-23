@@ -4,6 +4,7 @@ import Item from "./FormContact";
 import { Box } from "@mui/system";
 import { Button, TextField } from "@mui/material";
 import { useState } from "react";
+import VirtualizedList from "./FormInfraConnect";
 
 export default function FormTeam(props) {
   const [name, setName] = useState("");
@@ -26,8 +27,8 @@ export default function FormTeam(props) {
 
   return (
     <Box>
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <TextField
+      <Box sx={{ display: "flex", justifyItems: 'center', width: "50%" }}>
+        {/* <TextField
           sx={{
             bgcolor: "secondary.light",
             marginY: 2,
@@ -42,20 +43,16 @@ export default function FormTeam(props) {
           onChange={handleName}
           label="My Team"
           variant="filled"
-        />
-        <Button
+        /> */}
+        <VirtualizedList/>
+      </Box>
+      <Button
           onClick={handleTeam}
           variant="contained"
-          sx={{ marginX: 2, marginY: 3, fontWeight: 700 }}
-        >
+          sx={{ width: "50%", marginLeft: "22%",  bgcolor: "secondary.light", fontWeight: 700, borderRadius: 2, 
+          marginY: 4}}>
           Add
         </Button>
-      </Box>
-      <List sx={{ width: "100%", bgcolor: "secondary.light", borderRadius: 2 }}>
-        {props.info.team.map((i, index) => (
-          <Item name={i} key={index} id={index} del={delItem} />
-        ))}
-      </List>
     </Box>
   );
 }
