@@ -37,7 +37,7 @@ function SingleSpec() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/specs/${id}`)
+      .get(`${import.meta.env.VITE_API_URL}/specs/${id}`)
 
       .then((response) => {
         const data = response.data;
@@ -72,7 +72,7 @@ function SingleSpec() {
 
   const handleSaveTitle = async (newTitle) => {
     try {
-      await axios.put(`http://localhost:4000/specs/${id}`, { title: newTitle });
+      await axios.put(`${import.meta.env.VITE_API_URL}/specs/${id}`, { title: newTitle });
       updateSpecData("title", newTitle);
 
       setIsEditingTitle(false);
@@ -83,7 +83,7 @@ function SingleSpec() {
 
   const handleSaveDescription = async (newDescription) => {
     try {
-      await axios.put(`http://localhost:4000/specs/${id}`, {
+      await axios.put(`${import.meta.env.VITE_API_URL}/specs/${id}`, {
         description: newDescription,
       });
       updateSpecData("description", newDescription);
@@ -94,7 +94,7 @@ function SingleSpec() {
   };
 
   const handleSaveTasks = async (newTasks) => {
-    setIsEditingTasks(false)
+    setIsEditingTasks(false);
     // try {
     //   await axios.put(`http://localhost:4000/specs/${id}`, { tasks: newTasks });
     //   updateSpecData("tasks", newTasks);
@@ -106,7 +106,9 @@ function SingleSpec() {
 
   const handleSaveTeam = async (newTeam) => {
     try {
-      await axios.put(`http://localhost:4000/specs/${id}`, { team: newTeam });
+      await axios.put(`${import.meta.env.VITE_API_URL}/specs)/${id}`,
+        { team: newTeam }
+      );
       updateSpecData("team", newTeam);
       setIsEditingDescription(false);
     } catch (error) {
@@ -228,7 +230,9 @@ function SingleSpec() {
       >
         {isEditingTasks ? (
           <Box>
-            <Button onClick={handleSaveTasks} variant="contained">Save</Button>
+            <Button onClick={handleSaveTasks} variant="contained">
+              Save
+            </Button>
           </Box>
         ) : (
           specData.task.length > 0 && (
@@ -273,7 +277,7 @@ function SingleSpec() {
           )
         )}
       </Box>
-      
+
       <CommentBox specId={id} onCommentAdded={handleCommentAdded} />
     </Box>
   );

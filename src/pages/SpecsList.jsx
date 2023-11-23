@@ -17,10 +17,7 @@ function SpecsList() {
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    // console.log(process.env.REACT_APP_API_URL);
     axios
-      // .get(`${process.env.REACT_APP_API_URL}/specs`)
-      // .get('https://jlm-specs-2-server.vercel.app/specs')
       .get(`${import.meta.env.VITE_API_URL}/specs`)
       .then((response) => {
         setSpecsList(response.data.reverse());
