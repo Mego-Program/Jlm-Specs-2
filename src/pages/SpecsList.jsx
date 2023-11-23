@@ -18,7 +18,7 @@ function SpecsList() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/specs")
+      .get(`${import.meta.env.VITE_API_URL}/specs`)
       .then((response) => {
         setSpecsList(response.data.reverse());
         setSuccess(true);

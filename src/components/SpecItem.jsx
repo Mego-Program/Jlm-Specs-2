@@ -9,7 +9,7 @@ function SpecItem(item) {
 
   const delSpec = () => {
     try {
-      axios.delete(`http://localhost:4000/specs/${item.id}`);
+      axios.delete(`${import.meta.env.VITE_API_URL}/specs/${item.id}`);
       item.del(item.id);
     } catch (error) {
       console.log("faild to delete item: ", error);
