@@ -4,7 +4,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { MultiInputDateRangeField } from "@mui/x-date-pickers-pro/MultiInputDateRangeField";
 import "dayjs/locale/en-gb";
-import { Typography } from "@mui/material";
+import Typography from "@mui/material/Typography";
 import { useState } from "react";
 
 const inputStyle = {
