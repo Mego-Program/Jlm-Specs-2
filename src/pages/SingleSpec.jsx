@@ -7,6 +7,7 @@ import SpecTitle from "../components/SingleSpec/SpecTitle";
 import SpecDescription from "../components/SingleSpec/SpecDescription";
 import SpecTasks from "../components/SingleSpec/SpecTasks";
 import SpecTeam from "../components/SingleSpec/SpecTeam";
+import CommentBox from "../components/SingleSpec/CommentBox";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
@@ -51,6 +52,16 @@ function SingleSpec() {
   const [isEditingDescription, setIsEditingDescription] = useState(false);
   const [isEditingTasks, setIsEditingTasks] = useState(false);
   const [isEditingTeam, setIsEditingTeam] = useState(false);
+
+  const handleCommentAdded = async () => {
+    try {
+      const response = await axios.get(`/specs/${id}`);
+      const updatedSpecData = response.data;
+      setSpecData(updatedSpecData);
+    } catch (error) {
+      console.error("Error :", error);
+    }
+  };
 
   const updateSpecData = (field, newValue) => {
     setSpecData((prevData) => ({
@@ -262,6 +273,8 @@ function SingleSpec() {
           )
         )}
       </Box>
+      
+      <CommentBox specId={id} onCommentAdded={handleCommentAdded} />
     </Box>
   );
 }
