@@ -53,6 +53,7 @@ export default function FormSubmit(props) {
           <Typography>Task</Typography>
           <Box sx={boxStyle}>
               {props.info.task.map((task, index) => {
+                {console.log(task);}
                 const object = convertFromRaw(task);
                 const html = stateToHTML(object);
                 return (
