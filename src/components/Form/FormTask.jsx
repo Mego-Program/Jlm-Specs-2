@@ -1,257 +1,123 @@
-import React from "react";
-import TextEditor from "../TextEditor";
-
-import { Box } from "@mui/system";
-import { Button, Typography, Divider, SwipeableDrawer } from "@mui/material";
-import KeyboardBackspaceSharpIcon from "@mui/icons-material/KeyboardBackspaceSharp";
-import DoneSharpIcon from "@mui/icons-material/DoneSharp";
+import styled from "@emotion/styled";
+import {
+  Autocomplete,
+  Box,
+  Button,
+  Input,
+  Paper,
+  Stack,
+  TextField,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import EditIcon from "@mui/icons-material/Edit";
+import { useEffect, useRef, useState } from "react";
 
-import { LocalizationProvider, DateField} from "@mui/x-date-pickers";
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { EditorState, convertFromRaw, convertToRaw } from "draft-js";
-import { stateToHTML } from "draft-js-export-html";
+const top100Films = [
+  { label: "The Shawshank Redemption", year: 1994 },
+  { label: "The Godfather", year: 1972 },
+  { label: "The Godfather: Part II", year: 1974 },
+  { label: "The Dark Knight", year: 2008 },
+  { label: "12 Angry Men", year: 1957 },
+  { label: "Schindler's List", year: 1993 },
+  { label: "Pulp Fiction", year: 1994 },
+];
 
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: "center",
+  color: theme.palette.text.secondary,
+}));
 
-export default function FormTask(props) {
-  const [disable, setDisable] = React.useState(false);
-  const [state, setState] = React.useState(false);
-  const [update, setUpdate] = React.useState(null);
-  const [editorState, setEditorState] = React.useState(
-    EditorState.createWithContent(
-      convertFromRaw({
-        blocks: [],
-        entityMap: {},
-      })
-    )
+const CustomPaper = (props) => {
+  return (
+    <Paper
+      elevation={5}
+      sx={{
+        border:4,
+        borderTop:1,
+        borderColor:'secondary.main',
+        bgcolor: "secondary.light",
+        padding: 0,
+        "& ::-webkit-scrollbar": {
+          width: "6px",
+        },
+
+        " & ::-webkit-scrollbar-thumb": {
+          backgroundColor: "#f6c927",
+          borderRadius: "6px",
+        },
+      }}
+      {...props}
+    />
   );
+};
 
 
 
-
-  const toggleDrawer = (open) => (event) => {
-    if (
-      event &&
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-
-    setState(open);
-  };
-
-  const handleCancel = () => setState(false);
-
-  const addTask = () => {
-    const contentState = editorState.getCurrentContent();
-    const contentObject = convertToRaw(contentState);
-    if (contentObject.blocks[0].text !== "") {
-      props.set({ ...props.info, task: [...props.info.task, contentObject] });
-      setEditorState(
-        EditorState.createWithContent(
-          convertFromRaw({
-            blocks: [],
-            entityMap: {},
-          })
-        )
-      );
-      setState(false);
-    }
-  };
-  const updateTask = () => {
-    const contentState = editorState.getCurrentContent();
-    const contentObject = convertToRaw(contentState);
-    if (contentObject.blocks[0].text !== "") {
-      props.info.task[update] = contentObject
-      props.set({...props.info, task: props.info.task})
-      setEditorState(
-        EditorState.createWithContent(
-          convertFromRaw({
-            blocks: [],
-            entityMap: {},
-          })
-        )
-      );
-      setState(false);
-      setUpdate(null);
-      setDisable(true)
-    }
-  };
-
-  const list = () => (
-    <Box sx={{ bgcolor: "background.b1", width: "100vw" }} role="presentation">
-      <Box sx={{ width: "80%", margin: "20vh auto 0" }}>
-        <TextEditor
-          set={setEditorState}
-          info={editorState}
-          setDisable={setDisable}
-        />
-      </Box>
-      <Box
-        sx={{
-          width: "80%",
-          margin: "20px auto 10vh",
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
-        <Button
-          onClick={handleCancel}
-          sx={{
-            margin: 1,
-            fontWeight: 700,
-            "&:hover": { color: "background.b3", bgcolor: "primary.dark" },
-          }}
-          variant="contained"
-          startIcon={<KeyboardBackspaceSharpIcon />}
-        >
-          cancel
-        </Button>
-        {update !== null ? (
-          <Button
-            sx={{
-              margin: 1,
-              fontWeight: 700,
-              "&:hover": { color: "background.b3", bgcolor: "primary.dark" },
-            }}
-            variant="contained"
-            startIcon={<DoneSharpIcon />}
-            disabled={disable}
-            onClick={updateTask}
-          >
-            Update task
-          </Button>
-        ) : (
-          <Button
-            sx={{
-              margin: 1,
-              fontWeight: 700,
-              "&:hover": { color: "background.b3", bgcolor: "primary.dark" },
-            }}
-            variant="contained"
-            startIcon={<DoneSharpIcon />}
-            disabled={disable}
-            onClick={addTask}
-          >
-            Add task
-          </Button>
-        )}
-      </Box>
-    </Box>
-  );
+export default function FormTask() {
+ const [project, setProject] = useState('')
 
   return (
     <Box>
-      <Box>
-        <React.Fragment key={"top"}>
-          <Button
-            startIcon={<AddIcon />}
-            variant="contained"
-            sx={{ fontWeight: 700, marginBottom: 2 }}
-            onClick={toggleDrawer(true)}
-          >
-            New Task
-          </Button>
-          <SwipeableDrawer
-            anchor={"top"}
-            open={state}
-            onClose={toggleDrawer(false)}
-            onOpen={toggleDrawer(true)}
-          >
-            {list()}
-          </SwipeableDrawer>
-        </React.Fragment>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginBottom: 2,
+        }}
+      >
+        <Button
+          startIcon={<AddIcon />}
+          variant="contained"
+          sx={{ fontWeight: 700, height: 36 }}
+        >
+          New Task
+        </Button>
+        <Autocomplete
+           sx={{
+            width: 300,
+            "& input": {
+              bgcolor: "secondary.light",
+              height: 10,
+              borderRadius: 1,
+            },
+          }}
+          // disablePortal
+          options={top100Films}
+          PaperComponent={CustomPaper}
+         
+          renderInput={(params) => {
+            setProject(params.inputProps.value)
+            return(
+            <TextField
+              value={'test'}
+              sx={{
+                height: 40,
+                borderRadius: 1,
+                borderColor: "secondary.light",
+                "& .MuiOutlinedInput-root": {
+                  height: 48,
+                  border: 2,
+                  borderColor: "secondary.light",
+                  borderRadius: 1,
+                  padding: 0,
+                  paddingLeft: 1,
+                },
+                "& svg": { color: "secondary.light" },
+              }}
+              {...params}
+              placeholder="Link a Project"
+            />)
+          }}
+        />
       </Box>
-      <Box sx={{ overflowY: "scroll", maxHeight: "40vh" }}>
-        {props.info.task.map((item, index) => {
-          const object = convertFromRaw(item);
-          const html = stateToHTML(object);
-          return (
-            <Box key={index}>
-              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <Typography
-                  sx={{
-                    paddingX: 1,
-                    wordWrap: "break-word",
-                    overflowX: "hidden",
-                    overflowY: "scroll",
-                    maxHeight: "20vh",
-                  }}
-                  dangerouslySetInnerHTML={{ __html: html }}
-                />
-                <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <LocalizationProvider
-                    dateAdapter={AdapterDayjs}
-                    adapterLocale="en-gb"
-                  >
-                    <DateField
-                      defaultValue={props.info.task[index].deadline}
-                      onChange={(date) => {
-                        props.info.task[index].deadline = date;
-                      }}
-                      label="Deadline"
-                      sx={{
-                        minWidth: "140px",
-                        maxWidth: "140px",
-                        maxHeight: "3.5rem",
-                        borderRadius: 1,
-                        marginX: 1,
-                        marginTop: 1,
-                        bgcolor: "secondary.light",
-                        padding: 0,
-                        "& label": {
-                          color: "info.main",
-                        },
-                      }}
-                    />
-                  </LocalizationProvider>
-                  <Box sx={{ display: "flex", flexDirection: "column"}}>
-                    <Button
-                      variant="outlined"
-                      sx={{ height: 30 }}
-                      onClick={() => {
-                        const newList = props.info.task.filter(
-                          (item, i) => i !== index
-                        );
-                        props.set({ ...props.info, task: newList });
-                      }}
-                    >
-                      {" "}
-                      <DeleteOutlineIcon sx={{ fontSize: 30 }} />
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      sx={{ height: 30, marginTop: 1 }}
-                      onClick={() => {
-                        setUpdate(index)
-                        setState(true);
-                        setEditorState(
-                          EditorState.createWithContent(
-                            convertFromRaw(props.info.task[index])
-                          )
-                        );
-                      }}
-                      
-                    >
-                      {" "}
-                      <EditIcon sx={{ fontSize: 24 }} />
-                    </Button>
-                  </Box>
-                </Box>
-              </Box>
-
-              <Divider
-                sx={{ height: 1.5, borderRadius: 5, marginY: 1 }}
-                color="#f6c927"
-                orientation="horizontal"
-                variant="fullWidth"
-              />
-            </Box>
-          );
-        })}
+      <Box sx={{ bgcolor: "secondary.light", padding: 2, borderRadius: 1 }}>
+        <Stack spacing={1}>
+          <Item>Item 1</Item>
+          <Item>Item 2</Item>
+          <Item>Item 3</Item>
+        </Stack>
       </Box>
     </Box>
   );
