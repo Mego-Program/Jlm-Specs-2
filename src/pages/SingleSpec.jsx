@@ -34,6 +34,7 @@ const componentStyle = {
 function SingleSpec() {
   const { id } = useParams();
   const [specData, setSpecData] = useState(null);
+  const [isEditing, setIsEditing] = useState({});
 
   useEffect(() => {
     axios
@@ -95,13 +96,6 @@ function SingleSpec() {
 
   const handleSaveTasks = async (newTasks) => {
     setIsEditingTasks(false);
-    // try {
-    //   await axios.put(`http://localhost:4000/specs/${id}`, { tasks: newTasks });
-    //   updateSpecData("tasks", newTasks);
-    //   setIsEditingDescription(false);
-    // } catch (error) {
-    //   console.error("Error saving tasks:", error);
-    // }
   };
 
   const handleSaveTeam = async (newTeam) => {

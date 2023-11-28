@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Typography, Button, TextField } from "@mui/material";
+
 
 const componentStyle = {
   backgroundColor: "background.b2",
@@ -12,7 +13,7 @@ const componentStyle = {
 const CommentBox = ({ specId, onCommentAdded }) => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState({
-    author: "",
+    author: "David", // Temporarly
     content: "",
   });
 
@@ -27,14 +28,20 @@ const CommentBox = ({ specId, onCommentAdded }) => {
 
   useEffect(() => {
     fetchComments();
+  }, []);
+
+  useEffect(() => {
+    fetchComments();
   }, [specId]);
+
+
 
   const handleCommentSubmit = async () => {
     try {
       const response = await axios.post(`http://localhost:4000/specs/${specId}/comments`, newComment);
       const savedComments = response.data.comments;
       setComments(savedComments);
-      setNewComment({ author: "", content: "" });
+      setNewComment({ author: "David", content: "" });
       onCommentAdded();
     } catch (error) {
       console.error("Error when adding comment:", error);
@@ -46,10 +53,10 @@ const CommentBox = ({ specId, onCommentAdded }) => {
       ...componentStyle,
       position: "relative",
       display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
+      flexDirection: "column",
+      alignItems: "left",
     }}>
-      <h2>Comments</h2>
+      <Typography variant="h5">Comments:</Typography>
       <ul>
         {comments.map((comment) => (
           <li key={comment._id}>

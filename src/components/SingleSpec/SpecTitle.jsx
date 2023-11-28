@@ -1,10 +1,12 @@
-import React from 'react';
+import React from "react";
+import { Box, Typography } from "@mui/material";
 
 function SpecTitle({ title }) {
   return (
-    <div>
-      <h2>Title: {title}</h2>
-    </div>
+    <Box>
+      <Typography variant="h5">Title:</Typography>
+      <Typography sx={{ fontFamily: "monospace" }}>{title}</Typography>{" "}
+    </Box>
   );
 }
 
