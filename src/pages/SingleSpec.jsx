@@ -3,14 +3,16 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import EditIcon from "@mui/icons-material/Edit";
 import EditableField from "../components/EditableField";
-import SpecTitle from "../components/SpecComponents/SpecTitle";
-import SpecDescription from "../components/SpecComponents/SpecDescription";
-import SpecTasks from "../components/SpecComponents/SpecTasks";
-import SpecTeam from "../components/SpecComponents/SpecTeam";
+import SpecTitle from "../components/SingleSpec/SpecTitle";
+import SpecDescription from "../components/SingleSpec/SpecDescription";
+import SpecTasks from "../components/SingleSpec/SpecTasks";
+import SpecTeam from "../components/SingleSpec/SpecTeam";
+import CommentBox from "../components/SingleSpec/CommentBox";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import KeyboardBackspaceOutlinedIcon from "@mui/icons-material/KeyboardBackspaceOutlined";
+import { Backdrop, CircularProgress } from "@mui/material";
 
 const pageStyle = {
   backgroundColor: "background.b1",
@@ -32,9 +34,11 @@ const componentStyle = {
 function SingleSpec() {
   const { id } = useParams();
   const [specData, setSpecData] = useState(null);
+  const [isEditing, setIsEditing] = useState({});
 
   useEffect(() => {
-    axios.get(`http://localhost:4000/specs/${id}`)
+    axios
+      .get(`${import.meta.env.VITE_API_URL}/specs/${id}`)
 
       .then((response) => {
         const data = response.data;
@@ -50,50 +54,59 @@ function SingleSpec() {
   const [isEditingTasks, setIsEditingTasks] = useState(false);
   const [isEditingTeam, setIsEditingTeam] = useState(false);
 
+  const handleCommentAdded = async () => {
+    try {
+      const response = await axios.get(`/specs/${id}`);
+      const updatedSpecData = response.data;
+      setSpecData(updatedSpecData);
+    } catch (error) {
+      console.error("Error :", error);
+    }
+  };
+
   const updateSpecData = (field, newValue) => {
     setSpecData((prevData) => ({
       ...prevData,
       [field]: newValue,
     }));
   };
-  
+
   const handleSaveTitle = async (newTitle) => {
     try {
-      await axios.put(`http://localhost:4000/specs/${id}`, { title: newTitle });
-      updateSpecData('title', newTitle);
+      await axios.put(`${import.meta.env.VITE_API_URL}/specs/${id}`, { title: newTitle });
+      updateSpecData("title", newTitle);
+
       setIsEditingTitle(false);
     } catch (error) {
-      console.error('Error saving title:', error);
+      console.error("Error saving title:", error);
     }
   };
 
   const handleSaveDescription = async (newDescription) => {
     try {
-      await axios.put(`http://localhost:4000/specs/${id}`, { description: newDescription });
-      updateSpecData('description', newDescription);
+      await axios.put(`${import.meta.env.VITE_API_URL}/specs/${id}`, {
+        description: newDescription,
+      });
+      updateSpecData("description", newDescription);
       setIsEditingDescription(false);
     } catch (error) {
-      console.error('Error saving description:', error);
+      console.error("Error saving description:", error);
     }
   };
 
   const handleSaveTasks = async (newTasks) => {
-    try {
-      await axios.put(`http://localhost:4000/specs/${id}`, { tasks: newTasks });
-      updateSpecData('tasks', newTasks);
-      setIsEditingDescription(false);
-    } catch (error) {
-      console.error('Error saving tasks:', error);
-    }
+    setIsEditingTasks(false);
   };
 
   const handleSaveTeam = async (newTeam) => {
     try {
-      await axios.put(`http://localhost:4000/specs/${id}`, { team: newTeam });
-      updateSpecData('team', newTeam);
+      await axios.put(`${import.meta.env.VITE_API_URL}/specs)/${id}`,
+        { team: newTeam }
+      );
+      updateSpecData("team", newTeam);
       setIsEditingDescription(false);
     } catch (error) {
-      console.error('Error saving team:', error);
+      console.error("Error saving team:", error);
     }
   };
 
@@ -111,13 +124,27 @@ function SingleSpec() {
       case "team":
         setIsEditingTeam(true);
         break;
+      case "tasks":
+        setIsEditingTasks(true);
+        break;
       default:
         break;
     }
   };
 
   if (!specData) {
-    return <div>Loading...</div>;
+    return (
+      <Backdrop
+        sx={{
+          bgcolor: "background.b1",
+          color: "primary.main",
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+        }}
+        open={true}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    );
   }
 
   return (
@@ -186,17 +213,25 @@ function SingleSpec() {
         )}
       </Box>
 
-      <Box sx={componentStyle}>
+      <Box
+        sx={{
+          ...componentStyle,
+          position: "relative",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "start",
+        }}
+      >
         {isEditingTasks ? (
-          <EditableField
-            tasks={specData.tasks}
-            onSave={handleSaveTasks}
-            field="tasks"
-          />
+          <Box>
+            <Button onClick={handleSaveTasks} variant="contained">
+              Save
+            </Button>
+          </Box>
         ) : (
-          specData.tasks && (
+          specData.task.length > 0 && (
             <>
-              <SpecTasks tasks={specData.tasks} />
+              <SpecTasks tasks={specData.task} />
               <Button
                 variant="outlined"
                 color="primary"
@@ -208,13 +243,15 @@ function SingleSpec() {
         )}
       </Box>
 
-      <Box sx={{
+      <Box
+        sx={{
           ...componentStyle,
           position: "relative",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-        }}>
+        }}
+      >
         {isEditingTeam ? (
           <EditableField
             content={specData.team.join(", ")}
@@ -234,6 +271,8 @@ function SingleSpec() {
           )
         )}
       </Box>
+
+      <CommentBox specId={id} onCommentAdded={handleCommentAdded} />
     </Box>
   );
 }

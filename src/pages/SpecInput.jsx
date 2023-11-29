@@ -36,12 +36,12 @@ export default function SpecInput() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const [item, setItem] = React.useState({
-    title:'',
+    title: "",
     description: "",
     startDate: null,
     endDate: null,
-    task: [],
-    team: []
+    task: {projectName:'', tasks:[]},
+    team: [],
     // date: dayjs(),
     // ownwr: 'test-name'
   });
@@ -72,7 +72,8 @@ export default function SpecInput() {
     setLoading(true);
     console.log(item);
     try {
-      const response = await axios.post("http://localhost:4000/specs", item);
+
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/specs`, item);
       console.log("test");
       console.log(response.data);
       handleNext();
@@ -85,7 +86,28 @@ export default function SpecInput() {
 
   return (
     <Box sx={{ width: "100%", height: "100vh", bgcolor: "background.b1" }}>
-      <Stepper sx={{ paddingTop: 10, paddingX: 25 }} activeStep={activeStep}>
+      <Stepper
+        sx={{
+          paddingTop: 10,
+          paddingX: 25,
+          "& .MuiStepLabel-label": {
+            color: "primary.main",
+          },
+          "& .MuiStepConnector-lineHorizontal": {
+            borderColor: "primary.main",
+          },
+          "& .Mui-disabled": {
+            color: "secondary.light",
+            "& .MuiSvgIcon-root": {
+              color: "secondary.light",
+            },
+            "& .MuiStepConnector-lineHorizontal": {
+              borderColor: "secondary.light",
+            },
+          },
+        }}
+        activeStep={activeStep}
+      >
         {steps.map((label, index) => {
           const stepProps = {};
           const labelProps = {};
