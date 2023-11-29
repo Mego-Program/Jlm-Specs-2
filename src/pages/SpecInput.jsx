@@ -40,7 +40,7 @@ export default function SpecInput() {
     description: "",
     startDate: null,
     endDate: null,
-    task: [],
+    task: {projectName:'', tasks:[]},
     team: [],
     // date: dayjs(),
     // ownwr: 'test-name'
