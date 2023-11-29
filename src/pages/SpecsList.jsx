@@ -15,6 +15,7 @@ import axios from "axios";
 function SpecsList() {
   const [specsList, setSpecsList] = useState([]);
   const [success, setSuccess] = useState(false);
+  const [faild, setfaild] = useState(false);
 
   useEffect(() => {
     axios
@@ -25,6 +26,7 @@ function SpecsList() {
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
+        setfaild(true)
       });
   }, []);
 
@@ -88,7 +90,22 @@ function SpecsList() {
           )}
         </List>
       ) : (
-        <Backdrop
+        <Box>
+          {faild ? (
+            <Typography
+            sx={{
+              bgcolor: "background.b2",
+              color: "background.y",
+              paddingY: 2,
+              fontSize: 24,
+              fontWeight: 700,
+              textAlign:'center'
+            }}
+          >
+            Faild to load list of Specs - Try again
+          </Typography>
+          ):(
+            <Backdrop
           sx={{
             color: "primary.main",
             zIndex: (theme) => theme.zIndex.drawer + 1,
@@ -97,6 +114,9 @@ function SpecsList() {
         >
           <CircularProgress color="inherit" />
         </Backdrop>
+          )}
+        </Box>
+        
       )}
     </Box>
   );
