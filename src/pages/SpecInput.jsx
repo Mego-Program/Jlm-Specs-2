@@ -74,7 +74,6 @@ export default function SpecInput() {
     try {
 
       const response = await axios.post(`${import.meta.env.VITE_API_URL}/specs`, item);
-      console.log("test");
       console.log(response.data);
       handleNext();
     } catch (error) {

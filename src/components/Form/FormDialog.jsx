@@ -4,7 +4,6 @@ import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import AddIcon from "@mui/icons-material/Add";
 import KeyboardBackspaceSharpIcon from "@mui/icons-material/KeyboardBackspaceSharp";
@@ -15,12 +14,28 @@ import { Box, Typography } from "@mui/material";
 
 export default function FormDialog(props) {
   const [open, setOpen] = React.useState(false);
+  const [data, setData] = React.useState({title:'', content:'',deadline:null});
+  const [disable, setDisable] = React.useState(true);
+
+  React.useEffect(() => {
+    if(data.title !== '' && data.content !== '') {
+      setDisable(false)
+    }else{
+      setDisable(true)
+    }
+  },[data])
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
+  const handleSubmit = () => {
+    props.set({...props.info, task:{...props.info.task, tasks: [...props.info.task.tasks, data]}})
+    handleClose()
+};
+
   const handleClose = () => {
+    setData({title:'', content:'',deadline:null})
     setOpen(false);
   };
 
@@ -42,6 +57,8 @@ export default function FormDialog(props) {
             border: 1,
             borderColor: "background.y",
             borderBottom: 0,
+            borderTopRightRadius:4,
+            borderTopLeftRadius:4
           }}
         >
           New Task
@@ -61,7 +78,7 @@ export default function FormDialog(props) {
             type="text"
             fullWidth
             variant="standard"
-            placeholder="Enter Header"
+            placeholder="Enter Title"
             sx={{
               "& input": {
                 border: 2,
@@ -71,9 +88,9 @@ export default function FormDialog(props) {
                 padding: 1,
               },
             }}
+            onChange={(e) => {setData({...data, title: e.target.value})}}
           />
           <TextField
-            id="filled-multiline-static"
             multiline
             rows={4}
             fullWidth
@@ -86,14 +103,53 @@ export default function FormDialog(props) {
                 paddingX: 1,
               },
             }}
+            onChange={(e) => {setData({...data, content: e.target.value})}}
+
           />
-          <Box sx={{display:'flex', alignItems:'center', width:'100%', marginTop:1, border:2, borderColor:'primary.main', boxSizing:'border-box', borderBottomLeftRadius:4,  borderBottomRightRadius:4 }}>
-            <Typography sx={{flex:1, fontSize:26, fontWeight:700, color:'primary.main', textAlign:'center'}}>Deadline:</Typography>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker sx={{flex:2, border:2, borderColor:'secondary.light', '&:hover':{ borderColor:'secondary.main', outline:4, boxSizing:'content-box'}}}  fullWidth/>
-          </LocalizationProvider>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              width: "100%",
+              marginTop: 0.5,
+              border: 2,
+              borderColor: "primary.main",
+              boxSizing: "border-box",
+              borderBottomLeftRadius: 4,
+              borderBottomRightRadius: 4,
+            }}
+          >
+            <Typography
+              sx={{
+                flex: 1,
+                fontSize: 26,
+                fontWeight: 700,
+                color: "primary.main",
+                textAlign: "center",
+              }}
+            >
+              Deadline:
+            </Typography>
+            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
+              <DatePicker
+              
+                sx={{
+                  flex: 1.5,
+                  border: 2,
+                  borderColor: "secondary.light",
+                  "&:hover": {
+                    borderColor: "secondary.main",
+                  },
+                  '& .MuiButtonBase-root':{display:'none'}
+                  
+                  
+                }}
+                onChange={(e) => {setData({...data, deadline: e.$d})}}
+
+                fullWidth
+              />
+            </LocalizationProvider>
           </Box>
-         
         </DialogContent>
         <DialogActions
           sx={{
@@ -101,6 +157,9 @@ export default function FormDialog(props) {
             border: 1,
             borderColor: "background.y",
             borderTop: 0,
+            borderBottomLeftRadius:4,
+            borderBottomRightRadius:4,
+
           }}
         >
           <Button
@@ -120,7 +179,8 @@ export default function FormDialog(props) {
               "&:hover": { color: "secondary.main" },
             }}
             variant="contained"
-            onClick={handleClose}
+            onClick={handleSubmit}
+            disabled={disable}
           >
             Add Task
           </Button>
