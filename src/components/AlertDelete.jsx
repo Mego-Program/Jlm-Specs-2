@@ -5,33 +5,33 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { Fab } from "@mui/material";
 
 export default function AlertDialog(props) {
-  const [open, setOpen] = React.useState(false);
+  // const [open, setOpen] = React.useState(props.open);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
 
   const handleDelete = () => {
-    props.del()
-    setOpen(false);
-  
+    props.del(props.index)
+    props.setOpen(false)
   };
 
   return (
     <React.Fragment>
-      <Button
+      {/* <Button
         margin="0"
         padding="0"
         onClick={handleClickOpen}
         sx={{ color: "text.primary", fontSize: 11, fontWeight: 700 }}
       >
         Delete
-      </Button>
+      </Button> */}
       <Dialog
-        open={open}
-        onClose={() => setOpen(false)}
+        open={props.open}
+        onClose={() => props.setOpen(false)}
       >
         <DialogTitle color={"primary.main"} bgcolor={'secondary.main'} sx={{border:1, borderBottom:0, borderTopLeftRadius:4, borderTopRightRadius:4}}>
           Are you sure you want to delete this item?
@@ -43,7 +43,7 @@ export default function AlertDialog(props) {
           </DialogContentText>
         </DialogContent>
         <DialogActions sx={{bgcolor:'background.b1', border:1, borderColor:'primary.main', borderTop:0, borderBottomLeftRadius:4, borderBottomRightRadius:4}}>
-          <Button onClick={() => setOpen(false)}>Cancel</Button>
+          <Button onClick={() => props.setOpen(false)}>Cancel</Button>
           <Button onClick={handleDelete} autoFocus>
             Delete
           </Button>
