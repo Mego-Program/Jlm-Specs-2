@@ -65,7 +65,7 @@ export default function SpecInput() {
   };
 
   const handleCancel = () => {
-    navigate("../SpecsList");
+    navigate("../");
   };
 
   const handleSubmit = async () => {
