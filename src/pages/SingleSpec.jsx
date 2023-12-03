@@ -145,7 +145,7 @@ function SingleSpec() {
 
   return (
     <Box sx={pageStyle}>
-      <NavLink to="../SpecsList">
+      <NavLink to="../">
         <KeyboardBackspaceOutlinedIcon
           color="primary"
           sx={{

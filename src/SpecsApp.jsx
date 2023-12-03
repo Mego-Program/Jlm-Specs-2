@@ -10,9 +10,9 @@ function SpecsApp() {
     <ThemeProvider theme={theme}>
           <Routes>
             <Route path="/" element={<SpecsList />} />
-            <Route path="/SpecsList" element={<SpecsList />} />
-            <Route path="/SpecInput" element={<SpecInput />} />
-            <Route path="/SingleSpec/:id" element={<SingleSpec />} />
+            {/* <Route path="/specsList" element={<SpecsList />} /> */}
+            <Route path="/spec-input" element={<SpecInput />} />
+            <Route path="/single-spec/:id" element={<SingleSpec />} />
           </Routes>
     </ThemeProvider>
   );
