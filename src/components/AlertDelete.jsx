@@ -22,19 +22,7 @@ export default function AlertDialog(props) {
 
   return (
     <React.Fragment>
-      <Button
-      {/* <Button
-        margin="0"
-        padding="0"
-        onClick={handleClickOpen}
-        sx={{ color: "text.primary", fontSize: 11, fontWeight: 700 }}
-      >
-        Delete
-      </Button>
-      <Dialog
-        open={open}
-        onClose={() => setOpen(false)}
-      </Button> */}
+      
       <Dialog
         open={props.open}
         onClose={() => props.setOpen(false)}
@@ -49,7 +37,6 @@ export default function AlertDialog(props) {
           </DialogContentText>
         </DialogContent>
         <DialogActions sx={{bgcolor:'background.b1', border:1, borderColor:'primary.main', borderTop:0, borderBottomLeftRadius:4, borderBottomRightRadius:4}}>
-          <Button onClick={() => setOpen(false)}>Cancel</Button>
           <Button onClick={() => props.setOpen(false)}>Cancel</Button>
           <Button onClick={handleDelete} autoFocus>
             Delete
