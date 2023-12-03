@@ -55,7 +55,7 @@ function SpecItem(item) {
         <Box sx={{ bgcolor: "background.b2", width: "2px", height: "70px" }} />
       </Box>
       <Button
-        onClick={() => {navigate('/SingleSpec/'+ item.id)}}
+        onClick={() => {navigate('/single-spec/'+ item.id)}}
         sx={{
           color: "text.primary",
           bgcolor: "background.b2",

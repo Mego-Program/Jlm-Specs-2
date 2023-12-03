@@ -23,6 +23,7 @@ function SpecsList() {
       .get(`${import.meta.env.VITE_API_URL}/specs`)
       .then((response) => {
         setSpecsList(response.data.reverse());
+        setSuccess(true);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -39,7 +40,7 @@ function SpecsList() {
   return (
     <Box sx={{ height: "100vh", bgcolor: "background.b1" }}>
       <Box sx={{ bgcolor: "background.b1", padding: 3 }}>
-        <Link to={"../SpecInput"}>
+        <Link to={"../spec-input"}>
           <Button variant="contained" sx={{ bgcolor: "background.y" }}>
             <Typography fontSize={11} fontWeight={700}>
               Add New Spec

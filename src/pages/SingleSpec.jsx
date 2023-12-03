@@ -5,7 +5,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import EditableField from "../components/EditableField";
 import SpecTitle from "../components/SingleSpec/SpecTitle";
 import SpecDescription from "../components/SingleSpec/SpecDescription";
-import SpecTasks from "../components/SingleSpec/SpecTasks";
+
+import SpecTask from "../components/SingleSpec/SpecTask";
 import SpecTeam from "../components/SingleSpec/SpecTeam";
 import CommentBox from "../components/SingleSpec/CommentBox";
 import { useParams } from "react-router-dom";
@@ -92,10 +93,7 @@ function SingleSpec() {
     } catch (error) {
       console.error("Error saving description:", error);
     }
-  };
 
-  const handleSaveTasks = async (newTasks) => {
-    setIsEditingTasks(false);
   };
 
   const handleSaveTeam = async (newTeam) => {
@@ -149,7 +147,7 @@ function SingleSpec() {
 
   return (
     <Box sx={pageStyle}>
-      <NavLink to="../SpecsList">
+      <NavLink to="../">
         <KeyboardBackspaceOutlinedIcon
           color="primary"
           sx={{
@@ -222,25 +220,12 @@ function SingleSpec() {
           alignItems: "start",
         }}
       >
-        {isEditingTasks ? (
-          <Box>
-            <Button onClick={handleSaveTasks} variant="contained">
-              Save
-            </Button>
-          </Box>
-        ) : (
-          specData.task.length > 0 && (
-            <>
-              <SpecTasks tasks={specData.task} />
-              <Button
-                variant="outlined"
-                color="primary"
-                startIcon={<EditIcon />}
-                onClick={() => handleEditClick("tasks")}
-              ></Button>
-            </>
-          )
-        )}
+
+        
+          {specData.task.length > 0 && (
+              <SpecTask  info={specData} set={setSpecData}/>
+          )}
+      
       </Box>
 
       <Box

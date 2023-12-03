@@ -1,3 +1,4 @@
+
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import {ThemeProvider } from "@mui/material";
 import SpecsList from "./pages/SpecsList";
@@ -8,16 +9,12 @@ import theme from "./Theme";
 function SpecsApp() {
   return (
     <ThemeProvider theme={theme}>
-      <Router>
-        <div>
           <Routes>
             <Route path="/" element={<SpecsList />} />
-            <Route path="/SpecsList" element={<SpecsList />} />
-            <Route path="/SpecInput" element={<SpecInput />} />
-            <Route path="/SingleSpec/:id" element={<SingleSpec />} />
+            {/* <Route path="/specsList" element={<SpecsList />} /> */}
+            <Route path="/spec-input" element={<SpecInput />} />
+            <Route path="/single-spec/:id" element={<SingleSpec />} />
           </Routes>
-        </div>
-      </Router>
     </ThemeProvider>
   );
 }

@@ -1,10 +1,10 @@
-import { Typography } from "@mui/material";
+import { List, ListItem, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import dayjs from "dayjs";
 import { convertFromRaw } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 
 const boxStyle = {
-
   bgcolor: "secondary.light",
   marginBottom: 1,
   borderRadius: 1,
@@ -28,7 +28,24 @@ export default function FormSubmit(props) {
           {props.disabled(true)}
         </Typography>
       ) : (
-        <Box sx={{overflowY:'scroll', maxHeight:'45vh', paddingRight:1}}>
+        <Box
+          sx={{
+            overflowY: "scroll",
+            maxHeight: "45vh",
+            paddingRight: 1,
+            "&::-webkit-scrollbar": {
+              width: "6px",
+              border:1,
+              borderRadius:'6px',
+              borderColor:'primary.main'
+            },
+
+            "&::-webkit-scrollbar-thumb": {
+              backgroundColor: "primary.main",
+              borderRadius: "6px",
+            },
+          }}
+        >
           {props.disabled(false)}
           <Typography>Title</Typography>
           <Box sx={boxStyle}>
@@ -50,24 +67,64 @@ export default function FormSubmit(props) {
               ))}
             </Typography>
           </Box>
-          <Typography>Task</Typography>
-          <Box sx={boxStyle}>
-              {props.info.task.map((task, index) => {
-                {console.log(task);}
-                const object = convertFromRaw(task);
-                const html = stateToHTML(object);
-                return (
-                    <Box sx={{display:'flex', justifyContent:'space-between', borderBottom:1}}>
+
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Typography>Task</Typography>
+            {props.info.task.projectName !== "" && (
+              <Typography>Board: {props.info.task.projectName}</Typography>
+            )}
+          </Box>
+          <Box
+            sx={{
+              ...boxStyle,
+              overflowY: "scroll",
+              maxHeight: 200,
+              "&::-webkit-scrollbar": {
+                width: "6px",
+              },
+
+              "&::-webkit-scrollbar-thumb": {
+                backgroundColor: "#f6c927",
+                borderRadius: "6px",
+              },
+            }}
+          >
+            {props.info.task.tasks.map((item, index) => {
+              const date = dayjs(item.deadline);
+              return (
+                <Box
+                  key={index}
+                  sx={{
+                    border: 2,
+                    marginBottom: 0.3,
+                    borderColor: "secondary.main",
+                    borderStyle: "dashed",
+                    borderRadius: 2,
+                    paddingLeft: 1,
+                  }}
+                >
+                  <Typography
+                    color={"primary.main"}
+                    variant="h5"
+                    sx={{ fontWeight: 700 }}
+                  >
+                    {item.title}
+                  </Typography>
+                  <Typography color={"secondary.dark"}>
+                    {item.content}
+                  </Typography>
+                  {item.deadline !== null && (
                     <Typography
-                      key={index}
-                      sx={{ wordWrap: "break-word", fontFamily: "monospace", overflowX:'hidden'}}
-                      dangerouslySetInnerHTML={{ __html: html }}
-                    />
-                    {task.deadline && <Typography sx={{fontFamily: "monospace"}}>Deadline:<br/>{task.deadline.$D}/{task.deadline.$M}/{task.deadline.$y}</Typography>}
-                    
-                    </Box>
-                    )
-              })}
+                      color={"secondary.dark"}
+                      sx={{ fontWeight: 700 }}
+                    >
+                      {date.$D}/{date.$M}/{date.$y}
+                    </Typography>
+                  )}
+                </Box>
+              );
+              // console.log(item);
+            })}
           </Box>
           <Typography>Time Line</Typography>
           <Box sx={boxStyle}>
@@ -79,7 +136,6 @@ export default function FormSubmit(props) {
           </Box>
         </Box>
       )}
-
     </Box>
   );
 }
