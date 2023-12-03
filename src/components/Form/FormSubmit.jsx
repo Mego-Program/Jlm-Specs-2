@@ -67,6 +67,7 @@ export default function FormSubmit(props) {
               ))}
             </Typography>
           </Box>
+
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Typography>Task</Typography>
             {props.info.task.projectName !== "" && (

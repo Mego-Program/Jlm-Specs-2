@@ -12,6 +12,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+
 function SpecsList() {
   const [specsList, setSpecsList] = useState([]);
   const [success, setSuccess] = useState(false);

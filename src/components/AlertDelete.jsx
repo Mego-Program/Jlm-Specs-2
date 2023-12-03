@@ -5,6 +5,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+
 import { Fab } from "@mui/material";
 
 export default function AlertDialog(props) {
@@ -21,6 +22,7 @@ export default function AlertDialog(props) {
 
   return (
     <React.Fragment>
+      <Button
       {/* <Button
         margin="0"
         padding="0"
@@ -28,6 +30,10 @@ export default function AlertDialog(props) {
         sx={{ color: "text.primary", fontSize: 11, fontWeight: 700 }}
       >
         Delete
+      </Button>
+      <Dialog
+        open={open}
+        onClose={() => setOpen(false)}
       </Button> */}
       <Dialog
         open={props.open}
@@ -43,6 +49,7 @@ export default function AlertDialog(props) {
           </DialogContentText>
         </DialogContent>
         <DialogActions sx={{bgcolor:'background.b1', border:1, borderColor:'primary.main', borderTop:0, borderBottomLeftRadius:4, borderBottomRightRadius:4}}>
+          <Button onClick={() => setOpen(false)}>Cancel</Button>
           <Button onClick={() => props.setOpen(false)}>Cancel</Button>
           <Button onClick={handleDelete} autoFocus>
             Delete

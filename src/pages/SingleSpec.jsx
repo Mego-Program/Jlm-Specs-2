@@ -5,6 +5,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import EditableField from "../components/EditableField";
 import SpecTitle from "../components/SingleSpec/SpecTitle";
 import SpecDescription from "../components/SingleSpec/SpecDescription";
+
 import SpecTask from "../components/SingleSpec/SpecTask";
 import SpecTeam from "../components/SingleSpec/SpecTeam";
 import CommentBox from "../components/SingleSpec/CommentBox";
@@ -92,6 +93,7 @@ function SingleSpec() {
     } catch (error) {
       console.error("Error saving description:", error);
     }
+
   };
 
   const handleSaveTeam = async (newTeam) => {
@@ -218,6 +220,7 @@ function SingleSpec() {
           alignItems: "start",
         }}
       >
+
         
           {specData.task.length > 0 && (
               <SpecTask  info={specData} set={setSpecData}/>

@@ -1,18 +1,22 @@
+
 import {
   Autocomplete,
   Box,
   Button,
+
   IconButton,
   Input,
   Paper,
   Popper,
   Stack,
   TextField,
+
   Typography,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
+
 import FormDialog from "./FormDialog";
 import TaskItem from "./TaskItem-old";
 import Item from "./FormContact";
@@ -66,6 +70,7 @@ export default function FormTask(props) {
       });
   }, []);
 
+
   function delItem(index) {
     const newlist = props.info.task.tasks.filter((item, id) => id !== index);
     props.set({ ...props.info, task: { ...props.info.task, tasks: newlist } });
@@ -87,6 +92,7 @@ export default function FormTask(props) {
           marginBottom: 2,
         }}
       >
+
         <FormDialog set={props.set} info={props.info} />
         <Autocomplete
           sx={{
@@ -96,6 +102,7 @@ export default function FormTask(props) {
               height: 10,
               borderRadius: 1,
             },
+
           }}
           defaultValue={props.info.task.projectName}
           options={projectList}
