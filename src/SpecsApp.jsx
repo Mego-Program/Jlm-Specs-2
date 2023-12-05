@@ -20,7 +20,7 @@ function ThemeWrapper() {
 
 const specsRoutes = (
   <Route element={<ThemeWrapper />}>
-    <Route index element={<SpecsList />} />
+    <Route path="" element={<SpecsList />} />
     <Route path="new-spec" element={<SpecInput />} />
     <Route path="single/:id" element={<SingleSpec />} />
   </Route>
@@ -30,7 +30,7 @@ export function SpecsApp() {
   return (
     <Router>
       <Routes>
-        <Route path="/">{specsRoutes}</Route>
+        <Route path="/*">{specsRoutes}</Route>
       </Routes>
     </Router>
   );
