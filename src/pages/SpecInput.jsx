@@ -70,13 +70,17 @@ export default function SpecInput() {
 
   const handleSubmit = async () => {
     setLoading(true);
-    console.log(item);
     try {
-
       const response = await axios.post(`${import.meta.env.VITE_API_URL}/specs`, item);
+      console.log('specs: ',response.data);
+      // const sendList = item.task.tasks.filter((item) => item.sendToBoard === true)
+      // const projectObject = {boardName:item.task.projectName, list:sendList}
+      
+      // send to project opject: board name + list, url : spec-id
 
-      console.log(response.data);
-      handleNext();
+      // const projectResponse = await axios.post(`project-url/${response._id}`, projectObject);
+      // console.log('project :',projectResponse.data);
+      // handleNext();
     } catch (error) {
       console.error("Error sending object to srver: ", error);
       setError("try again");

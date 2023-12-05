@@ -1,7 +1,14 @@
 import dayjs from "dayjs";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+
 import { useState, useEffect } from "react";
+
 import EditIcon from "@mui/icons-material/Edit";
 import DoneIcon from "@mui/icons-material/Done";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ForwardToInboxOutlinedIcon from "@mui/icons-material/ForwardToInboxOutlined";
+import MarkEmailReadOutlinedIcon from "@mui/icons-material/MarkEmailReadOutlined";
+
 import styled from "@emotion/styled";
 import {
   Box,
@@ -11,19 +18,15 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import IosShareIcon from "@mui/icons-material/IosShare";
 import { DateField, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+
 import AlertDialog from "./AlertDelete";
-import ForwardToInboxOutlinedIcon from "@mui/icons-material/ForwardToInboxOutlined";
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   padding: theme.spacing(1),
 }));
 
-// item , save-content/title , save-date , shere, index
 export default function Task(props) {
   const [edit, setEdit] = useState(false);
   const [item, setItem] = useState(props.item);
@@ -47,17 +50,24 @@ export default function Task(props) {
   const handleChangeDate = (value) => {
     item.deadline = value;
     props.save(item, props.index);
-    // props.saveDate(value)
   };
   const handleSave = () => {
     props.save(item, props.index);
     setEdit(false);
   };
 
+  const sendToBoard = () => {
+    if (item.sendToBoard === true) {
+      item.sendToBoard = false;
+    } else {
+      item.sendToBoard = true;
+    }
+    props.save(item, props.index);
+  };
+
   return (
-    <Box sx={{ display: "flex", alignItems: "center" }}>
+    <Box key={props.index} sx={{ display: "flex", alignItems: "center" }}>
       <Item
-        key={props.index}
         sx={{
           bgcolor: "secondary.main",
           color: "primary.main",
@@ -149,16 +159,6 @@ export default function Task(props) {
             </IconButton>
           ) : (
             <IconButton sx={{ display: "flex", flexDirection: "column" }}>
-              {/* <ShortcutIcon
-              sx={{
-                color: "primary.main",
-                border: 2,
-                padding: 0.5,
-                borderTopLeftRadius: 4,
-                borderTopRightRadius: 4,
-                "&:hover": { bgcolor: "secondary.light" },
-              }}
-            /> */}
               <EditIcon
                 onClick={() => {
                   setEdit(true);
@@ -202,10 +202,17 @@ export default function Task(props) {
             bgcolor: "secondary.main",
             "&:hover": { bgcolor: "secondary.light" },
           }}
+          onClick={sendToBoard}
         >
-          <ForwardToInboxOutlinedIcon
-            sx={{ fontSize: 24, color: "primary.main" }}
-          />
+          {props.item.sendToBoard ? (
+            <MarkEmailReadOutlinedIcon
+              sx={{ fontSize: 24, color: "primary.main" }}
+            />
+          ) : (
+            <ForwardToInboxOutlinedIcon
+              sx={{ fontSize: 24, color: "primary.main" }}
+            />
+          )}
         </Fab>
       )}
     </Box>

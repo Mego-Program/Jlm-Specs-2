@@ -222,9 +222,8 @@ function SingleSpec() {
       >
 
         
-          {specData.task.length > 0 && (
-              <SpecTask  info={specData} set={setSpecData}/>
-          )}
+      <SpecTask  info={specData} set={setSpecData}/>
+          
       
       </Box>
 
