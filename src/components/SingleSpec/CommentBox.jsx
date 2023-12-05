@@ -19,7 +19,7 @@ const CommentBox = ({ specId, onCommentAdded }) => {
 
   const fetchComments = async () => {
     try {
-      const response = await axios.get(`http://localhost:4000/specs/${specId}/comments`);
+      const response = await axios.get(`http://${import.meta.env.VITE_API_URL}/specs/${specId}/comments`);
       setComments(response.data);
     } catch (error) {
       console.error("Error fetching comments:", error);
@@ -38,7 +38,7 @@ const CommentBox = ({ specId, onCommentAdded }) => {
 
   const handleCommentSubmit = async () => {
     try {
-      const response = await axios.post(`http://localhost:4000/specs/${specId}/comments`, newComment);
+      const response = await axios.post(`http://${import.meta.env.VITE_API_URL}/specs/${specId}/comments`, newComment);
       const savedComments = response.data.comments;
       setComments(savedComments);
       setNewComment({ author: "David", content: "" });
