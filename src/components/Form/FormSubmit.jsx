@@ -19,7 +19,7 @@ export default function FormSubmit(props) {
   return (
     <Box>
       {props.info.title === "" ||
-      props.info.team.length == 0 ||
+      // props.info.team.length == 0 ||
       props.info.task.length == 0 ||
       props.info.startDate === null ||
       props.info.endDate === null ? (

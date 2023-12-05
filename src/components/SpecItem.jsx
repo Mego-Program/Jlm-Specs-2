@@ -3,13 +3,19 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import dayjs from "dayjs";
 import AlertDialog from "./AlertDelete";
+import { useState } from "react";
+import DeleteIcon from "@mui/icons-material/Delete";
+
 
 function SpecItem(item) {
   const navigate = useNavigate();
 
+  const [alert , setAlert] = useState(false)
+
   const delSpec = () => {
     try {
       axios.delete(`${import.meta.env.VITE_API_URL}/specs/${item.id}`);
+      console.log('test');
       item.del(item.id);
     } catch (error) {
       console.log("faild to delete item: ", error);
@@ -99,8 +105,24 @@ function SpecItem(item) {
           justifyContent: "center",
           height: "100%",
         }}
-      >
-        <AlertDialog del={delSpec}/>
+      >   
+      <DeleteIcon
+                sx={{
+                  color: "primary.main",
+                  boxSizing:'border-box',
+                  "&:hover": { border:1, borderColor:'primary.main' },
+                  padding:1,
+                  borderRadius:'50%',
+                  fontSize:48
+                }}
+                onClick={() => setAlert(true)}
+              />
+        <AlertDialog
+                open={alert}
+                setOpen={setAlert}
+                del={delSpec}
+                index={item.id}
+              />
       </Box>
     </ListItem>
   )
