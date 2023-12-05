@@ -40,7 +40,7 @@ function SpecsList() {
   return (
     <Box sx={{ height: "100vh", bgcolor: "background.b1" }}>
       <Box sx={{ bgcolor: "background.b1", padding: 3 }}>
-        <Link to={"spec-input"}>
+        <Link to={"new"}>
           <Button variant="contained" sx={{ bgcolor: "background.y" }}>
             <Typography fontSize={11} fontWeight={700}>
               Add New Spec

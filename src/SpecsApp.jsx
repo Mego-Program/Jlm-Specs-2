@@ -9,20 +9,20 @@ import {
   RouterProvider
 } from "react-router-dom";
 
-export const mainRouters = createBrowserRouter([
+export const specsRoutes = createBrowserRouter([
   {
-    path:'/',
+    path:'/specs',
     children:[
       {
         path:'',
         element:<SpecsList />
       },
       {
-        path:'spec-input',
+        path:'new',
         element:<SpecInput />
       },
       {
-        path:'single-spec/:id',
+        path:'single/:id',
         element:<SingleSpec />
       }
     ]
@@ -32,7 +32,7 @@ export const mainRouters = createBrowserRouter([
 function SpecsApp() {
   return (
     <ThemeProvider theme={theme}>
-      <RouterProvider router={mainRouters}/>
+      <RouterProvider router={specsRoutes}/>
         {/* <Routes>
           <Route path="/" element={<SpecsList />} />
           <Route path="spec-input" element={<SpecInput />} />
