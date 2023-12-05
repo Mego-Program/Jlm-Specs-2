@@ -1,12 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import SpecsApp from "./SpecsApp";
-import { BrowserRouter } from "react-router-dom";
+import {SpecsApp} from "./SpecsApp";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    {/* <BrowserRouter> */}
       <SpecsApp />
-    {/* </BrowserRouter> */}
   </React.StrictMode>
 );
