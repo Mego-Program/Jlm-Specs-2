@@ -5,10 +5,9 @@ import EditIcon from "@mui/icons-material/Edit";
 import EditableField from "../components/EditableField";
 import SpecTitle from "../components/SingleSpec/SpecTitle";
 import SpecDescription from "../components/SingleSpec/SpecDescription";
-
 import SpecTask from "../components/SingleSpec/SpecTask";
 import SpecTeam from "../components/SingleSpec/SpecTeam";
-import CommentBox from "../components/SingleSpec/CommentBox";
+import SpecComments from "../components/SingleSpec/SpecComments";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
@@ -55,16 +54,6 @@ function SingleSpec() {
   const [isEditingTasks, setIsEditingTasks] = useState(false);
   const [isEditingTeam, setIsEditingTeam] = useState(false);
 
-  const handleCommentAdded = async () => {
-    try {
-      const response = await axios.get(`/specs/${id}`);
-      const updatedSpecData = response.data;
-      setSpecData(updatedSpecData);
-    } catch (error) {
-      console.error("Error :", error);
-    }
-  };
-
   const updateSpecData = (field, newValue) => {
     setSpecData((prevData) => ({
       ...prevData,
@@ -75,7 +64,9 @@ function SingleSpec() {
   const handleSaveTitle = async (newTitle) => {
     console.log(specData);
     try {
-      await axios.put(`${import.meta.env.VITE_API_URL}/specs/${id}`, { title: newTitle });
+      await axios.put(`${import.meta.env.VITE_API_URL}/specs/${id}`, {
+        title: newTitle,
+      });
       updateSpecData("title", newTitle);
 
       setIsEditingTitle(false);
@@ -94,14 +85,13 @@ function SingleSpec() {
     } catch (error) {
       console.error("Error saving description:", error);
     }
-
   };
 
   const handleSaveTeam = async (newTeam) => {
     try {
-      await axios.put(`${import.meta.env.VITE_API_URL}/specs)/${id}`,
-        { team: newTeam }
-      );
+      await axios.put(`${import.meta.env.VITE_API_URL}/specs)/${id}`, {
+        team: newTeam,
+      });
       updateSpecData("team", newTeam);
       setIsEditingDescription(false);
     } catch (error) {
@@ -221,11 +211,9 @@ function SingleSpec() {
           alignItems: "start",
         }}
       >
-
-        
-      <SpecTask  info={specData} set={setSpecData}/>
-          
-      
+        {specData.task.length > 0 && (
+          <SpecTask info={specData} set={setSpecData} />
+        )}
       </Box>
 
       <Box
@@ -256,8 +244,25 @@ function SingleSpec() {
           )
         )}
       </Box>
-
-      <CommentBox specId={id} onCommentAdded={handleCommentAdded} />
+      <Box
+        sx={{
+          ...componentStyle,
+          position: "relative",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <SpecComments
+          specId={id}
+          onCommentAdded={() => {
+            console.log("Comment added!");
+          }}
+          onReplyAdded={() => {
+            console.log("Reply added!");
+          }}
+        />
+      </Box>
     </Box>
   );
 }
