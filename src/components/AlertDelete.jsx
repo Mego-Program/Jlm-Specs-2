@@ -37,7 +37,6 @@ export default function AlertDialog(props) {
           </DialogContentText>
         </DialogContent>
         <DialogActions sx={{bgcolor:'background.b1', border:1, borderColor:'primary.main', borderTop:0, borderBottomLeftRadius:4, borderBottomRightRadius:4}}>
-          <Button onClick={() => setOpen(false)}>Cancel</Button>
           <Button onClick={() => props.setOpen(false)}>Cancel</Button>
           <Button onClick={handleDelete} autoFocus>
             Delete

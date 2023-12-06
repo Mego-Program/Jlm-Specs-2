@@ -14,7 +14,7 @@ import { Box, Typography } from "@mui/material";
 
 export default function FormDialog(props) {
   const [open, setOpen] = React.useState(false);
-  const [data, setData] = React.useState({title:'', content:'',deadline:null});
+  const [data, setData] = React.useState({title:'', content:'', deadline:null, sendToBoard:false});
   const [disable, setDisable] = React.useState(true);
 
   React.useEffect(() => {

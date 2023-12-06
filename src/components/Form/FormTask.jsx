@@ -2,24 +2,15 @@
 import {
   Autocomplete,
   Box,
-  Button,
-
-  IconButton,
-  Input,
   Paper,
-  Popper,
   Stack,
   TextField,
-
   Typography,
 } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 import FormDialog from "./FormDialog";
-import TaskItem from "./TaskItem-old";
-import Item from "./FormContact";
 import Task from "../TaskItem";
 
 export default function FormTask(props) {
@@ -50,6 +41,8 @@ export default function FormTask(props) {
     );
   };
 
+
+
   useEffect(() => {
     props.set({
       ...props.info,
@@ -59,9 +52,7 @@ export default function FormTask(props) {
 
   useEffect(() => {
     axios
-      .get(
-        "https://project-jerusalem-2-server.vercel.app/projects/listOfProjects"
-      )
+      .get(`${import.meta.env.VITE_API_URL}/project/boards`)
       .then((response) => {
         setProjectList(response.data);
       })
@@ -85,6 +76,7 @@ export default function FormTask(props) {
 
   return (
     <Box>
+      
       <Box
         sx={{
           display: "flex",

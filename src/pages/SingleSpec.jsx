@@ -62,6 +62,7 @@ function SingleSpec() {
   };
 
   const handleSaveTitle = async (newTitle) => {
+    console.log(specData);
     try {
       await axios.put(`${import.meta.env.VITE_API_URL}/specs/${id}`, {
         title: newTitle,

@@ -5,6 +5,7 @@ import federation from "@originjs/vite-plugin-federation";
 
 
 
+
 export default defineConfig({
   plugins: [
     react(),
@@ -12,7 +13,7 @@ export default defineConfig({
       name: 'SpecsApp',
       filename: 'remoteEntry.js',
       exposes: {
-        './SpecsApp': './src/SpecsApp', // Adjust this path to your App component
+        './SpecsApp': './src/SpecsApp/', // Adjust this path to your App component
       },
       shared: ['react', 'react-dom','react-router-dom' /* other shared dependencies */],
     }),
