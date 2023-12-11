@@ -13,6 +13,7 @@ import axios from "axios";
 import { NavLink } from "react-router-dom";
 import KeyboardBackspaceOutlinedIcon from "@mui/icons-material/KeyboardBackspaceOutlined";
 import { Backdrop, CircularProgress } from "@mui/material";
+import SpecContent from "../components/SingleSpec/SpecContent";
 
 const pageStyle = {
   backgroundColor: "background.b1",
@@ -48,6 +49,13 @@ function SingleSpec() {
         console.error("Error when retrieving spec data :", error);
       });
   }, [id]);
+  useEffect(() => {
+    axios
+      .put(`${import.meta.env.VITE_API_URL}/specs/${id}`, specData)
+      .catch((error) => {
+        console.error("Error updating spec data :", error);
+      });
+  }, [specData]);
 
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [isEditingDescription, setIsEditingDescription] = useState(false);
@@ -200,6 +208,9 @@ function SingleSpec() {
             ></Button>
           </>
         )}
+      </Box>
+      <Box sx={componentStyle}>
+          <SpecContent set={setSpecData} info={specData}/>
       </Box>
 
       <Box

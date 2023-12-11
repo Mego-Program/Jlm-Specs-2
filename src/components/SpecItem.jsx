@@ -2,7 +2,7 @@ import { Box, Button, Typography, ListItem, Avatar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import dayjs from "dayjs";
-import AlertDialog from "./AlertDelete";
+import AlertDialog from "./AlertDialog";
 import { useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 
@@ -83,7 +83,6 @@ function SpecItem(item) {
           </Typography>
           <Typography sx={{ fontSize: 9, textAlign:'start', marginRight:1}}>{item.info}</Typography>
         </Box>
-        {/* <DialogSelect  stat="todo" /> */}
         <Box
           sx={{
             display: "flex",
@@ -91,9 +90,7 @@ function SpecItem(item) {
             justifyContent: "center",
           }}
         >
-          {/* <Button component='span' sx={{ color: "text.primary", fontSize: 11, fontWeight: 700 }}>
-            Edit
-          </Button> */}
+
         </Box>
         <Avatar>f</Avatar>
       </Button>

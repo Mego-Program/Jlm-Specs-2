@@ -1,18 +1,31 @@
 * {
   margin: 0px;
   box-sizing: border-box;
+  font-family: sans-serif;
 }
 
 .editor-wrapper {
   width: 100%;
   border: 1px solid #f6c927;
-  padding: 1rem;
+  padding: 10px;
+  border-radius: 4px;
+}
+.editor-wrapper:hover{
+  border-color: #fff;
+}
+.editor-wrapper:focus-within{
+  border: 2px solid #f6c927;
+}
+
+.public-DraftEditorPlaceholder-root{
+  color: #8D8D9C;
 }
 
 .editor-container {
+  
   width: 100%;
-  max-height: 25vh;
-  padding: 1rem;
+  max-height: 20vh;
+  padding: 8px;
   margin-top: 1rem;
   border-radius: 8px;
   overflow-y: scroll;
@@ -40,18 +53,18 @@
 
 .btn {
   width: 35px;
-  margin: 4px;
+  margin: 2px;
   font-size: 0.8rem;
-  padding: 10px;
+  padding: 5px;
   border: none;
   background: #f6c927;
   cursor: pointer;
-  border-radius: 8px;
+  border-radius: 4px;
 }
 
 .superFancyBlockquote {
   color: #999;
-  /* background: #fff; */
+  background: #fff;
   font-family: "Hoefler Text", Georgia, serif;
   font-style: italic;
   border-left: 2px solid #999;
@@ -61,14 +74,15 @@
 .codeBlock {
   font-family: fira-code, monospace;
   font-size: inherit;
-  /* background: #ffeff0; */
   font-style: italic;
   word-wrap: normal;
   word-wrap: break-word;
   box-decoration-break: slice;
   padding: 0.3rem 2rem;
   border-radius: 0.2rem;
+  background: red;
 }
+
 
 .leftAlign {
   text-align: left;

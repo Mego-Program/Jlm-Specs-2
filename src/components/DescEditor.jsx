@@ -1,34 +1,23 @@
-import React, { useEffect, useRef, useState } from "react";
-import {
-  Editor,
-  EditorState,
-  RichUtils,
-  convertToRaw,
-} from "draft-js";
+import React, { useRef, useState } from "react";
+import { Editor, EditorState, convertToRaw, convertFromRaw } from "draft-js";
 import Toolbar from "./Toolbar";
-import "./TextEditor.css";
+import "./DescEditor.css";
+import { Box } from "@mui/material";
 
-
-
-const TextEditor = (props) => {
+const DescEditor = (props) => {
+  const [editorState, setEditorState] = useState(
+    EditorState.createWithContent(
+      convertFromRaw({
+        blocks: props.info.content.blocks,
+        entityMap: {},
+      })
+    )
+  );
 
   const editor = useRef(null);
 
-  useEffect(() => {
-    focusEditor();
-  }, []);
-
   const focusEditor = () => {
     editor.current.focus();
-  };
-
-  const handleKeyCommand = (command) => {
-    const newState = RichUtils.handleKeyCommand(props.info, command);
-    if (newState) {
-      props.set(newState);
-      return true;
-    }
-    return false;
   };
 
   // FOR INLINE STYLES
@@ -87,28 +76,26 @@ const TextEditor = (props) => {
   };
 
   return (
-    <div className="editor-wrapper" onClick={focusEditor}>
-      <Toolbar editorState={props.info} setEditorState={props.set} />
-      <div className="editor-container">
-        <Editor
-          ref={editor}
-          placeholder="Write Here"
-          handleKeyCommand={handleKeyCommand}
-          editorState={props.info}
-          customStyleMap={styleMap}
-          blockStyleFn={myBlockStyleFn}
-          onChange={(editorState) => {
-            const contentState = editorState.getCurrentContent();
-            const contentObject = convertToRaw(contentState);
-            if (contentObject.blocks[0].text === '') {props.setDisable(true)}
-            else {props.setDisable(false)}
-
-            props.set(editorState);
-          }}
-        />
+    <Box sx={{marginTop:1}}>
+      <div className="editor-wrapper" onClick={focusEditor}>
+        <Toolbar editorState={editorState} setEditorState={setEditorState} />
+        <div className="editor-container">
+          <Editor
+            ref={editor}
+            placeholder="Spec Content"
+            editorState={editorState}
+            customStyleMap={styleMap}
+            blockStyleFn={myBlockStyleFn}
+            onChange={(editorState) => {
+              const contentState = editorState.getCurrentContent();
+              props.set({...props.info, content:convertToRaw(contentState)})
+              setEditorState(editorState);
+            }}
+          />
+        </div>
       </div>
-    </div>
+    </Box>
   );
 };
 
-export default TextEditor;
+export default DescEditor;
