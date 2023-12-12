@@ -1,11 +1,11 @@
 import { Editor, EditorState, ContentState, convertFromRaw } from "draft-js";
 import { Box, Button, List, ListItem, Stack, Tooltip, Typography } from "@mui/material";
 import dayjs from "dayjs";
-import TaskItem from "../TaskItem";
+import TaskItem from "../global/TaskItem";
 import axios from "axios";
 import { useEffect } from "react";
 import FormDetails from "../Form/FormDetails";
-import FormDialog from "../FormDialog";
+import FormDialog from "../global/FormDialog";
 
 export default function SpecTask(props) {
   const update = async () => {

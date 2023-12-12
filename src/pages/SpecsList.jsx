@@ -6,7 +6,7 @@ import {
   List,
   Typography,
 } from "@mui/material";
-import SpecItem from "../components/SpecItem";
+import SpecItem from "../components/SpecsList/SpecItem";
 import { Link } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import { useState, useEffect } from "react";

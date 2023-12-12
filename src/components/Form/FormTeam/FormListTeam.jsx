@@ -6,7 +6,6 @@ import Stack from '@mui/material/Stack';
 import { Button, List, Paper} from '@mui/material';
 import Item from './FormUser';
 import { Entity } from 'draft-js';
-import SpecInput from '../../pages/SpecInput';
 
 export default function Tags(props) { 
 

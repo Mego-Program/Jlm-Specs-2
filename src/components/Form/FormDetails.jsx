@@ -1,7 +1,8 @@
 import { TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
-import DescEditor from "../DescEditor";
+
+import DescEditor from "../global/Editor/DescEditor";
 
 const inputStyle = {
   bgcolor: "secondary.light",

@@ -2,7 +2,7 @@ import { Editor, EditorState, ContentState, convertFromRaw } from "draft-js";
 import { Box, Button, List, ListItem, Typography } from "@mui/material";
 import dayjs from "dayjs";
 import { useState } from "react";
-import DescEditor from "../DescEditor";
+import DescEditor from "../global/Editor/DescEditor";
 import EditIcon from "@mui/icons-material/Edit";
 import DoneOutlinedIcon from '@mui/icons-material/DoneOutlined';
 

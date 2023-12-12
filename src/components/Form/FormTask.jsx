@@ -9,8 +9,8 @@ import {
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import FormDialog from "../FormDialog";
-import TaskItem from "../TaskItem";
+import FormDialog from "../global/FormDialog";
+import TaskItem from "../global/TaskItem";
 
 export default function FormTask(props) {
   const [project, setProject] = useState("");

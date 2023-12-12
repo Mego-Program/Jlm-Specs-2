@@ -2,7 +2,7 @@ import { Box, Button, Typography, ListItem, Avatar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import dayjs from "dayjs";
-import AlertDialog from "./AlertDialog";
+import AlertDialog from "../global/AlertDialog";
 import { useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 
