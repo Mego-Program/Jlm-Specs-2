@@ -76,7 +76,7 @@ const DescEditor = (props) => {
   };
 
   return (
-    <Box sx={{marginTop:1}}>
+    <Box sx={{marginTop:3}}>
       <div className="editor-wrapper" onClick={focusEditor}>
         <Toolbar editorState={editorState} setEditorState={setEditorState} />
         <div className="editor-container">

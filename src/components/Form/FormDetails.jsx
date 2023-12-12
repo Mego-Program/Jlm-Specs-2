@@ -6,13 +6,12 @@ import DescEditor from "../global/Editor/DescEditor";
 
 const inputStyle = {
   bgcolor: "secondary.light",
-  marginBottom: 0.5,
+  marginBottom: 1,
   borderRadius: 1,
   "& input": {
     borderRadius: 1,
     border: 1,
     borderColor: "primary.main",
-    height:4,
 
   },
   "& label": {
@@ -29,7 +28,7 @@ export default function FormDetails(props) {
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column" }}>
+    <Box sx={{ display: "flex", flexDirection: "column", overflowY:'scroll', maxHeight:'48vh', paddingRight:4}}>
       <TextField
         sx={inputStyle}
         variant="outlined"
