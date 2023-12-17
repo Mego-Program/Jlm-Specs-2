@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import EditIcon from "@mui/icons-material/Edit";
-import EditableField from "../components/EditableField";
+import KeyboardBackspaceOutlinedIcon from "@mui/icons-material/KeyboardBackspaceOutlined";
+import { Backdrop, CircularProgress } from "@mui/material";
+
+import EditableField from "../components/SingleSpec/EditableField";
 import SpecTitle from "../components/SingleSpec/SpecTitle";
 import SpecDescription from "../components/SingleSpec/SpecDescription";
 import SpecTask from "../components/SingleSpec/SpecTask";
 import SpecTeam from "../components/SingleSpec/SpecTeam";
 import SpecComments from "../components/SingleSpec/SpecComments";
-import { useParams } from "react-router-dom";
-import axios from "axios";
-import { NavLink } from "react-router-dom";
-import KeyboardBackspaceOutlinedIcon from "@mui/icons-material/KeyboardBackspaceOutlined";
-import { Backdrop, CircularProgress } from "@mui/material";
+import SpecContent from "../components/SingleSpec/SpecContent";
 
 const pageStyle = {
   backgroundColor: "background.b1",
@@ -48,6 +51,13 @@ function SingleSpec() {
         console.error("Error when retrieving spec data :", error);
       });
   }, [id]);
+  useEffect(() => {
+    axios
+      .put(`${import.meta.env.VITE_API_URL}/specs/${id}`, specData)
+      .catch((error) => {
+        console.error("Error updating spec data :", error);
+      });
+  }, [specData]);
 
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [isEditingDescription, setIsEditingDescription] = useState(false);
@@ -200,6 +210,9 @@ function SingleSpec() {
             ></Button>
           </>
         )}
+      </Box>
+      <Box sx={componentStyle}>
+          <SpecContent set={setSpecData} info={specData}/>
       </Box>
 
       <Box

@@ -1,11 +1,11 @@
 import { Editor, EditorState, ContentState, convertFromRaw } from "draft-js";
-import { Box, List, ListItem, Stack, Typography } from "@mui/material";
+import { Box, Button, List, ListItem, Stack, Tooltip, Typography } from "@mui/material";
 import dayjs from "dayjs";
-import Task from "../TaskItem";
+import TaskItem from "../global/TaskItem";
 import axios from "axios";
 import { useEffect } from "react";
 import FormDetails from "../Form/FormDetails";
-import FormDialog from "../Form/FormDialog";
+import FormDialog from "../global/FormDialog";
 
 export default function SpecTask(props) {
   const update = async () => {
@@ -16,9 +16,8 @@ export default function SpecTask(props) {
           task: props.info.task,
         }
       );
-      console.log(props.info.task);
     } catch (error) {
-      console.error("Error saving team:", error);
+      console.error("Error saving task:", error);
     }
   };
 
@@ -29,6 +28,7 @@ export default function SpecTask(props) {
     update();
   };
   function saveItem(item, index) {
+    console.log(item);
     props.info.task.tasks[index] = item;
     props.set({ ...props.info, task: {...props.info.task, tasks:props.info.task.tasks} });
     update();
@@ -61,8 +61,11 @@ export default function SpecTask(props) {
             }}
           >
             {/* <FormDialog  set={props.set} info={props.info}/> */}
-            {props.info.task.projecname !== "" && (
-              <Typography
+            {props.info.task.projecName !== "" && (
+              
+              
+              <Tooltip title={<Button sx={{height:20, color:'secondary.main', fontWeight:700, border:1, borderColor:'secondary.main'}}>Edit</Button>} placement='right'>
+                <Typography
                 sx={{
                   bgcolor: "secondary.main",
                   paddingY: 0.5,
@@ -74,17 +77,21 @@ export default function SpecTask(props) {
               >
                 LinkTo: {props.info.task.projectName}
               </Typography>
+              </Tooltip>
+              
             )}
           </Box>
           {props.info.task.tasks.map((item, index) => {
             return (
-              <Task
+              <TaskItem
                 key={index}
                 board={props.info.task.projectName}
                 item={item}
                 index={index}
                 save={saveItem}
                 del={delItem}
+                spec={{title:props.info.title,id:props.info._id}}
+                new={false}
               />
             );
           })}

@@ -5,13 +5,12 @@ import {
   Paper,
   Stack,
   TextField,
-  Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import FormDialog from "./FormDialog";
-import Task from "../TaskItem";
+import FormDialog from "../global/FormDialog";
+import TaskItem from "../global/TaskItem";
 
 export default function FormTask(props) {
   const [project, setProject] = useState("");
@@ -84,7 +83,6 @@ export default function FormTask(props) {
           marginBottom: 2,
         }}
       >
-
         <FormDialog set={props.set} info={props.info} />
         <Autocomplete
           sx={{
@@ -141,7 +139,7 @@ export default function FormTask(props) {
         <Stack spacing={1}>
           {props.info.task.tasks.map((item, index) => {
             return (
-              <Task board={props.info.task.projectName} item={item} index={index} save={saveItem} del={delItem} />
+              <TaskItem board={props.info.task.projectName} item={item} index={index} save={saveItem} del={delItem} new={true}/>
             );
           })}
         </Stack>
