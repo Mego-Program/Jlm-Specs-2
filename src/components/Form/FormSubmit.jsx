@@ -19,7 +19,6 @@ const boxStyle = {
 export default function FormSubmit(props) {
 
 
-  console.log(props);
   return (
     <Box>
       {props.info.title === "" ||

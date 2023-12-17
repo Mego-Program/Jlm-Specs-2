@@ -10,6 +10,7 @@ import {
   StepLabel,
   Button,
   Typography,
+  Alert,
 } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 
@@ -32,31 +33,25 @@ export default function SpecInput() {
 
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = useState(null);
+  const [alert, setAlert] = useState(false);
+
   const [disabled, setDisabled] = useState(false);
+
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const [item, setItem] = React.useState({
     title: "",
-    description: '',
-    content: {blocks:[]},
+    description: "",
+    content: { blocks: [] },
     startDate: null,
     endDate: null,
-    task: {projectName:'', tasks:[]},
+    task: { projectName: "", tasks: [] },
     team: [],
-    // date: dayjs(),
-    // ownwr: 'test-name'
   });
-
-  const isStepSkipped = (step) => {
-    return skipped.has(step);
-  };
 
   const handleNext = () => {
     let newSkipped = skipped;
-    if (isStepSkipped(activeStep)) {
-      newSkipped = new Set(newSkipped.values());
-      newSkipped.delete(activeStep);
-    }
+
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setSkipped(newSkipped);
   };
@@ -72,9 +67,13 @@ export default function SpecInput() {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/specs`, item);
-      console.log('specs: ',response.data);
-      handleNext()
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/specs`,
+        item
+      );
+      console.log("specs: ", response.data);
+      if (response.data.task.projectName === "") setAlert(true);
+      handleNext();
     } catch (error) {
       console.error("Error sending object to srver: ", error);
       setError("try again");
@@ -133,7 +132,7 @@ export default function SpecInput() {
       </Stepper>
       {activeStep === steps.length ? (
         <React.Fragment>
-          <Typography
+          <Box
             sx={{
               mt: 2,
               mb: 1,
@@ -146,8 +145,22 @@ export default function SpecInput() {
               marginTop: 5,
             }}
           >
-            New spec added successfully
-          </Typography>
+            <Typography>New spec added successfully</Typography>
+
+            {alert && (
+              <Alert
+                sx={{
+                  marginTop: 4,
+                  bgcolor: "secondary.light",
+                  color: "primary.main",
+                  svg: { color: "primary.main" },
+                }}
+                severity="warning"
+              >
+                This spec is not linked to a board!
+              </Alert>
+            )}
+          </Box>
           <Box
             sx={{
               display: "flex",
