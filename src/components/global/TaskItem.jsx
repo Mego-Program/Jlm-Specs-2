@@ -19,15 +19,16 @@ import {
   Typography,
 } from "@mui/material";
 import { DateField, LocalizationProvider } from "@mui/x-date-pickers";
+import axios from "axios";
 
-import AlertDialog from "./AlertDelete";
+import AlertDialog from "./AlertDialog";
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   padding: theme.spacing(1),
 }));
 
-export default function Task(props) {
+export default function TaskItem(props) {
   const [edit, setEdit] = useState(false);
   const [item, setItem] = useState(props.item);
   const [disable, setDisable] = useState(false);
@@ -42,7 +43,7 @@ export default function Task(props) {
   }, [item]);
 
   const handleChangeTitle = (value) => {
-    setItem({ ...item, title: value });
+    setItem({ ...item, header: value });
   };
   const handleChangeContent = (value) => {
     setItem({ ...item, content: value });
@@ -56,13 +57,40 @@ export default function Task(props) {
     setEdit(false);
   };
 
-  const sendToBoard = () => {
-    if (item.sendToBoard === true) {
-      item.sendToBoard = false;
+  const sendToBoard = async () => {
+    if (!props.new) {
+      console.log(props.item.sendToBoard);
+      if (!props.item.sendToBoard) {
+        try {
+          item.sendToBoard = true;
+          const obj = {
+            spec: props.spec,
+            boardName: props.board,
+            tasks: [item],
+            newSpec: false,
+          };
+          console.log(obj);
+          const response = await axios.put(
+            `${import.meta.env.VITE_API_URL}/project/add-task`,
+            obj
+          );
+          // console.log(response.data);
+          console.log('test');
+          props.save(item, props.index);
+        } catch (error) {
+          console.log('test err');
+          console.log(error);
+          item.sendToBoard = false;
+        }
+      }
     } else {
-      item.sendToBoard = true;
+      if (item.sendToBoard === false) {
+        item.sendToBoard = true;
+      } else {
+        item.sendToBoard = false;
+      }
+      props.save(item, props.index);
     }
-    props.save(item, props.index);
   };
 
   return (
@@ -83,7 +111,7 @@ export default function Task(props) {
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <TextField
               autoFocus
-              defaultValue={item.title}
+              defaultValue={item.header}
               variant="standard"
               sx={{
                 bgcolor: "secondary.light",
@@ -124,7 +152,7 @@ export default function Task(props) {
           <Box>
             <Typography variant="h5" sx={{ fontWeight: 700 }}>
               {" "}
-              {props.item.title}
+              {props.item.header}
             </Typography>
             <Typography> {props.item.content}</Typography>
             <LocalizationProvider

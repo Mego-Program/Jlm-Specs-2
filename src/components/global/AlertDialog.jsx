@@ -9,11 +9,6 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { Fab } from "@mui/material";
 
 export default function AlertDialog(props) {
-  // const [open, setOpen] = React.useState(props.open);
-
-  // const handleClickOpen = () => {
-  //   setOpen(true);
-  // };
 
   const handleDelete = () => {
     props.del(props.index)

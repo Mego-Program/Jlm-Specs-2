@@ -1,20 +1,25 @@
 import { TextField } from "@mui/material";
 import { Box } from "@mui/system";
+import { useState } from "react";
+
+import DescEditor from "../global/Editor/DescEditor";
 
 const inputStyle = {
   bgcolor: "secondary.light",
-  margin:1,
-  borderTopLeftRadius:4,
-  borderTopRightRadius:4,
-  borderBottomRightRadius:2,
-  borderBottomLrftRadius:2,
+  marginBottom: 1,
+  borderRadius: 1,
+  "& input": {
+    borderRadius: 1,
+    border: 1,
+    borderColor: "primary.main",
+
+  },
   "& label": {
     color: "info.main",
-  }
+  },
 };
 
 export default function FormDetails(props) {
-  
   const handleTitle = (e) => {
     props.set({ ...props.info, title: e.target.value });
   };
@@ -23,25 +28,22 @@ export default function FormDetails(props) {
   };
 
   return (
-    <Box sx={{display:'flex', flexDirection:'column'}}>
+    <Box sx={{ display: "flex", flexDirection: "column", overflowY:'scroll', maxHeight:'48vh', paddingRight:4}}>
       <TextField
-        
         sx={inputStyle}
-        label="Spec Title"
-        variant="filled"
+        variant="outlined"
+        placeholder="Spec Title"
         onChange={handleTitle}
         value={props.info.title}
       />
       <TextField
         sx={inputStyle}
-        label="Description"
-        variant="filled"
-        multiline
-        rows={2}
+        variant="outlined"
+        placeholder="Spec Description"
         onChange={handleDesc}
         value={props.info.description}
       />
-
+      <DescEditor set={props.set} info={props.info} />
     </Box>
   );
 }

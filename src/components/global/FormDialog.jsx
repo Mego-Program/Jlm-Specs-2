@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -14,11 +15,11 @@ import { Box, Typography } from "@mui/material";
 
 export default function FormDialog(props) {
   const [open, setOpen] = React.useState(false);
-  const [data, setData] = React.useState({title:'', content:'', deadline:null, sendToBoard:false});
+  const [data, setData] = React.useState({header:'', content:'', deadline:null, sendToBoard:false});
   const [disable, setDisable] = React.useState(true);
 
   React.useEffect(() => {
-    if(data.title !== '' && data.content !== '') {
+    if(data.header !== '' && data.content !== '') {
       setDisable(false)
     }else{
       setDisable(true)
@@ -31,11 +32,12 @@ export default function FormDialog(props) {
 
   const handleSubmit = () => {
     props.set({...props.info, task:{...props.info.task, tasks: [...props.info.task.tasks, data]}})
+    console.log(data);
     handleClose()
 };
 
   const handleClose = () => {
-    setData({title:'', content:'',deadline:null})
+    setData({header:'', content:'',deadline:null})
     setOpen(false);
   };
 
@@ -88,7 +90,7 @@ export default function FormDialog(props) {
                 padding: 1,
               },
             }}
-            onChange={(e) => {setData({...data, title: e.target.value})}}
+            onChange={(e) => {setData({...data, header: e.target.value})}}
           />
           <TextField
             multiline
