@@ -67,13 +67,12 @@ function SpecsList() {
           {specsList.length > 0 ? (
             specsList.map((spec, index) => (
               <SpecItem
-                date={spec.startDate}
+                date={spec.date}
                 title={spec.title}
                 info={spec.description}
                 key={spec._id}
                 id={spec._id}
                 del={delSpec}
-                // avater={spec.creator}
               />
             ))
           ) : (

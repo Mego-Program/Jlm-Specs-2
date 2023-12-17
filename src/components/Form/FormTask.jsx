@@ -9,10 +9,12 @@ import {
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import FormDialog from "../global/FormDialog";
+import FormDialog from "./FormDialog";
 import TaskItem from "../global/TaskItem";
 
 export default function FormTask(props) {
+  // connect board and send task to project team
+  // board connected only after spec submit
   const [project, setProject] = useState("");
   const [projectList, setProjectList] = useState([]);
 
@@ -40,15 +42,7 @@ export default function FormTask(props) {
     );
   };
 
-
-
-  useEffect(() => {
-    props.set({
-      ...props.info,
-      task: { ...props.info.task, projectName: project },
-    });
-  }, [project]);
-
+  // get list of boards
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_API_URL}/project/boards`)
@@ -59,6 +53,16 @@ export default function FormTask(props) {
         console.error("Error fetching data:", error);
       });
   }, []);
+
+  // connect board
+  useEffect(() => {
+    props.set({
+      ...props.info,
+      task: { ...props.info.task, projectName: project },
+    });
+  }, [project]);
+
+  
 
 
   function delItem(index) {
@@ -74,8 +78,7 @@ export default function FormTask(props) {
   }
 
   return (
-    <Box>
-      
+    <Box> 
       <Box
         sx={{
           display: "flex",

@@ -15,7 +15,6 @@ function SpecItem(item) {
   const delSpec = () => {
     try {
       axios.delete(`${import.meta.env.VITE_API_URL}/specs/${item.id}`);
-      console.log('test');
       item.del(item.id);
     } catch (error) {
       console.log("faild to delete item: ", error);
@@ -23,7 +22,7 @@ function SpecItem(item) {
   };
 
   const dateobject = dayjs(item.date);
-  const dateString = dateobject.$D + "." + dateobject.$M + "." + dateobject.$y;
+  const dateString = dateobject.$D + "." + (dateobject.$M+1) + "." + dateobject.$y;
   
   return (
     <ListItem

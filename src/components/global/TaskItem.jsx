@@ -69,16 +69,12 @@ export default function TaskItem(props) {
             tasks: [item],
             newSpec: false,
           };
-          console.log(obj);
           const response = await axios.put(
             `${import.meta.env.VITE_API_URL}/project/add-task`,
             obj
           );
-          // console.log(response.data);
-          console.log('test');
           props.save(item, props.index);
         } catch (error) {
-          console.log('test err');
           console.log(error);
           item.sendToBoard = false;
         }
@@ -186,38 +182,53 @@ export default function TaskItem(props) {
               )}
             </IconButton>
           ) : (
-            <IconButton sx={{ display: "flex", flexDirection: "column" }}>
-              <EditIcon
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <IconButton
+                sx={{ paddingBottom: 0 }}
                 onClick={() => {
                   setEdit(true);
                 }}
-                sx={{
-                  color: "primary.main",
-                  border: 2,
-                  padding: 0.5,
-                  borderTopLeftRadius: 4,
-                  borderTopRightRadius: 4,
-                  "&:hover": { bgcolor: "secondary.light" },
-                }}
-              />
-              <DeleteIcon
-                sx={{
-                  color: "primary.main",
-                  border: 2,
-                  padding: 0.5,
-                  borderBottomLeftRadius: 4,
-                  borderBottomRightRadius: 4,
-                  "&:hover": { bgcolor: "secondary.light" },
-                }}
-                onClick={() => setAlert(true)}
-              />
-              <AlertDialog
-                open={alert}
-                setOpen={setAlert}
-                del={props.del}
-                index={props.index}
-              />
-            </IconButton>
+              >
+                <EditIcon
+                  sx={{
+                    color: "primary.main",
+                    border: 2,
+                    padding: 0.5,
+                    width: 30,
+                    height: 30,
+                    borderTopLeftRadius: 4,
+                    borderTopRightRadius: 4,
+                    "&:hover": { bgcolor: "secondary.light" },
+                  }}
+                />
+              </IconButton>
+              <IconButton sx={{ paddingTop: 0 }} onClick={() => setAlert(true)}>
+                <DeleteIcon
+                  sx={{
+                    color: "primary.main",
+                    border: 2,
+                    padding: 0.5,
+                    width: 30,
+                    height: 30,
+                    borderBottomLeftRadius: 4,
+                    borderBottomRightRadius: 4,
+                    "&:hover": { bgcolor: "secondary.light" },
+                  }}
+                />
+                <AlertDialog
+                  open={alert}
+                  setOpen={setAlert}
+                  del={props.del}
+                  index={props.index}
+                />
+              </IconButton>
+            </Box>
           )}
         </Box>
       </Item>

@@ -1,17 +1,14 @@
 import * as React from "react";
-
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
-import AddIcon from "@mui/icons-material/Add";
-import KeyboardBackspaceSharpIcon from "@mui/icons-material/KeyboardBackspaceSharp";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { Box, Typography } from "@mui/material";
+
+import {Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, Box, Typography } from "@mui/material";
+
+import AddIcon from "@mui/icons-material/Add";
+import KeyboardBackspaceSharpIcon from "@mui/icons-material/KeyboardBackspaceSharp";
+import { DateField } from "@mui/x-date-pickers";
+
+
 
 export default function FormDialog(props) {
   const [open, setOpen] = React.useState(false);
@@ -32,7 +29,6 @@ export default function FormDialog(props) {
 
   const handleSubmit = () => {
     props.set({...props.info, task:{...props.info.task, tasks: [...props.info.task.tasks, data]}})
-    console.log(data);
     handleClose()
 };
 
@@ -133,18 +129,14 @@ export default function FormDialog(props) {
               Deadline:
             </Typography>
             <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
-              <DatePicker
-              
+              <DateField
                 sx={{
                   flex: 1.5,
                   border: 2,
                   borderColor: "secondary.light",
                   "&:hover": {
                     borderColor: "secondary.main",
-                  },
-                  '& .MuiButtonBase-root':{display:'none'}
-                  
-                  
+                  }                  
                 }}
                 onChange={(e) => {setData({...data, deadline: e.$d})}}
 
