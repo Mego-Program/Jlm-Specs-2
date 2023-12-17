@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 
 const SpecComments = ({ specId }) => {
   const [comments, setComments] = useState([]);
@@ -49,29 +49,33 @@ const SpecComments = ({ specId }) => {
   };
 
   return (
-    <Box>
+    <Box sx={{width:'100%'}}>
       {comments.map((comment, commentIndex) => (
         <Box
           key={commentIndex}
           sx={{
             border: "1px solid #ccc",
+            bgcolor:'secondary.dark',
             borderRadius: "8px",
             padding: "8px",
             marginBottom: "16px",
             marginLeft: comment.replyTo ? "16px" : "0",
+            borderBottom:2
           }}
         >
-          <strong>{comment.author}</strong>: {comment.content}
-          <Box sx={{ marginTop: "8px" }}>
+          <Typography sx={{borderBottom:1}}><strong>{comment.author}</strong>: {comment.content}</Typography>
+          
+          <Box sx={{ marginTop: "8px"}}>
             <Button
-              variant="outlined"
+              variant="text"
+              sx={{fontWeight:700}}
               onClick={() => setReplyFormOpen(commentIndex)}
             >
               Add Reply
             </Button>
-
+            <Box sx={{bgcolor:'secondary.light', borderRadius:1, padding:1, marginLeft:8}}>
             {comment.replies && comment.replies.length > 0 && (
-              <Box sx={{ marginLeft: "16px", marginTop: "8px" }}>
+              <Box >
                 {comment.replies.map((reply, replyIndex) => (
                   <Box
                     key={replyIndex}
@@ -87,18 +91,18 @@ const SpecComments = ({ specId }) => {
                 ))}
               </Box>
             )}
+            </Box>
 
             {replyFormOpen !== null && replyFormOpen === commentIndex && (
-              <Box sx={{ marginTop: "8px", marginLeft: "16px" }}>
+              <Box sx={{ marginTop:2, marginLeft:8, bgcolor:'secondary.main', padding:2, borderRadius:1, display:'flex', justifyContent:'space-between'}}>
                 <TextField
                   label="Author"
                   value={newReply.author}
                   onChange={(e) =>
                     setNewReply({ ...newReply, author: e.target.value })
                   }
-                  multiline
                   rows={2}
-                  sx={{ marginBottom: "8px" }}
+                  sx={{marginRight:1, '& .MuiOutlinedInput-notchedOutline':{border:2, borderRadius:1}, '& label':{color:'info.main'}}}
                 />
                 <TextField
                   label="Content"
@@ -108,39 +112,45 @@ const SpecComments = ({ specId }) => {
                   }
                   multiline
                   rows={2}
-                  sx={{ marginBottom: "8px" }}
+                  sx={{flex:2, marginRight:1, '& .MuiOutlinedInput-notchedOutline':{border:2, borderRadius:1}, '& label':{color:'info.main'}}}
                 />
+                <Box sx={{display:'flex', alignItems:'end'}}>
                 <Button
                   variant="outlined"
+                  sx={{height:40, border:2, fontWeight:700, '&:hover':{border:2}}}
                   onClick={() => handleReplySubmit(comment._id, comment._id)}
                 >
                   Add Reply
                 </Button>
+                </Box>
               </Box>
             )}
           </Box>
         </Box>
       ))}
-
+    <Box sx={{display:'flex', alignItems:'start'}}>
       <TextField
         label="Your Name"
         value={newComment.author}
         onChange={(e) =>
           setNewComment({ ...newComment, author: e.target.value })
         }
-        sx={{ marginRight: 2 }}
-      />
+        sx={{marginRight:1, '& .MuiOutlinedInput-notchedOutline':{border:2, borderColor:'primary.main', borderRadius:1}, '& label':{color:'primary.main'}}}
+        />
       <TextField
         label="Your Comment"
         value={newComment.content}
+        multiline
+        rows={3}
         onChange={(e) =>
           setNewComment({ ...newComment, content: e.target.value })
         }
-        sx={{ marginRight: 2 }}
-      />
-      <Button variant="contained" onClick={handleCommentSubmit}>
+        sx={{flex:2, marginRight:1, '& .MuiOutlinedInput-notchedOutline':{border:2, borderColor:'primary.main', borderRadius:1}, '& label':{color:'primary.main'}}}
+        />
+      <Button variant="contained" sx={{fontWeight:700}} onClick={handleCommentSubmit}>
         Add A Comment
       </Button>
+      </Box>
     </Box>
   );
 };
