@@ -6,6 +6,8 @@ import Stack from '@mui/material/Stack';
 import { Button, List, Paper} from '@mui/material';
 import Item from './FormUser';
 import { Entity } from 'draft-js';
+import SpecInput from '../../pages/SpecInput';
+import axios from 'axios'
 
 export default function Tags(props) { 
 
@@ -33,6 +35,47 @@ const CustomPaper = (props) => {
         );
       };
 
+
+
+const [value, setValue] = React.useState("")
+const [list, setList] = React.useState([]) 
+const [users, setUsers] = React.useState([])
+
+React.useEffect(() => {
+  async function fetchData() {
+    try {
+      const response = await axios.get('http://localhost:4000/teams');
+      response.data.map((item) => { 
+        if (item.userName === undefined || users.includes(item.userName)) {
+          return;
+        } else {
+          setUsers(prevUsers => {
+            if (!prevUsers.includes(item.userName)) {
+              return [...prevUsers, item.userName];
+            }
+            return prevUsers;
+          });
+        }
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  fetchData();
+}, [users]);
+
+
+React.useEffect(() => {
+  console.log(users);
+}, [users]);
+
+React.useEffect(() => {
+    console.log('value:' + value);
+    console.log('props:', props);
+    console.log('list:' + list);
+ },[props, list, value])
+
 const top100Films = [
     'The Godfather',
     'The Godfather: Part II',
@@ -42,15 +85,6 @@ const top100Films = [
     'The Lord of the Rings'
   ];
  
-const [value, setValue] = React.useState("")
-const [users, setUsers] = React.useState([])
-const [list, setList] = React.useState([])
-
-React.useEffect(() => {
-    console.log('value:' + value);
-    console.log('props:', props);
-    console.log('list:' + list);
- },[props, list, value])
 
 const enterUser = (event) => {
     setValue(event.target.innerHTML)
@@ -76,12 +110,12 @@ const enterUser = (event) => {
       onChange={enterUser}
         multiple 
         id="tags-outlined"
-        options={top100Films} 
-        getOptionLabel ={(option) => option} 
+        options={users} 
+        getOptionLabel = {(option) => option} 
         freeSolo
         filterSelectedOptions
         renderInput = {(params) => ( 
-          <TextField
+          <TextField sx={{maxHeight: 80, overflow: 'auto'}}
           onChange={enterUser}
             {...params} 
             label="TEAM" 
@@ -96,7 +130,7 @@ const enterUser = (event) => {
         >
           Add
         </Button>
-        <List sx={{ width: "100%", bgcolor: "secondary.light", borderRadius: 2 }}>
+        <List sx={{ width: "100%", bgcolor: "secondary.light", borderRadius: 2, maxHeight: 80, overflow: 'auto'}}>
       {props.info.team.map((i, index) => (
           <Item name={i} key={index} id={index} del={delItem}/>
       ))}
