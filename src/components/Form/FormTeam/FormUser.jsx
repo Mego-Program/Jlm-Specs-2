@@ -16,7 +16,7 @@ export default function Item(props) {
       alignItems="flex-start"
     >
       <ListItemAvatar sx={{ margin: 0 }}>
-        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+        <Avatar alt="Remy Sharp" src="" />
       </ListItemAvatar>
       <ListItemText primary={props.name} />
       <Button sx={{ fontSize: 11 }} onClick={delItem}>

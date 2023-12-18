@@ -5,7 +5,6 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import { Button, List, Paper} from '@mui/material';
 import Item from './FormUser';
-import { Entity } from 'draft-js';
 import axios from 'axios'
 
 export default function Tags(props) { 
@@ -65,15 +64,15 @@ React.useEffect(() => {
 }, [users]);
 
 
-React.useEffect(() => {
-  console.log(users);
-}, [users]);
+// React.useEffect(() => {
+//   console.log(users);
+// }, [users]);
 
-React.useEffect(() => {
-    console.log('value:' + value);
-    console.log('props:', props);
-    console.log('list:' + list);
- },[props, list, value])
+// React.useEffect(() => {
+//     console.log('value:' + value);
+//     console.log('props:', props);
+//     console.log('list:' + list);
+//  },[props, list, value])
 
 const top100Films = [
     'The Godfather',

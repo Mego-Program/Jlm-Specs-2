@@ -211,6 +211,7 @@ function SingleSpec() {
           </>
         )}
       </Box>
+      
       <Box sx={componentStyle}>
           <SpecContent set={setSpecData} info={specData}/>
       </Box>
@@ -224,7 +225,7 @@ function SingleSpec() {
           alignItems: "start",
         }}
       >
-        {specData.task.length > 0 && (
+        {specData.task.tasks.length > 0 && (
           <SpecTask info={specData} set={setSpecData} />
         )}
       </Box>

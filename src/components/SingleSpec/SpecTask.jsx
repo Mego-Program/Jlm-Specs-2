@@ -1,11 +1,33 @@
 import { Editor, EditorState, ContentState, convertFromRaw } from "draft-js";
-import { Box, Button, List, ListItem, Stack, Tooltip, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Dialog,
+  IconButton,
+  List,
+  ListItem,
+  Stack,
+  TextField,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import dayjs from "dayjs";
 import TaskItem from "../global/TaskItem";
 import axios from "axios";
 import { useEffect } from "react";
 import FormDetails from "../Form/FormDetails";
-import FormDialog from "../global/FormDialog";
+import AddIcon from "@mui/icons-material/Add";
+import CheckIcon from "@mui/icons-material/Check";
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
+import {
+  DateField,
+  DesktopDatePicker,
+  LocalizationProvider,
+} from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { useState } from "react";
+import NewTask from "./NewTask";
+import LinkTask from "./LinkTask";
 
 export default function SpecTask(props) {
   const update = async () => {
@@ -24,15 +46,29 @@ export default function SpecTask(props) {
   const delItem = async (index) => {
     const newlist = props.info.task.tasks.filter((item, id) => id !== index);
     props.info.task.tasks = newlist;
-    props.set({ ...props.info, task: {...props.info.task, tasks:props.info.task.tasks} });
+    props.set({
+      ...props.info,
+      task: { ...props.info.task, tasks: props.info.task.tasks },
+    });
     update();
   };
   function saveItem(item, index) {
-    console.log(item);
     props.info.task.tasks[index] = item;
-    props.set({ ...props.info, task: {...props.info.task, tasks:props.info.task.tasks} });
+    props.set({
+      ...props.info,
+      task: { ...props.info.task, tasks: props.info.task.tasks },
+    });
     update();
   }
+
+  function newItem() {}
+  const [open, setOpen] = useState(false);
+  const [task, setTask] = useState({
+    header: "",
+    content: "",
+    deadline: null,
+    sendToBoard: false,
+  });
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -51,21 +87,23 @@ export default function SpecTask(props) {
             backgroundColor: "#f6c927",
             borderRadius: "6px",
           },
+
         }}
       >
-        <Stack spacing={1}>
+        <Stack spacing={1} >
           <Box
             sx={{
               display: "flex",
               justifyContent: "space-between",
+              zIndex:0,
             }}
           >
-            {/* <FormDialog  set={props.set} info={props.info}/> */}
-            {props.info.task.projecName !== "" && (
-              
-              
-              <Tooltip title={<Button sx={{height:20, color:'secondary.main', fontWeight:700, border:1, borderColor:'secondary.main'}}>Edit</Button>} placement='right'>
-                <Typography
+            <Tooltip
+              title={<LinkTask info={props.info} set={props.set}/>}
+              placement="right"
+              PopperProps={{style:{zIndex:0}}}
+            >
+              <Typography
                 sx={{
                   bgcolor: "secondary.main",
                   paddingY: 0.5,
@@ -73,13 +111,16 @@ export default function SpecTask(props) {
                   borderRadius: 1,
                   border: 1,
                   borderColor: "primary.main",
+                  fontWeight: 700,
+                  cursor: "context-menu",
+                  '& .MuiPopper-root':{zIndex:0}
+
                 }}
               >
                 LinkTo: {props.info.task.projectName}
               </Typography>
-              </Tooltip>
-              
-            )}
+            </Tooltip>
+            <NewTask info={props.info} set={props.set}/>
           </Box>
           {props.info.task.tasks.map((item, index) => {
             return (
@@ -90,7 +131,7 @@ export default function SpecTask(props) {
                 index={index}
                 save={saveItem}
                 del={delItem}
-                spec={{title:props.info.title,id:props.info._id}}
+                spec={{ title: props.info.title, id: props.info._id }}
                 new={false}
               />
             );
