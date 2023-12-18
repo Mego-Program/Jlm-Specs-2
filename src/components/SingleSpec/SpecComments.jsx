@@ -11,7 +11,7 @@ const SpecComments = ({ specId }) => {
   const fetchComments = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:4000/specs/${specId}/comments`
+        `${import.meta.env.VITE_API_URL}/comments/${specId}`
       );
       setComments(response.data);
     } catch (error) {
@@ -26,7 +26,7 @@ const SpecComments = ({ specId }) => {
   const handleCommentSubmit = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:4000/specs/${specId}/comments`,
+        `${import.meta.env.VITE_API_URL}/comments/${specId}`,
         newComment
       );
       setComments(response.data);
@@ -38,7 +38,7 @@ const SpecComments = ({ specId }) => {
 
   const handleReplySubmit = async (commentId, replyTo) => {
     try {
-      const endpoint = `http://localhost:4000/specs/${specId}/comments/${commentId}/replies`;
+      const endpoint = `${import.meta.env.VITE_API_URL}/comments/${specId}/${commentId}/replies`;
       await axios.post(endpoint, newReply);
       setNewReply({ author: "", content: "" });
       fetchComments();
@@ -52,7 +52,7 @@ const SpecComments = ({ specId }) => {
     <Box>
       {comments.map((comment, commentIndex) => (
         <Box
-          key={commentIndex}
+          key={comment._id}
           sx={{
             border: "1px solid #ccc",
             borderRadius: "8px",
