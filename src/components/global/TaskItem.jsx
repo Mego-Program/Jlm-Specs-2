@@ -59,7 +59,6 @@ export default function TaskItem(props) {
 
   const sendToBoard = async () => {
     if (!props.new) {
-      console.log(props.item.sendToBoard);
       if (!props.item.sendToBoard) {
         try {
           item.sendToBoard = true;

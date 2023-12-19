@@ -33,7 +33,7 @@ export default function FormDialog(props) {
 };
 
   const handleClose = () => {
-    setData({header:'', content:'',deadline:null})
+    setData({header:'', content:'',deadline:null, sendToBoard:false})
     setOpen(false);
   };
 
