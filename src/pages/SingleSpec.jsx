@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import axios from "axios";
-
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import EditIcon from "@mui/icons-material/Edit";
+// import Box from "@mui/material/Box";
 import KeyboardBackspaceOutlinedIcon from "@mui/icons-material/KeyboardBackspaceOutlined";
-import { Backdrop, CircularProgress } from "@mui/material";
-
-import EditableField from "../components/SingleSpec/EditableField";
-import SpecTitle from "../components/SingleSpec/SpecTitle";
-import SpecDescription from "../components/SingleSpec/SpecDescription";
+import { Box, Backdrop, CircularProgress } from "@mui/material";
+import SpecInfo from "../components/SingleSpec/SpecInfo";
 import SpecTask from "../components/SingleSpec/SpecTask";
 import SpecTeam from "../components/SingleSpec/SpecTeam";
 import SpecComments from "../components/SingleSpec/SpecComments";
@@ -42,33 +36,20 @@ const SingleSpec = () => {
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_API_URL}/specs/${id}`)
-
-      .then((response) => {
-        const data = response.data;
-        setSpecData(data);
-      })
-      .catch((error) => {
-        console.error("Error when retrieving spec data :", error);
-      });
+      .then((response) => setSpecData(response.data))
+      .catch((error) =>
+        console.error("Error when retrieving spec data :", error)
+      );
   }, [id]);
+
   useEffect(() => {
     axios
       .put(`${import.meta.env.VITE_API_URL}/specs/${id}`, specData)
-      .catch((error) => {
-        console.error("Error updating spec data :", error);
-      });
-  }, [specData]);
-
-  const [isEditingTitle, setIsEditingTitle] = useState(false);
-  const [isEditingDescription, setIsEditingDescription] = useState(false);
-  const [isEditingTasks, setIsEditingTasks] = useState(false);
-  const [isEditingTeam, setIsEditingTeam] = useState(false);
+      .catch((error) => console.error("Error updating spec data :", error));
+  }, [id, specData]);
 
   const updateSpecData = (field, newValue) => {
-    setSpecData((prevData) => ({
-      ...prevData,
-      [field]: newValue,
-    }));
+    setSpecData((prevData) => ({ ...prevData, [field]: newValue }));
   };
 
   const handleSave = async (field, newValue) => {
@@ -83,50 +64,8 @@ const SingleSpec = () => {
     }
   };
 
-  const handleSaveDescription = async (newDescription) => {
-    try {
-      await axios.put(`${import.meta.env.VITE_API_URL}/specs/${id}`, {
-        description: newDescription,
-      });
-      updateSpecData("description", newDescription);
-      setIsEditingDescription(false);
-    } catch (error) {
-      console.error("Error saving description:", error);
-    }
-  };
-
-  // const handleSaveTeam = async (newTeam) => {
-  //   try {
-  //     await axios.put(`${import.meta.env.VITE_API_URL}/specs)/${id}`, {
-  //       team: newTeam,
-  //     });
-  //     updateSpecData("team", newTeam);
-  //     setIsEditingDescription(false);
-  //   } catch (error) {
-  //     console.error("Error saving team:", error);
-  //   }
-  // };
-
   const handleEditClick = (field) => {
-    switch (field) {
-      case "title":
-        setIsEditingTitle(true);
-        break;
-      case "description":
-        setIsEditingDescription(true);
-        break;
-      case "content":
-        setIsEditingTasks(true);
-        break;
-      case "team":
-        setIsEditingTeam(true);
-        break;
-      case "tasks":
-        setIsEditingTasks(true);
-        break;
-      default:
-        break;
-    }
+    setIsEditing({ ...isEditing, [field]: true });
   };
 
   if (!specData) {
@@ -159,59 +98,19 @@ const SingleSpec = () => {
         />
       </NavLink>
 
-      <Box
-        sx={{
-          ...componentStyle,
-          position: "relative",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        {isEditingTitle ? (
-          <EditableField content={specData.title} onSave={handleSaveTitle} />
-        ) : (
-          <>
-            <SpecTitle title={specData.title} />
-            <Button
-              variant="outlined"
-              color="primary"
-              startIcon={<EditIcon />}
-              onClick={() => handleEditClick("title")}
-            ></Button>
-          </>
-        )}
-      </Box>
+      <SpecInfo
+        title={specData.title}
+        description={specData.description}
+        onSaveTitle={(newTitle) => handleSave("title", newTitle)}
+        onSaveDescription={(newDescription) =>
+          handleSave("description", newDescription)
+        }
+        isEditing={isEditing}
+        onEditClick={handleEditClick}
+      />
 
-      <Box
-        sx={{
-          ...componentStyle,
-          position: "relative",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        {isEditingDescription ? (
-          <EditableField
-            content={specData.description}
-            onSave={handleSaveDescription}
-          />
-        ) : (
-          <>
-            <SpecDescription description={specData.description} />
-            <Button
-              variant="outlined"
-              color="primary"
-              startIcon={<EditIcon />}
-              onClick={() => handleEditClick("description")}
-            ></Button>
-          </>
-        )}
-      </Box>
-      
       <Box sx={componentStyle}>
-          <SpecContent set={setSpecData} info={specData}/>
+        <SpecContent set={setSpecData} info={specData} />
       </Box>
 
       <Box
@@ -229,7 +128,7 @@ const SingleSpec = () => {
       </Box>
 
       <Box sx={componentStyle}>
-        <SpecTeam info={specData} set={setSpecData}/>
+        <SpecTeam info={specData} set={setSpecData} />
       </Box>
 
       <Box
@@ -253,6 +152,6 @@ const SingleSpec = () => {
       </Box>
     </Box>
   );
-}
+};
 
 export default SingleSpec;
