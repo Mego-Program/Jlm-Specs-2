@@ -58,11 +58,13 @@ export default function SpecTask(props) {
       <Typography variant="h5">Tasks:</Typography>
       <Box
         sx={{
+          minHeight:150,
+          marginTop:1,
           bgcolor: "secondary.light",
           padding: 2,
           borderRadius: 1,
           overflowY: "scroll",
-          maxHeight: "30vh",
+          maxHeight: 300,
           "&::-webkit-scrollbar": {
             width: "6px",
           },

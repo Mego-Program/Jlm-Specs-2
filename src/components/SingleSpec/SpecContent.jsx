@@ -72,6 +72,7 @@ export default function SpecContent(props) {
             <DescEditor set={props.set} info={props.info} />
           </Box>
         ) : (
+          <Box sx={{minHeight:150}}>
           <Editor
             editorState={
               props.info && props.info.content
@@ -85,6 +86,7 @@ export default function SpecContent(props) {
             }
             readOnly
           />
+          </Box>
         )}
       </Box>
     </Box>
