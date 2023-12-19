@@ -23,6 +23,7 @@ export default function LinkTask(props) {
     tasks: [Object],
     newSpec: false,
   });
+  // const oldBoard = 
 
   useEffect(() => {
     axios
@@ -37,8 +38,7 @@ export default function LinkTask(props) {
 
   const newItem = async () => {
     try {
-        const response = await axios.put(`${import.meta.env.VITE_API_URL}/project/connect-board`, board);
-        console.log('test');
+        const response = await axios.put(`${import.meta.env.VITE_API_URL}/project/connect-board/${props.info.task.projectName}`, board);
         const updateList = props.info.task.tasks.map(item => ({ ...item, sendToBoard: false }))
         const newTask = {
           projectName:board.boardName,
@@ -83,7 +83,6 @@ export default function LinkTask(props) {
           border: 1,
           borderColor: "secondary.main",
           bgcolor: "primary.main",
-          fontWeight: 700,
           "&:hover": { bgcolor: "primary.dark" },
         }}
         onClick={() => setOpen(true)}

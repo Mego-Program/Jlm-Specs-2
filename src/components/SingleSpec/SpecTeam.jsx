@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Button, List, ListItem, Typography } from "@mui/material";
-import Item from '../Form/FormTeam/FormUser';
+import Item from '../global/FormUser';
 import { Edit } from '@mui/icons-material';
 import axios from 'axios';
 
@@ -17,13 +17,13 @@ function SpecTeam(props) {
   const delItem = (id) => {
     let newTeam = props.info.team.filter((item, index) => id !== index);
     console.log(newTeam);
-    props.set({ ...props, team: newTeam });
+    props.set({...props.info, team: newTeam });
     console.log(props.info.team);
   };
 
     async function fetchData() {
       try {
-        const response = await axios.get('http://localhost:4000/teams');
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/team`);
         let data = response.data
         response.data.map((item) => { 
             console.log(item.userName)

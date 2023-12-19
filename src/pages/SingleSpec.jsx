@@ -212,7 +212,7 @@ function SingleSpec() {
         )}
       </Box>
       
-      {/* <Box sx={componentStyle}>
+      <Box sx={componentStyle}>
           <SpecContent set={setSpecData} info={specData}/>
       </Box>
 
@@ -228,7 +228,7 @@ function SingleSpec() {
         {specData.task.tasks.length > 0 && (
           <SpecTask info={specData} set={setSpecData} />
         )}
-      </Box> */}
+      </Box>
 
       <Box sx={componentStyle}>
         <SpecTeam info={specData} set={setSpecData}/>
