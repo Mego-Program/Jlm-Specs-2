@@ -47,14 +47,19 @@ export default function SpecContent(props) {
           </Box>
         ) : (
           <Editor
-            editorState={EditorState.createWithContent(
-              convertFromRaw({
-                blocks: props.info.content.blocks,
-                entityMap: {},
-              })
-            )}
-            readOnly
-          />
+  editorState={
+    props.info && props.info.content
+      ? EditorState.createWithContent(
+          convertFromRaw({
+            blocks: props.info.content.blocks,
+            entityMap: {},
+          })
+        )
+      : EditorState.createEmpty()
+  }
+  readOnly
+/>
+
         )}
       </Box>
     </Box>

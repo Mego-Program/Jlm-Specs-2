@@ -79,7 +79,6 @@ export default function LinkTask(props) {
         sx={{
           height: 20,
           color: "secondary.main",
-          fontWeight: 700,
           border: 1,
           borderColor: "secondary.main",
           bgcolor: "primary.main",

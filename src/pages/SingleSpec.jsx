@@ -34,7 +34,7 @@ const componentStyle = {
   borderRadius: 2,
 };
 
-function SingleSpec() {
+const SingleSpec = () => {
   const { id } = useParams();
   const [specData, setSpecData] = useState(null);
   const [isEditing, setIsEditing] = useState({});
@@ -71,17 +71,15 @@ function SingleSpec() {
     }));
   };
 
-  const handleSaveTitle = async (newTitle) => {
-    console.log(specData);
+  const handleSave = async (field, newValue) => {
     try {
       await axios.put(`${import.meta.env.VITE_API_URL}/specs/${id}`, {
-        title: newTitle,
+        [field]: newValue,
       });
-      updateSpecData("title", newTitle);
-
-      setIsEditingTitle(false);
+      updateSpecData(field, newValue);
+      setIsEditing(false);
     } catch (error) {
-      console.error("Error saving title:", error);
+      console.error(`Error saving ${field}:`, error);
     }
   };
 
