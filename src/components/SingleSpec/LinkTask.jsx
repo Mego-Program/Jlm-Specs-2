@@ -20,10 +20,9 @@ export default function LinkTask(props) {
   const [board, setBoard] = useState({
     spec:{ title: props.info.title, id: props.info._id },
     boardName: props.info.task.projectName,
-    tasks: [Object],
+    tasks: [],
     newSpec: false,
   });
-  // const oldBoard = 
 
   useEffect(() => {
     axios
@@ -38,7 +37,11 @@ export default function LinkTask(props) {
 
   const newItem = async () => {
     try {
-        const response = await axios.put(`${import.meta.env.VITE_API_URL}/project/connect-board/${props.info.task.projectName}`, board);
+        if (board.boardName !== ''){
+          const response = await axios.put(`${import.meta.env.VITE_API_URL}/project/connect-board/${props.info.task.projectName}`, board);
+        }else{
+          const response = await axios.put(`${import.meta.env.VITE_API_URL}/project/connect-board/null`, board);
+        }
         const updateList = props.info.task.tasks.map(item => ({ ...item, sendToBoard: false }))
         const newTask = {
           projectName:board.boardName,
