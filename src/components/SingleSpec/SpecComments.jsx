@@ -11,7 +11,7 @@ const SpecComments = ({ specId }) => {
   const fetchComments = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:4000/specs/${specId}/comments`
+        `${import.meta.env.VITE_API_URL}/comments/${specId}`
       );
       setComments(response.data);
     } catch (error) {
@@ -26,7 +26,7 @@ const SpecComments = ({ specId }) => {
   const handleCommentSubmit = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:4000/specs/${specId}/comments`,
+        `${import.meta.env.VITE_API_URL}/comments/${specId}`,
         newComment
       );
       setComments(response.data);
@@ -38,7 +38,9 @@ const SpecComments = ({ specId }) => {
 
   const handleReplySubmit = async (commentId, replyTo) => {
     try {
-      const endpoint = `http://localhost:4000/specs/${specId}/comments/${commentId}/replies`;
+      const endpoint = `${
+        import.meta.env.VITE_API_URL
+      }/comments/${specId}/${commentId}/replies`;
       await axios.post(endpoint, newReply);
       setNewReply({ author: "", content: "" });
       fetchComments();
@@ -49,52 +51,75 @@ const SpecComments = ({ specId }) => {
   };
 
   return (
-    <Box sx={{width:'100%'}}>
+    <Box sx={{ width: "100%" }}>
+      <Typography variant="h5">Comments:</Typography>
       {comments.map((comment, commentIndex) => (
         <Box
-          key={commentIndex}
+          key={comment._id}
           sx={{
             border: "1px solid #ccc",
-            bgcolor:'secondary.dark',
+            bgcolor: "secondary.main",
             borderRadius: "8px",
             padding: "8px",
             marginBottom: "16px",
             marginLeft: comment.replyTo ? "16px" : "0",
-            borderBottom:2
+            borderBottom: 2,
           }}
         >
-          <Typography sx={{borderBottom:1}}><strong>{comment.author}</strong>: {comment.content}</Typography>
-          
-          <Box sx={{ marginTop: "8px"}}>
+          <Typography sx={{ borderBottom: 1 }}>
+            <strong>{comment.author}</strong>: {comment.content}
+          </Typography>
+
+          <Box sx={{ marginTop: "8px" }}>
             <Button
               variant="text"
-              sx={{fontWeight:700}}
-              onClick={() => setReplyFormOpen(commentIndex)}
+              sx={{ fontWeight: 700 }}
+              onClick={() => {
+                setReplyFormOpen(commentIndex);
+                setNewReply({ author: "", content: "" });
+              }}
             >
               Add Reply
             </Button>
-            <Box sx={{bgcolor:'secondary.light', borderRadius:1, padding:1, marginLeft:8}}>
-            {comment.replies && comment.replies.length > 0 && (
-              <Box >
-                {comment.replies.map((reply, replyIndex) => (
-                  <Box
-                    key={replyIndex}
-                    sx={{
-                      border: "1px solid #ccc",
-                      borderRadius: "8px",
-                      padding: "8px",
-                      marginTop: "8px",
-                    }}
-                  >
-                    <strong>{reply.author}</strong>: {reply.content}
-                  </Box>
-                ))}
-              </Box>
-            )}
+            <Box
+              sx={{
+                bgcolor: "secondary.light",
+                borderRadius: 1,
+                padding: 1,
+                marginLeft: 8,
+              }}
+            >
+              {comment.replies && comment.replies.length > 0 && (
+                <Box>
+                  {comment.replies.map((reply, replyIndex) => (
+                    <Box
+                      key={replyIndex}
+                      sx={{
+                        border: "1px solid #ccc",
+                        borderRadius: "8px",
+                        padding: "8px",
+                        marginTop: "8px",
+                      }}
+                    >
+                      <strong>{reply.author}</strong>: {reply.content}
+                    </Box>
+                  ))}
+                </Box>
+              )}
             </Box>
 
             {replyFormOpen !== null && replyFormOpen === commentIndex && (
-              <Box sx={{ marginTop:2, marginLeft:8, bgcolor:'secondary.main', padding:2, borderRadius:1, display:'flex', justifyContent:'space-between'}}>
+              <Box
+                sx={{
+                  marginTop: 2,
+                  marginLeft: 8,
+                  bgcolor: "secondary.main",
+                  padding: 2,
+                  borderRadius: 1,
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
                 <TextField
                   label="Author"
                   value={newReply.author}
@@ -102,7 +127,14 @@ const SpecComments = ({ specId }) => {
                     setNewReply({ ...newReply, author: e.target.value })
                   }
                   rows={2}
-                  sx={{marginRight:1, '& .MuiOutlinedInput-notchedOutline':{border:2, borderRadius:1}, '& label':{color:'info.main'}}}
+                  sx={{
+                    marginRight: 1,
+                    "& .MuiOutlinedInput-notchedOutline": {
+                      border: 2,
+                      borderRadius: 1,
+                    },
+                    "& label": { color: "info.main" },
+                  }}
                 />
                 <TextField
                   label="Content"
@@ -112,44 +144,78 @@ const SpecComments = ({ specId }) => {
                   }
                   multiline
                   rows={2}
-                  sx={{flex:2, marginRight:1, '& .MuiOutlinedInput-notchedOutline':{border:2, borderRadius:1}, '& label':{color:'info.main'}}}
+                  sx={{
+                    flex: 2,
+                    marginRight: 1,
+                    "& .MuiOutlinedInput-notchedOutline": {
+                      border: 2,
+                      borderRadius: 1,
+                    },
+                    "& label": { color: "info.main" },
+                  }}
                 />
-                <Box sx={{display:'flex', alignItems:'end'}}>
-                <Button
-                  variant="outlined"
-                  sx={{height:40, border:2, fontWeight:700, '&:hover':{border:2}}}
-                  onClick={() => handleReplySubmit(comment._id, comment._id)}
-                >
-                  Add Reply
-                </Button>
+                <Box sx={{ display: "flex", alignItems: "end" }}>
+                  <Button
+                    variant="outlined"
+                    sx={{
+                      height: 40,
+                      border: 2,
+                      fontWeight: 700,
+                      "&:hover": { border: 2 },
+                    }}
+                    onClick={() => handleReplySubmit(comment._id, comment._id)}
+                  >
+                    Add Reply
+                  </Button>
                 </Box>
               </Box>
             )}
           </Box>
         </Box>
       ))}
-    <Box sx={{display:'flex', alignItems:'start'}}>
-      <TextField
-        label="Your Name"
-        value={newComment.author}
-        onChange={(e) =>
-          setNewComment({ ...newComment, author: e.target.value })
-        }
-        sx={{marginRight:1, '& .MuiOutlinedInput-notchedOutline':{border:2, borderColor:'primary.main', borderRadius:1}, '& label':{color:'primary.main'}}}
+      <Box sx={{ display: "flex", alignItems: "start" }}>
+        <TextField
+          label="Your Name"
+          value={newComment.author}
+          onChange={(e) =>
+            setNewComment({ ...newComment, author: e.target.value })
+          }
+          sx={{
+            marginRight: 1,
+            "& .MuiOutlinedInput-notchedOutline": {
+              border: 2,
+              borderColor: "primary.main",
+              borderRadius: 1,
+            },
+            "& label": { color: "primary.main" },
+          }}
         />
-      <TextField
-        label="Your Comment"
-        value={newComment.content}
-        multiline
-        rows={3}
-        onChange={(e) =>
-          setNewComment({ ...newComment, content: e.target.value })
-        }
-        sx={{flex:2, marginRight:1, '& .MuiOutlinedInput-notchedOutline':{border:2, borderColor:'primary.main', borderRadius:1}, '& label':{color:'primary.main'}}}
+        <TextField
+          label="Your Comment"
+          value={newComment.content}
+          multiline
+          rows={3}
+          onChange={(e) =>
+            setNewComment({ ...newComment, content: e.target.value })
+          }
+          sx={{
+            flex: 2,
+            marginRight: 1,
+            "& .MuiOutlinedInput-notchedOutline": {
+              border: 2,
+              borderColor: "primary.main",
+              borderRadius: 1,
+            },
+            "& label": { color: "primary.main" },
+          }}
         />
-      <Button variant="contained" sx={{fontWeight:700}} onClick={handleCommentSubmit}>
-        Add A Comment
-      </Button>
+        <Button
+          variant="contained"
+          sx={{ fontWeight: 700 }}
+          onClick={handleCommentSubmit}
+        >
+          Add A Comment
+        </Button>
       </Box>
     </Box>
   );
