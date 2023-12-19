@@ -1,10 +1,10 @@
-
 import {
   Autocomplete,
   Box,
   Paper,
   Stack,
   TextField,
+  Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -62,8 +62,13 @@ export default function FormTask(props) {
     });
   }, [project]);
 
-  
-
+  useEffect(() => {
+    if (props.info.task.tasks.length == 0) {
+      props.fillPage(true);
+    } else {
+      props.fillPage(false);
+    }
+  }, [props.info.task]);
 
   function delItem(index) {
     const newlist = props.info.task.tasks.filter((item, id) => id !== index);
@@ -78,7 +83,7 @@ export default function FormTask(props) {
   }
 
   return (
-    <Box> 
+    <Box>
       <Box
         sx={{
           display: "flex",
@@ -95,7 +100,7 @@ export default function FormTask(props) {
               height: 10,
               borderRadius: 1,
             },
-
+            '& svg':{color:'primary.main'}
           }}
           defaultValue={props.info.task.projectName}
           options={projectList}
@@ -112,7 +117,7 @@ export default function FormTask(props) {
                     padding: 0,
                     paddingLeft: 1,
                   },
-                  "& svg": { color: "secondary.light" },
+                  "& svg": { color: "primary.light" },
                 }}
                 {...params}
                 placeholder="Link a Project"
@@ -140,11 +145,24 @@ export default function FormTask(props) {
         }}
       >
         <Stack spacing={1}>
-          {props.info.task.tasks.map((item, index) => {
-            return (
-              <TaskItem board={props.info.task.projectName} item={item} index={index} save={saveItem} del={delItem} new={true}/>
-            );
-          })}
+          {props.info.task.tasks.length == 0 ? (
+            <Typography> no task to display</Typography>
+          ) : (
+            <Box>
+              {props.info.task.tasks.map((item, index) => {
+                return (
+                  <TaskItem
+                    board={props.info.task.projectName}
+                    item={item}
+                    index={index}
+                    save={saveItem}
+                    del={delItem}
+                    new={true}
+                  />
+                );
+              })}
+            </Box>
+          )}
         </Stack>
       </Box>
     </Box>

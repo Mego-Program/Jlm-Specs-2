@@ -5,7 +5,6 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { MultiInputDateRangeField } from "@mui/x-date-pickers-pro/MultiInputDateRangeField";
 import "dayjs/locale/en-gb";
 import Typography from "@mui/material/Typography";
-import { useState } from "react";
 
 const inputStyle = {
   bgcolor: "secondary.light",
@@ -17,10 +16,22 @@ const inputStyle = {
   },
 };
 
-
 export default function FormKpi(props) {
   const [date1, setDate1] = React.useState(props.info.startDate || dayjs());
   const [date2, setDate2] = React.useState(props.info.endDate);
+
+  React.useEffect(() => {
+
+    if (props.info.endDate) {
+
+      if (props.info.startDate.$d == 'Invalid Date' || props.info.endDate.$d == 'Invalid Date') {
+        if (props.info.startDate > props.info.endDate);
+        props.fillPage(true);
+      } else {
+        props.fillPage(false);
+      }
+    }
+  }, [props.info.startDate, props.info.endDate]);
 
   const handleTime = (newDate) => {
     props.set({ ...props.info, startDate: newDate[0], endDate: newDate[1] });
@@ -34,7 +45,7 @@ export default function FormKpi(props) {
       <MultiInputDateRangeField
         onChange={handleTime}
         sx={inputStyle}
-        defaultValue={[date1,date2]}
+        defaultValue={[date1, date2]}
       />
     </LocalizationProvider>
   );

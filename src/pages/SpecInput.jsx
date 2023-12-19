@@ -24,7 +24,6 @@ import FormKpi from "../components/Form/FormKpi";
 import FormTask from "../components/Form/FormTask";
 import FormTeam from "../components/Form/FormTeam";
 import FormSubmit from "../components/Form/FormSubmit";
-import dayjs from "dayjs";
 
 const steps = ["Details", "KPIs", "Task", "Team", "Submit"];
 
@@ -36,6 +35,8 @@ export default function SpecInput() {
   const [alert, setAlert] = useState(false);
 
   const [disabled, setDisabled] = useState(false);
+  const [fillPage, setfillPage] = useState(true);
+
 
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
@@ -54,6 +55,7 @@ export default function SpecInput() {
 
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setSkipped(newSkipped);
+    setfillPage(true)
   };
 
   const handleBack = () => {
@@ -197,11 +199,11 @@ export default function SpecInput() {
               marginTop: 5,
             }}
           >
-            {activeStep === 0 && <FormDetails info={item} set={setItem} />}
-            {activeStep === 1 && <FormKpi info={item} set={setItem} />}
-            {activeStep === 2 && <FormTask info={item} set={setItem} />}
+            {activeStep === 0 && <FormDetails fillPage={setfillPage} info={item} set={setItem} />}
+            {activeStep === 1 && <FormKpi fillPage={setfillPage} info={item} set={setItem} />}
+            {activeStep === 2 && <FormTask fillPage={setfillPage} info={item} set={setItem} />}
 
-            {activeStep === 3 && <FormTeam info={item} set={setItem} />}
+            {activeStep === 3 && <FormTeam fillPage={setfillPage} info={item} set={setItem} />}
             {activeStep === 4 && (
               <FormSubmit info={item} set={setItem} disabled={setDisabled} />
             )}
@@ -233,7 +235,7 @@ export default function SpecInput() {
             <Button
               disabled={activeStep === 0}
               onClick={handleBack}
-              sx={{ mr: 1 }}
+              sx={{ mr: 1, '&.Mui-disabled':{color:'secondary.light', cursor:'not-allowed', pointerEvents:'unset'}}}
             >
               <ArrowBackIosNewSharpIcon />
               Back
@@ -275,7 +277,7 @@ export default function SpecInput() {
                 )}
               </LoadingButton>
             ) : (
-              <Button onClick={handleNext}>
+              <Button sx={{'&.Mui-disabled':{color:'secondary.light', cursor:'not-allowed', pointerEvents:'unset'}}} disabled={fillPage}  onClick={handleNext}>
                 Next
                 <ArrowForwardIosSharpIcon />
               </Button>

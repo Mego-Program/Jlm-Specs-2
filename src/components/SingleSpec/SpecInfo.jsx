@@ -21,7 +21,7 @@ function SpecInfo({
   return (
     <Box
       sx={{
-        backgroundColor: "background.b2",
+        backgroundColor: "secondary.main",
         padding: "16px",
         marginBottom: "16px",
         borderRadius: 2,

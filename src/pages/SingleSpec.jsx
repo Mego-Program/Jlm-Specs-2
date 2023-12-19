@@ -8,6 +8,7 @@ import SpecTask from "../components/SingleSpec/SpecTask";
 import SpecTeam from "../components/SingleSpec/SpecTeam";
 import SpecComments from "../components/SingleSpec/SpecComments";
 import SpecContent from "../components/SingleSpec/SpecContent";
+import SpecKpi from "../components/SingleSpec/Speckpi";
 
 const pageStyle = {
   backgroundColor: "background.b1",
@@ -95,17 +96,18 @@ const SingleSpec = () => {
           }}
         />
       </NavLink>
-
-      <SpecInfo
-        title={specData.title}
-        description={specData.description}
-        onSaveTitle={(newTitle) => handleSave("title", newTitle)}
-        onSaveDescription={(newDescription) =>
-          handleSave("description", newDescription)
-        }
-        isEditing={isEditing}
-        onEditClick={handleEditClick}
-      />
+      <Box sx={componentStyle}>
+        <SpecInfo
+          title={specData.title}
+          description={specData.description}
+          onSaveTitle={(newTitle) => handleSave("title", newTitle)}
+          onSaveDescription={(newDescription) =>
+            handleSave("description", newDescription)
+          }
+          isEditing={isEditing}
+          onEditClick={handleEditClick}
+        />
+      </Box>
 
       <Box sx={componentStyle}>
         <SpecContent set={setSpecData} info={specData} />
@@ -120,13 +122,14 @@ const SingleSpec = () => {
           alignItems: "start",
         }}
       >
-        {specData.task.tasks.length > 0 && (
-          <SpecTask info={specData} set={setSpecData} />
-        )}
+        <SpecTask info={specData} set={setSpecData} />
       </Box>
 
       <Box sx={componentStyle}>
         <SpecTeam info={specData} set={setSpecData} />
+      </Box>
+      <Box sx={componentStyle}>
+        <SpecKpi info={specData} set={setSpecData} />
       </Box>
 
       <Box

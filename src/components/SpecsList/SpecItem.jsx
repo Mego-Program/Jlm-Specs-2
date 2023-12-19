@@ -1,4 +1,11 @@
-import { Box, Button, Typography, ListItem, Avatar } from "@mui/material";
+import {
+  Box,
+  Button,
+  Typography,
+  ListItem,
+  Avatar,
+  AvatarGroup,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import dayjs from "dayjs";
@@ -6,11 +13,10 @@ import AlertDialog from "../global/AlertDialog";
 import { useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-
 function SpecItem(item) {
   const navigate = useNavigate();
 
-  const [alert , setAlert] = useState(false)
+  const [alert, setAlert] = useState(false);
 
   const delSpec = () => {
     try {
@@ -22,8 +28,9 @@ function SpecItem(item) {
   };
 
   const dateobject = dayjs(item.date);
-  const dateString = dateobject.$D + "." + (dateobject.$M+1) + "." + dateobject.$y;
-  
+  const dateString =
+    dateobject.$D + "." + (dateobject.$M + 1) + "." + dateobject.$y;
+
   return (
     <ListItem
       sx={{
@@ -60,7 +67,9 @@ function SpecItem(item) {
         <Box sx={{ bgcolor: "background.b2", width: "2px", height: "70px" }} />
       </Box>
       <Button
-        onClick={() => {navigate('single/'+ item.id)}}
+        onClick={() => {
+          navigate("single/" + item.id);
+        }}
         sx={{
           color: "text.primary",
           bgcolor: "background.b2",
@@ -74,13 +83,26 @@ function SpecItem(item) {
           justifyContent: "space-between",
         }}
       >
-        <Box sx={{ width: "70%", height: "100%", display:'flex', flexDirection:'column', justifyContent:'space-around', alignItems:'start',  wordWrap:'break-word', overflowX:'hidden', overflowY:'scroll', '::-webkit-scrollbar':{display:'none'}}}>
-          <Typography
-            sx={{ margin: 0, paddingTop: 1, fontWeight: 700 }}
-          >
+        <Box
+          sx={{
+            width: "70%",
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-around",
+            alignItems: "start",
+            wordWrap: "break-word",
+            overflowX: "hidden",
+            overflowY: "scroll",
+            "::-webkit-scrollbar": { display: "none" },
+          }}
+        >
+          <Typography sx={{fontSize: 20, margin: 0, fontWeight: 700 }}>
             {item.title}
           </Typography>
-          <Typography sx={{ fontSize: 9, textAlign:'start', marginRight:1}}>{item.info}</Typography>
+          <Typography sx={{ fontSize: 9, textAlign: "start", marginRight: 1 }}>
+            {item.info}
+          </Typography>
         </Box>
         <Box
           sx={{
@@ -88,10 +110,13 @@ function SpecItem(item) {
             alignItems: "center",
             justifyContent: "center",
           }}
-        >
-
-        </Box>
-        <Avatar>f</Avatar>
+        ></Box>
+        <AvatarGroup max={4}>
+          {item.team.map((user, index) => {
+            console.log(user);
+            return <Avatar sx={{bgcolor:'secondary.light'}}>{user.charAt(0)}</Avatar>;
+          })}
+        </AvatarGroup>
       </Button>
 
       <Box
@@ -101,26 +126,26 @@ function SpecItem(item) {
           justifyContent: "center",
           height: "100%",
         }}
-      >   
-      <DeleteIcon
-                sx={{
-                  color: "primary.main",
-                  boxSizing:'border-box',
-                  "&:hover": { border:1, borderColor:'primary.main' },
-                  padding:1,
-                  borderRadius:'50%',
-                  fontSize:48
-                }}
-                onClick={() => setAlert(true)}
-              />
+      >
+        <DeleteIcon
+          sx={{
+            color: "primary.main",
+            boxSizing: "border-box",
+            "&:hover": { border: 1, borderColor: "primary.main" },
+            padding: 1,
+            borderRadius: "50%",
+            fontSize: 48,
+          }}
+          onClick={() => setAlert(true)}
+        />
         <AlertDialog
-                open={alert}
-                setOpen={setAlert}
-                del={delSpec}
-                index={item.id}
-              />
+          open={alert}
+          setOpen={setAlert}
+          del={delSpec}
+          index={item.id}
+        />
       </Box>
     </ListItem>
-  )
+  );
 }
 export default SpecItem;

@@ -24,7 +24,7 @@ export default function FormSubmit(props) {
       {props.info.title === "" ||
       props.info.content.blocks[0].text === "" ||
       props.info.team.length == 0 ||
-      // props.info.task.length == 0 ||
+      props.info.task.tasks.length == 0 ||
       props.info.startDate === null ||
       props.info.endDate === null ? (
         <Typography sx={{ fontFamily: "monospace" }}>

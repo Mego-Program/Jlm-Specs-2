@@ -71,6 +71,7 @@ function SpecsList() {
                 key={spec._id}
                 id={spec._id}
                 del={delSpec}
+                team={spec.team}
               />
             ))
           ) : (

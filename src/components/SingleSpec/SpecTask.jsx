@@ -1,33 +1,16 @@
 import { Editor, EditorState, ContentState, convertFromRaw } from "draft-js";
 import {
   Box,
-  Button,
-  Dialog,
-  IconButton,
-  List,
-  ListItem,
   Stack,
-  TextField,
   Tooltip,
   Typography,
 } from "@mui/material";
-import dayjs from "dayjs";
 import TaskItem from "../global/TaskItem";
 import axios from "axios";
-import { useEffect } from "react";
-import FormDetails from "../Form/FormDetails";
-import AddIcon from "@mui/icons-material/Add";
-import CheckIcon from "@mui/icons-material/Check";
-import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
-import {
-  DateField,
-  DesktopDatePicker,
-  LocalizationProvider,
-} from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+
 import { useState } from "react";
-import NewTask from "./NewTask";
-import LinkTask from "./LinkTask";
+import NewTask from "./SpecTask/NewTask";
+import LinkTask from "./SpecTask/LinkTask";
 
 export default function SpecTask(props) {
   const update = async () => {
