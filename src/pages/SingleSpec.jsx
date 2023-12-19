@@ -82,10 +82,30 @@ const SingleSpec = () => {
       console.error(`Error saving ${field}:`, error);
     }
   };
-  
-  const handleSaveTitle = (newTitle) => handleSave("title", newTitle);
-  const handleSaveDescription = (newDescription) => handleSave("description", newDescription);
-  const handleSaveTeam = (newTeam) => handleSave("team", newTeam);
+
+  const handleSaveDescription = async (newDescription) => {
+    try {
+      await axios.put(`${import.meta.env.VITE_API_URL}/specs/${id}`, {
+        description: newDescription,
+      });
+      updateSpecData("description", newDescription);
+      setIsEditingDescription(false);
+    } catch (error) {
+      console.error("Error saving description:", error);
+    }
+  };
+
+  // const handleSaveTeam = async (newTeam) => {
+  //   try {
+  //     await axios.put(`${import.meta.env.VITE_API_URL}/specs)/${id}`, {
+  //       team: newTeam,
+  //     });
+  //     updateSpecData("team", newTeam);
+  //     setIsEditingDescription(false);
+  //   } catch (error) {
+  //     console.error("Error saving team:", error);
+  //   }
+  // };
 
   const handleEditClick = (field) => {
     switch (field) {
@@ -190,7 +210,7 @@ const SingleSpec = () => {
         )}
       </Box>
       
-      <Box sx={componentStyle}>
+      {/* <Box sx={componentStyle}>
           <SpecContent set={setSpecData} info={specData}/>
       </Box>
 
@@ -206,36 +226,12 @@ const SingleSpec = () => {
         {specData.task.tasks.length > 0 && (
           <SpecTask info={specData} set={setSpecData} />
         )}
+      </Box> */}
+
+      <Box sx={componentStyle}>
+        <SpecTeam info={specData} set={setSpecData}/>
       </Box>
 
-      <Box
-        sx={{
-          ...componentStyle,
-          position: "relative",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        {isEditingTeam ? (
-          <EditableField
-            content={specData.team.join(", ")}
-            onSave={handleSaveTeam}
-          />
-        ) : (
-          specData.team && (
-            <>
-              <SpecTeam team={specData.team} />
-              <Button
-                variant="outlined"
-                color="primary"
-                startIcon={<EditIcon />}
-                onClick={() => handleEditClick("team")}
-              ></Button>
-            </>
-          )
-        )}
-      </Box>
       <Box
         sx={{
           ...componentStyle,

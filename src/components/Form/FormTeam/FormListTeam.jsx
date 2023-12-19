@@ -86,7 +86,7 @@ const top100Films = [
 
 const enterUser = (event) => {
     setValue(event.target.innerHTML)
-    if (value.length > 0) {
+    if (value.length > 0 && value != "") {
     props.set({ ...props.info, team: [...props.info.team, value] });
 }}
 
