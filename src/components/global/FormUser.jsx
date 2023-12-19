@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 
 export default function Item(props) {
   const delItem = () => {
-    props.del(props.id);
+    props.del(props.id)
   };
 
   return (
@@ -19,9 +19,11 @@ export default function Item(props) {
         <Avatar alt="Remy Sharp" src="" />
       </ListItemAvatar>
       <ListItemText primary={props.name} />
+      {props.del && 
       <Button sx={{ fontSize: 11 }} onClick={delItem}>
         Delete
       </Button>
+      }
     </ListItem>
   );
 }
