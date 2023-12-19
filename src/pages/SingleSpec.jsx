@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useParams } from "react-router-dom";
-// import { useParams } from "react-router-dom";
 import axios from "axios";
-// import Box from "@mui/material/Box";
 import KeyboardBackspaceOutlinedIcon from "@mui/icons-material/KeyboardBackspaceOutlined";
 import { Box, Backdrop, CircularProgress } from "@mui/material";
 import SpecInfo from "../components/SingleSpec/SpecInfo";
