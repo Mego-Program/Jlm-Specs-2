@@ -13,6 +13,7 @@ import AlertDialog from "../global/AlertDialog";
 import { useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 
+
 function SpecItem(item) {
   const navigate = useNavigate();
 
@@ -113,7 +114,6 @@ function SpecItem(item) {
         ></Box>
         <AvatarGroup max={4}>
           {item.team.map((user, index) => {
-            console.log(user);
             return <Avatar sx={{bgcolor:'secondary.light'}}>{user.charAt(0)}</Avatar>;
           })}
         </AvatarGroup>
