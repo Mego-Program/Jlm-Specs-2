@@ -78,13 +78,16 @@ export default function FormDialog(props) {
             variant="standard"
             placeholder="Enter Title"
             sx={{
-              "& input": {
+              '& .MuiInputBase-root':{
                 border: 2,
+                borderBottom:4,
                 borderColor: "primary.main",
                 borderTopRightRadius: 4,
                 borderTopLeftRadius: 4,
                 padding: 1,
-              },
+                marginY:1,
+                '&:hover':{borderColor:'info.main'}
+              }
             }}
             onChange={(e) => {setData({...data, header: e.target.value})}}
           />
@@ -97,8 +100,11 @@ export default function FormDialog(props) {
             sx={{
               "& .MuiInputBase-root": {
                 border: 2,
+                borderTop: 4,
+                borderBottom: 4,
                 borderColor: "primary.main",
                 paddingX: 1,
+                '&:hover':{borderColor:'info.main'}
               },
             }}
             onChange={(e) => {setData({...data, content: e.target.value})}}
@@ -111,10 +117,13 @@ export default function FormDialog(props) {
               width: "100%",
               marginTop: 0.5,
               border: 2,
+              borderTop: 4,
               borderColor: "primary.main",
               boxSizing: "border-box",
               borderBottomLeftRadius: 4,
               borderBottomRightRadius: 4,
+              marginTop:2,
+              '&:hover':{borderColor:'info.main'}
             }}
           >
             <Typography

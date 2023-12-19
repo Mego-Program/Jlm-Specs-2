@@ -4,10 +4,11 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
+import AlertDialog from "./AlertDialog";
 
 export default function Item(props) {
   const delItem = () => {
-    props.del(props.id)
+    props.del(props.id);
   };
 
   return (
@@ -16,14 +17,28 @@ export default function Item(props) {
       alignItems="flex-start"
     >
       <ListItemAvatar sx={{ margin: 0 }}>
-        <Avatar alt="Remy Sharp" src="" />
+        <Avatar sx={{ bgcolor: "primary.main", border: 2 }}>
+          {props.name.charAt(0)}
+        </Avatar>
       </ListItemAvatar>
       <ListItemText primary={props.name} />
-      {props.del && 
-      <Button sx={{ fontSize: 11 }} onClick={delItem}>
-        Delete
-      </Button>
-      }
+      {props.del && (
+        <AlertDialog
+        del={props.del}
+        index={props.id}
+        iconSx={{paddingTop:0}}
+        btnSx={{
+          color: "primary.main",
+          border: 2,
+          padding: 0.5,
+          width: 50,
+          height: 35,
+          borderRadius: 1,
+          borderColor:'secondary.light',
+          "&:hover": { bgcolor: "secondary.light", borderColor:'primary.main' },
+        }}
+      />
+      )}
     </ListItem>
   );
 }

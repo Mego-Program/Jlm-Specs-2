@@ -69,6 +69,7 @@ export default function NewTask(props) {
       >
         <AddIcon sx={{ color: "secondary.main" }} />
       </IconButton>
+      
       <Dialog open={open} onClose={closeDialog}>
         <Box
           sx={{

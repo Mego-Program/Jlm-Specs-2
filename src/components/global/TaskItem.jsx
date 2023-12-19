@@ -89,16 +89,14 @@ export default function TaskItem(props) {
   };
 
   return (
-    <Box key={props.index} sx={{ display: "flex", alignItems: "center" }}>
+    <Box key={props.index} sx={{ display: "flex", alignItems: "center", borderBottom:1, paddingY:2, borderColor:'primary.main'}}>
       <Item
         sx={{
           bgcolor: "secondary.main",
           color: "primary.main",
           display: "flex",
           justifyContent: "space-between",
-          border: 1,
-          borderColor: "primary.main",
-          borderStyle: "dashed",
+          border: 0,
           flex: 10,
         }}
       >
@@ -199,34 +197,30 @@ export default function TaskItem(props) {
                     color: "primary.main",
                     border: 2,
                     padding: 0.5,
-                    width: 30,
-                    height: 30,
+                    width: 40,
+                    height: 35,
                     borderTopLeftRadius: 4,
                     borderTopRightRadius: 4,
                     "&:hover": { bgcolor: "secondary.light" },
                   }}
                 />
               </IconButton>
-              <IconButton sx={{ paddingTop: 0 }} onClick={() => setAlert(true)}>
-                <DeleteIcon
-                  sx={{
+                
+                <AlertDialog
+                  del={props.del}
+                  index={props.index}
+                  iconSx={{paddingTop:0}}
+                  btnSx={{
                     color: "primary.main",
                     border: 2,
                     padding: 0.5,
-                    width: 30,
-                    height: 30,
+                    width: 40,
+                    height: 35,
                     borderBottomLeftRadius: 4,
                     borderBottomRightRadius: 4,
                     "&:hover": { bgcolor: "secondary.light" },
                   }}
                 />
-                <AlertDialog
-                  open={alert}
-                  setOpen={setAlert}
-                  del={props.del}
-                  index={props.index}
-                />
-              </IconButton>
             </Box>
           )}
         </Box>
@@ -243,7 +237,7 @@ export default function TaskItem(props) {
           onClick={sendToBoard}
         >
           {props.item.sendToBoard ? (
-            <MarkEmailReadOutlinedIcon
+            <DoneIcon
               sx={{ fontSize: 24, color: "primary.main" }}
             />
           ) : (

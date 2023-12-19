@@ -34,6 +34,14 @@ export default function FormTeam(props) {
   const [users, setUsers] = React.useState([]);
 
   React.useEffect(() => {
+    if(props.info.team.length == 0 ){
+      props.fillPage(true)
+    }else{
+      props.fillPage(false)
+    }
+  },[props.info.team])
+
+  React.useEffect(() => {
     async function fetchData() {
       try {
         const response = await axios.get(
@@ -78,12 +86,13 @@ export default function FormTeam(props) {
         renderInput={(params) => (
           <TextField
             sx={{
-              maxHeight: 80,
+              maxHeight: 100,
               overflow: "auto",
               "& .MuiOutlinedInput-notchedOutline": {
                 border: 1,
                 borderColor: "primary.main",
               },
+              '& .MuiButtonBase-root':{bgcolor:'secondary.light'}
             }}
             onChange={enterUser}
             {...params}

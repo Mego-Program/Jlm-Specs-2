@@ -39,7 +39,6 @@ export default function LinkTask(props) {
   const newItem = async () => {
     try {
         if (oldName !== ''){
-          console.log(board.boardName);
           const response = await axios.put(`${import.meta.env.VITE_API_URL}/project/connect-board/${props.info.task.projectName}`, board);
         }else{
           const response = await axios.put(`${import.meta.env.VITE_API_URL}/project/connect-board/null`, board);
