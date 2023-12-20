@@ -30,6 +30,8 @@ function SpecsList() {
       });
   }, []);
 
+  
+
   const delSpec = (id) => {
     let newList = specsList.filter((item) => item._id !== id);
     setSpecsList(newList);
@@ -68,10 +70,10 @@ function SpecsList() {
                 date={spec.date}
                 title={spec.title}
                 info={spec.description}
+                team={spec.team}
                 key={spec._id}
                 id={spec._id}
                 del={delSpec}
-                team={spec.team}
               />
             ))
           ) : (

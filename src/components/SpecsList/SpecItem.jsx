@@ -11,24 +11,26 @@ import axios from "axios";
 import dayjs from "dayjs";
 import AlertDialog from "../global/AlertDialog";
 import { useState } from "react";
-import DeleteIcon from "@mui/icons-material/Delete";
+import UserProfile from "../global/UserProfile";
 
-
-function SpecItem(item) {
+function SpecItem(props) {
+  const users = UserProfile
   const navigate = useNavigate();
 
   const [alert, setAlert] = useState(false);
 
+  
+
   const delSpec = () => {
     try {
-      axios.delete(`${import.meta.env.VITE_API_URL}/specs/${item.id}`);
-      item.del(item.id);
+      axios.delete(`${import.meta.env.VITE_API_URL}/specs/${props.id}`);
+      props.del(props.id);
     } catch (error) {
       console.log("faild to delete item: ", error);
     }
   };
 
-  const dateobject = dayjs(item.date);
+  const dateobject = dayjs(props.date);
   const dateString =
     dateobject.$D + "." + (dateobject.$M + 1) + "." + dateobject.$y;
 
@@ -69,7 +71,7 @@ function SpecItem(item) {
       </Box>
       <Button
         onClick={() => {
-          navigate("single/" + item.id);
+          navigate("single/" + props.id);
         }}
         sx={{
           color: "text.primary",
@@ -98,11 +100,11 @@ function SpecItem(item) {
             "::-webkit-scrollbar": { display: "none" },
           }}
         >
-          <Typography sx={{fontSize: 20, margin: 0, fontWeight: 700 }}>
-            {item.title}
+          <Typography sx={{ fontSize: 20, margin: 0, fontWeight: 700 }}>
+            {props.title}
           </Typography>
           <Typography sx={{ fontSize: 9, textAlign: "start", marginRight: 1 }}>
-            {item.info}
+            {props.info}
           </Typography>
         </Box>
         <Box
@@ -112,11 +114,12 @@ function SpecItem(item) {
             justifyContent: "center",
           }}
         ></Box>
-        <AvatarGroup max={4}>
-          {item.team.map((user, index) => {
-            return <Avatar sx={{bgcolor:'secondary.light'}}>{user.charAt(0)}</Avatar>;
-          })}
-        </AvatarGroup>
+          <AvatarGroup max={4} spacing={20} sx={{'& .MuiAvatar-root':{bgcolor:'secondary.light', width: 48, height: 48}, '& .css-sxh3gq-MuiAvatar-root-MuiAvatarGroup-avatar':{color:'primary.main', borderColor:'primary.main'}}}>
+            {props.team.map((user, index) => (
+              <Avatar key={index} alt={user.userName} src={user.img} sx={{ bgcolor: "primary.main"}}/>
+            ))}
+          </AvatarGroup>
+  
       </Button>
 
       <Box
@@ -127,7 +130,7 @@ function SpecItem(item) {
           height: "100%",
         }}
       >
-        <DeleteIcon
+        {/* <DeleteIcon
           sx={{
             color: "primary.main",
             boxSizing: "border-box",
@@ -137,12 +140,20 @@ function SpecItem(item) {
             fontSize: 48,
           }}
           onClick={() => setAlert(true)}
-        />
+        /> */}
         <AlertDialog
           open={alert}
           setOpen={setAlert}
           del={delSpec}
-          index={item.id}
+          index={props.id}
+          btnSx={{
+            color: "primary.main",
+            boxSizing: "border-box",
+            "&:hover": { border: 1, borderColor: "primary.main" },
+            padding: 1,
+            borderRadius: "50%",
+            fontSize: 48,
+          }}
         />
       </Box>
     </ListItem>

@@ -16,12 +16,8 @@ export default function Item(props) {
       sx={{ display: "flex", alignItems: "center", borderBottom: 1 }}
       alignItems="flex-start"
     >
-      <ListItemAvatar sx={{ margin: 0 }}>
-        <Avatar sx={{ bgcolor: "primary.main", border: 2 }}>
-          {props.name.charAt(0)}
-        </Avatar>
-      </ListItemAvatar>
-      <ListItemText primary={props.name} />
+      <Avatar alt={props.user.userName} src={props.user.img} sx={{ bgcolor: "primary.main", border: 2, marginRight:2, width: 56, height: 56}}/>
+      <ListItemText primary={props.user.userName} />
       {props.del && (
         <AlertDialog
         del={props.del}

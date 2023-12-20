@@ -47,25 +47,13 @@ export default function FormTeam(props) {
         const response = await axios.get(
           `${import.meta.env.VITE_API_URL}/team`
         );
-        response.data.map((item) => {
-          if (item.userName === undefined || users.includes(item.userName)) {
-            return;
-          } else {
-            setUsers((prevUsers) => {
-              if (!prevUsers.includes(item.userName)) {
-                return [...prevUsers, item.userName];
-              }
-              return prevUsers;
-            });
-          }
-        });
+        setUsers(response.data)
       } catch (error) {
         console.error(error);
       }
     }
-
     fetchData();
-  }, [users]);
+  }, []);
 
   const enterUser = (event, users) => {
     props.set({ ...props.info, team: users });
@@ -79,7 +67,7 @@ export default function FormTeam(props) {
         multiple
         id="tags-outlined"
         options={users}
-        getOptionLabel={(option) => option}
+        getOptionLabel={(option) => option.userName} 
         freeSolo
         filterSelectedOptions
         defaultValue={props.info.team}

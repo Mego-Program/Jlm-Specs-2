@@ -59,9 +59,9 @@ function SpecTeam(props) {
   return (
     <Box>
       <Typography variant="h5">Team:</Typography>
-      <List sx={{bgcolor:'secondary.light', borderRadius:1, minHeight:150}}>
-      {props.info.team.map((i, index) => (
-          <Item name={i} key={index} id={index} del={delItem}/>
+      <List sx={{bgcolor:'secondary.light', borderRadius:1, minHeight:20}}>
+      {props.info.team.map((user, index) => (
+          <Item user={user} key={index} id={index} del={delItem}/>
       ))}
       </List>
       <Button

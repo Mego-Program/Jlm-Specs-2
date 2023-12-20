@@ -90,8 +90,8 @@ export default function FormSubmit(props) {
           <Typography>Team</Typography>
           <Box sx={boxStyle}>
             <Typography sx={{ fontFamily: "monospace" }}>
-              {props.info.team.map((props, i) => (
-                <Box sx={{color: "#f6c927", Height: "10px"}} key={i}>{props}</Box>
+              {props.info.team.map((users, i) => (
+                <Box sx={{color: "#f6c927", Height: "10px"}} key={i}>{users.userName}</Box>
               ))}
             </Typography>
           </Box>

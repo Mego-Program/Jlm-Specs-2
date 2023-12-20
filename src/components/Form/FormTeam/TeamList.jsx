@@ -17,8 +17,8 @@ export default function TeamList(props) {
             overflow: "auto",
           }}
         >
-          {props.info.team.map((i, index) => (
-            <Item name={i} key={index} id={index} />
+          {props.info.team.map((user, index) => (
+            <Item user={user} key={index} id={index} />
           ))}
         </List>
       ) : (
