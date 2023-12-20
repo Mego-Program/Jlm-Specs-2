@@ -115,7 +115,6 @@ export default function FormDialog(props) {
               display: "flex",
               alignItems: "center",
               width: "100%",
-              marginTop: 0.5,
               border: 2,
               borderTop: 4,
               borderColor: "primary.main",
