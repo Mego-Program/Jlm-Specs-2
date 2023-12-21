@@ -65,7 +65,6 @@ export default function FormTeam(props) {
         PaperComponent={CustomPaper}
         onChange={enterUser}
         multiple
-        id="tags-outlined"
         options={users}
         getOptionLabel={(option) => option.userName} 
         freeSolo
@@ -82,7 +81,6 @@ export default function FormTeam(props) {
               },
               '& .MuiButtonBase-root':{bgcolor:'secondary.light'}
             }}
-            onChange={enterUser}
             {...params}
             placeholder="USERS"
           />
