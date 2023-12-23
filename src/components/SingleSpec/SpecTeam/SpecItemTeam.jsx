@@ -66,6 +66,14 @@ export default function SpecItemTeam(props) {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    if (user == null) {
+      setDisable(true)
+    } else{
+      setDisable(false)
+    }
+  },[user])
+
   function newItem() {
     // הוספת משתמש
     closeDialog();
@@ -133,7 +141,6 @@ export default function SpecItemTeam(props) {
             getOptionLabel={(option) => option.userName}
             PaperComponent={CustomPaper}
             onChange={(event, user) => {
-              setDisable(false)
               // הוסף קוד
             }}
             renderInput={(params) => {
