@@ -34,11 +34,11 @@ export default function AlertDialog(props) {
         onClose={handleClose}
       >
         <DialogTitle color={"primary.main"} bgcolor={'secondary.main'} sx={{border:1, borderBottom:0, borderTopLeftRadius:4, borderTopRightRadius:4}}>
-          Are you sure you want to delete this item?
+          Are you sure you want to delete this {props.type}?
         </DialogTitle>
         <DialogContent sx={{bgcolor:'background.b1', borderRight:1, borderLeft:1, borderColor:'primary.main'}}>
           <DialogContentText margin={'10px 0'} color={'info.dark'}  id="alert-dialog-description">
-            This action cannot be undone. Deleting this item will permanently
+            This action cannot be undone. Deleting this {props.type} will permanently
             remove it from the system.
           </DialogContentText>
         </DialogContent>

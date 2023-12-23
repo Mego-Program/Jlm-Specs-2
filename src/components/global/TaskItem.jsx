@@ -207,6 +207,7 @@ export default function TaskItem(props) {
               </IconButton>
                 
                 <AlertDialog
+                  type={'task'}
                   del={props.del}
                   index={props.index}
                   iconSx={{paddingTop:0}}

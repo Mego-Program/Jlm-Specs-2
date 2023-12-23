@@ -9,17 +9,18 @@ import {
   Typography,
 } from "@mui/material";
 import UserProfile from "../global/UserProfile";
+import CommentReply from "./SpecComments/CommentReply";
 
 const SpecComments = ({ specId }) => {
   const user = UserProfile;
 
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState({
-    author: user.userName,
+    author: user,
     content: "",
   });
   const [newReply, setNewReply] = useState({
-    author: user.userName,
+    author: user,
     content: "",
   });
   const [replyFormOpen, setReplyFormOpen] = useState(null);
@@ -66,6 +67,30 @@ const SpecComments = ({ specId }) => {
     }
   };
 
+  const commentDel = async (commentId) => {
+    try {
+      const response = await axios.delete(
+        `${import.meta.env.VITE_API_URL}/comments/${specId}/${commentId}`
+      );
+      fetchComments();
+    } catch (error) {
+      console.error("Error when adding comment:", error);
+    }
+  };
+
+  const replyDel = async (commentId, replyId) => {
+    try {
+      const response = await axios.delete(
+        `${
+          import.meta.env.VITE_API_URL
+        }/comments/${specId}/${commentId}/${replyId}`
+      );
+      fetchComments();
+    } catch (error) {
+      console.error("Error when adding comment:", error);
+    }
+  };
+
   return (
     <Box sx={{ width: "100%" }}>
       <Typography variant="h5">Comments:</Typography>
@@ -84,22 +109,14 @@ const SpecComments = ({ specId }) => {
               borderColor: "primary.main",
             }}
           >
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Avatar
-                alt={user.userName}
-                src={user.img}
-                sx={{ border: 2, borderColor: "primary.main" }}
-              />
-              <Typography
-                variant="h6"
-                sx={{ fontWeight: 700, color: "primary.main", marginLeft: 1 }}
-              >
-                {comment.author}
-              </Typography>
-            </Box>
-            <Typography sx={{ marginTop: 1, marginLeft: 6 }}>
-              {comment.content}
-            </Typography>
+            <CommentReply
+              type={"comment"}
+              del={commentDel}
+              index={comment._id}
+              content={comment.content}
+              author={comment.author}
+            />
+
             <Box sx={{ marginTop: "8px" }}>
               <Button
                 variant="text"
@@ -124,10 +141,12 @@ const SpecComments = ({ specId }) => {
               borderLeft: 4,
               marginLeft: 4,
               borderColor: "primary.main",
-              ...(replyFormOpen !== null || comment.replies.length > 0 && { paddingBottom: 2 }),            }}
+              ...(replyFormOpen !== null ||
+                (comment.replies.length > 0 && { paddingBottom: 2 })),
+            }}
           >
             {replyFormOpen !== null && replyFormOpen === commentIndex && (
-              <Box sx={{ paddingTop: 2, paddingLeft: 2}}>
+              <Box sx={{ paddingTop: 2, paddingLeft: 2 }}>
                 <TextField
                   value={newReply.content}
                   placeholder="Your Comment"
@@ -185,33 +204,15 @@ const SpecComments = ({ specId }) => {
                   }}
                 >
                   {comment.replies.map((reply, replyIndex) => (
-                    <Box
-                      key={replyIndex}
-                      sx={{
-                        padding: 1,
-                        borderBottom: 1,
-                      }}
-                    >
-                      <Box sx={{ display: "flex", alignItems: "center" }}>
-                        <Avatar
-                          alt={user.userName}
-                          src={user.img}
-                          sx={{ border: 2, borderColor: "primary.main" }}
-                        />
-                        <Typography
-                          variant="h6"
-                          sx={{
-                            fontWeight: 700,
-                            color: "primary.main",
-                            marginLeft: 1,
-                          }}
-                        >
-                          {reply.author}
-                        </Typography>
-                      </Box>
-                      <Typography sx={{ marginTop: 1, marginLeft: 6 }}>
-                        {reply.content}
-                      </Typography>
+                    <Box key={replyIndex}>
+                      <CommentReply
+                        type={"reply"}
+                        commentId={comment._id}
+                        index={reply._id}
+                        content={reply.content}
+                        author={reply.author}
+                        del={replyDel}
+                      />
                     </Box>
                   ))}
                 </Box>

@@ -7,9 +7,6 @@ import Button from "@mui/material/Button";
 import AlertDialog from "./AlertDialog";
 
 export default function Item(props) {
-  const delItem = () => {
-    props.del(props.id);
-  };
 
   return (
     <ListItem
@@ -20,6 +17,7 @@ export default function Item(props) {
       <ListItemText primary={props.user.userName} />
       {props.del && (
         <AlertDialog
+        type={'user'}
         del={props.del}
         index={props.id}
         iconSx={{paddingTop:0}}
