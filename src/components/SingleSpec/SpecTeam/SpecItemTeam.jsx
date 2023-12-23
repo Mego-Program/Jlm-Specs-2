@@ -28,6 +28,11 @@ export default function SpecItemTeam(props) {
   const [team, setTeam] = useState([]);
   const [user, setUser] = useState(null);
 
+// const list = props.info.team.filter(
+//   (item) => !props.info.team.includes(item)
+// )
+// console.log(list);
+
   const CustomPaper = (props) => {
     return (
       <Paper
@@ -58,7 +63,7 @@ export default function SpecItemTeam(props) {
         const response = await axios.get(
           `${import.meta.env.VITE_API_URL}/team`
         );
-        setTeam(response.data);
+        setTeam(response.data)
       } catch (error) {
         console.error(error);
       }
@@ -72,17 +77,21 @@ export default function SpecItemTeam(props) {
     } else{
       setDisable(false)
     }
-  },[user])
+  },[user, team])
 
   function newItem() {
-    // הוספת משתמש
+    if (user !== null && user !== user.includes(props.info.team)) {
+    props.set({ ...props.info, team: [...props.info.team, user] });
+    console.log(props.info.team);
+    }
     closeDialog();
   }
 
   function closeDialog() {
-    // איפוס
+    setUser(null)
     setOpen(false);
   }
+
 
   const fieldStyle = {
     bgcolor: "secondary.light",
@@ -141,7 +150,7 @@ export default function SpecItemTeam(props) {
             getOptionLabel={(option) => option.userName}
             PaperComponent={CustomPaper}
             onChange={(event, user) => {
-              // הוסף קוד
+              setUser(user.userName)
             }}
             renderInput={(params) => {
               return (
@@ -186,8 +195,7 @@ export default function SpecItemTeam(props) {
             />
           </IconButton>
           {disable ? (
-            <IconButton
-              sx={{
+            <IconButton sx={{
                 bgcolor: "secondary.light",
                 borderRadius: 1,
                 paddingX: 2,
