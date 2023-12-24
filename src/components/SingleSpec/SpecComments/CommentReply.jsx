@@ -1,20 +1,37 @@
 import { Avatar, Box, Typography } from "@mui/material";
 import AlertDialog from "../../global/AlertDialog";
+import { useEffect, useState } from "react";
+import UserProfile from "../../global/UserProfile";
 
 export default function CommentReply(props) {
+  const [user, setUser] = useState(false);
 
-    const del = (index) => {
-        if (props.commentId) props.del(props.commentId,index)
-        else props.del(index)
-    }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userData = await UserProfile;
+        if (userData.userName === props.author.userName || userData.userName === auther.userName) setUser(true);
+      } catch (error) {
+        console.error("Error fetching user data: ", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const del = (index) => {
+    console.log(user);
+    console.log(props);
+    if (props.commentId) props.del(props.commentId, index);
+    else props.del(index);
+  };
 
   return (
     <Box
       sx={{
         padding: 1,
         borderBottom: 1,
-        display:'flex',
-        justifyContent:'space-between'
+        display: "flex",
+        justifyContent: "space-between",
       }}
     >
       <Box>
@@ -39,25 +56,27 @@ export default function CommentReply(props) {
           {props.content}
         </Typography>
       </Box>
-      <AlertDialog
-        type={props.type}
-        del={del}
-        index={props.index}
-        iconSx={{}}
-        btnSx={{
-          color: "primary.main",
-          border: 2,
-          padding: 0.5,
-          width: 70,
-          height: 45,
-          borderRadius: 1,
-          borderColor: "secondary.light",
-          "&:hover": {
-            bgcolor: "secondary.light",
-            borderColor: "primary.main",
-          },
-        }}
-      />
+      {user && (
+        <AlertDialog
+          type={props.type}
+          del={del}
+          index={props.index}
+          iconSx={{}}
+          btnSx={{
+            color: "primary.main",
+            border: 2,
+            padding: 0.5,
+            width: 70,
+            height: 45,
+            borderRadius: 1,
+            borderColor: "secondary.light",
+            "&:hover": {
+              bgcolor: "secondary.light",
+              borderColor: "primary.main",
+            },
+          }}
+        />
+      )}
     </Box>
   );
 }
