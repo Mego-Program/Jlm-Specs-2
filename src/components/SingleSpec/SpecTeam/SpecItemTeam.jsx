@@ -4,34 +4,22 @@ import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import {
   Autocomplete,
   Box,
-  Button,
   Dialog,
   IconButton,
   Paper,
   TextField,
   Typography,
 } from "@mui/material";
-import {
-  DateField,
-  DesktopDatePicker,
-  LocalizationProvider,
-} from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+
 import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
-import { teal } from "@mui/material/colors";
 
 export default function SpecItemTeam(props) {
   const [open, setOpen] = useState(false);
   const [disable, setDisable] = useState(true);
   const [team, setTeam] = useState([]);
   const [user, setUser] = useState(null);
-
-// const list = props.info.team.filter(
-//   (item) => !props.info.team.includes(item)
-// )
-// console.log(list);
 
   const CustomPaper = (props) => {
     return (
@@ -77,13 +65,10 @@ export default function SpecItemTeam(props) {
     } else{
       setDisable(false)
     }
-  },[user, team])
+  },[user])
 
   function newItem() {
-    if (user !== null && user !== user.includes(props.info.team)) {
     props.set({ ...props.info, team: [...props.info.team, user] });
-    console.log(props.info.team);
-    }
     closeDialog();
   }
 
@@ -91,14 +76,6 @@ export default function SpecItemTeam(props) {
     setUser(null)
     setOpen(false);
   }
-
-
-  const fieldStyle = {
-    bgcolor: "secondary.light",
-    borderRadius: 1,
-    marginBottom: 1,
-    "& input": { height: 35, padding: 0, paddingLeft: 1 },
-  };
 
   return (
     <Box>
@@ -146,11 +123,12 @@ export default function SpecItemTeam(props) {
               },
               "& svg": { color: "primary.main" },
             }}
-            options={team}
+            options={team.filter(user => !props.info.team.some(teamUser => teamUser.userName === user.userName))}
+
             getOptionLabel={(option) => option.userName}
             PaperComponent={CustomPaper}
             onChange={(event, user) => {
-              setUser(user.userName)
+              setUser(user)
             }}
             renderInput={(params) => {
               return (
