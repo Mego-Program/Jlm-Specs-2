@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "dayjs/locale/en-gb";
@@ -24,6 +24,7 @@ import FormKpi from "../components/Form/FormKpi";
 import FormTask from "../components/Form/FormTask";
 import FormTeam from "../components/Form/FormTeam";
 import FormSubmit from "../components/Form/FormSubmit";
+import UserProfile from "../components/global/UserProfile";
 
 const steps = ["Details", "KPIs", "Task", "Team", "Submit"];
 
@@ -41,6 +42,7 @@ export default function SpecInput() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const [item, setItem] = React.useState({
+    author:null,
     title: "",
     description: "",
     content: { blocks: [] },
@@ -49,6 +51,18 @@ export default function SpecInput() {
     task: { projectName: "", tasks: [] },
     team: [],
   });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userData = await UserProfile;
+        setItem({...item, author:userData})
+      } catch (error) {
+        console.error("Error fetching user data: ", error);
+      }
+    };
+    fetchData();
+  }, []);
 
   const handleNext = () => {
     let newSkipped = skipped;
