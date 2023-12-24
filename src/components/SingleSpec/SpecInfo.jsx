@@ -1,20 +1,13 @@
 import React, { useState } from "react";
-import { Box, Typography, Button, TextField } from "@mui/material";
+import { Box, Typography, TextField, Button } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 
-function SpecInfo({
-  title,
-  description,
-  onSaveTitle,
-  onSaveDescription,
-}) {
-  const [editedTitle, setEditedTitle] = useState(title);
-  const [editedDescription, setEditedDescription] = useState(description);
+function SpecInfo({ content, onSave, type }) {
   const [isEditing, setIsEditing] = useState(false);
+  const [editedContent, setEditedContent] = useState(content);
 
   const handleSave = () => {
-    onSaveTitle(editedTitle);
-    onSaveDescription(editedDescription);
+    onSave(editedContent, type);
     setIsEditing(false);
   };
 
@@ -28,32 +21,16 @@ function SpecInfo({
         position: "relative",
       }}
     >
-      <Box sx={{ marginBottom: "16px" }}>
-        <Typography variant="h5">Title:</Typography>
-        {isEditing ? (
-          <TextField
-            value={editedTitle}
-            onChange={(e) => setEditedTitle(e.target.value)}
-            fullWidth
-          />
-        ) : (
-          <Typography sx={{ fontFamily: "monospace" }}>{title}</Typography>
-        )}
-      </Box>
-
-      <Box sx={{ marginBottom: "16px" }}>
-        <Typography variant="h5">Description:</Typography>
-        {isEditing ? (
-          <TextField
-            value={editedDescription}
-            onChange={(e) => setEditedDescription(e.target.value)}
-            fullWidth
-            multiline
-          />
-        ) : (
-          <Typography sx={{ fontFamily: "monospace" }}>{description}</Typography>
-        )}
-      </Box>
+      <Typography variant="h5">{type === "title" ? "Title:" : "Description:"}</Typography>
+      {isEditing ? (
+        <TextField
+          value={editedContent}
+          onChange={(e) => setEditedContent(e.target.value)}
+          fullWidth
+        />
+      ) : (
+        <Typography sx={{ fontFamily: "monospace" }}>{content}</Typography>
+      )}
 
       {isEditing ? (
         <Button
@@ -69,9 +46,7 @@ function SpecInfo({
           color="primary"
           startIcon={<EditIcon />}
           onClick={() => setIsEditing(true)}
-        >
-          
-        </Button>
+        />
       )}
     </Box>
   );

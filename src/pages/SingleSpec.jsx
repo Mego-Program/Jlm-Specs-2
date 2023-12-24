@@ -98,14 +98,17 @@ const SingleSpec = () => {
       </NavLink>
       <Box sx={componentStyle}>
         <SpecInfo
-          title={specData.title}
-          description={specData.description}
-          onSaveTitle={(newTitle) => handleSave("title", newTitle)}
-          onSaveDescription={(newDescription) =>
-            handleSave("description", newDescription)
-          }
-          isEditing={isEditing}
-          onEditClick={handleEditClick}
+          content={specData.title}
+          onSave={(newTitle) => handleSave("title", newTitle)}
+          type="title"
+        />
+      </Box>
+
+      <Box sx={componentStyle}>
+        <SpecInfo
+          content={specData.description}
+          onSave={(newDescription) => handleSave("description", newDescription)}
+          type="description"
         />
       </Box>
 
