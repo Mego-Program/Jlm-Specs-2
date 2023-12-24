@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
-  Avatar,
   Box,
   Button,
   InputAdornment,
@@ -11,19 +10,33 @@ import {
 import UserProfile from "../global/UserProfile";
 import CommentReply from "./SpecComments/CommentReply";
 
-const SpecComments = ({ specId }) => {
-  const user = UserProfile;
 
+const SpecComments =  ({ specId }) => {
   const [comments, setComments] = useState([]);
+  const [replyFormOpen, setReplyFormOpen] = useState(null);
   const [newComment, setNewComment] = useState({
-    author: user,
+    author: null,
     content: "",
   });
   const [newReply, setNewReply] = useState({
-    author: user,
+    author: null,
     content: "",
   });
-  const [replyFormOpen, setReplyFormOpen] = useState(null);
+
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userData = await UserProfile;
+        setNewComment({...newComment, author:userData})
+        setNewReply({...newReply, author:userData})
+      } catch (error) {
+        console.error("Error fetching user data: ", error);
+      }
+    };
+    fetchData();
+  }, []);
+ 
 
   const fetchComments = async () => {
     try {
@@ -59,6 +72,9 @@ const SpecComments = ({ specId }) => {
         import.meta.env.VITE_API_URL
       }/comments/${specId}/${commentId}/replies`;
       await axios.post(endpoint, newReply);
+
+
+
       setNewReply({ ...newReply, content: "" });
       fetchComments();
       setReplyFormOpen(null);

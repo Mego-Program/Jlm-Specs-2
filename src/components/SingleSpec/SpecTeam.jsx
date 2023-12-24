@@ -9,7 +9,6 @@ function SpecTeam(props) {
     let newTeam = props.info.team.filter((item, index) => id !== index);
     console.log(newTeam);
     props.set({ ...props.info, team: newTeam });
-    console.log(props.info.team);
   };
 
   return (
