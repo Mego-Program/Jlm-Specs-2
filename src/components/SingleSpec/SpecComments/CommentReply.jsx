@@ -10,7 +10,7 @@ export default function CommentReply(props) {
     const fetchData = async () => {
       try {
         const userData = await UserProfile;
-        if (userData.userName === props.author.userName || userData.userName === auther.userName) setUser(true);
+        if (userData.userName === props.author.userName) setUser(true);
       } catch (error) {
         console.error("Error fetching user data: ", error);
       }
