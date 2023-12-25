@@ -19,7 +19,7 @@ function SpecTeam(props) {
       </Box>
       <List sx={{ bgcolor: "secondary.light", borderRadius: 1, marginTop: 1 }}>
         {props.info.team.map((user, index) => (
-          <Item user={user} key={index} id={index} del={delItem} />
+          <Item user={user} key={index} id={index} del={delItem} authorId={props.info.author._id} />
         ))}
       </List>
     </Box>

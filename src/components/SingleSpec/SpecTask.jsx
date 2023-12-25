@@ -118,6 +118,7 @@ export default function SpecTask(props) {
                 del={delItem}
                 spec={{ title: props.info.title, id: props.info._id }}
                 new={false}
+                authorId={props.info.author._id}
               />
             );
           })}

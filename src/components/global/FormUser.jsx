@@ -3,8 +3,26 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Avatar from "@mui/material/Avatar";
 import AlertDialog from "./AlertDialog";
+import UserProfile from "./UserProfile";
 
 export default function Item(props) {
+  const [user, setUser] = React.useState(false);
+
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userData = await UserProfile;
+        if (props.authorId && userData._id === props.authorId){
+          setUser(true)
+        }
+      } catch (error) {
+        console.error("Error fetching user data: ", error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <ListItem
       sx={{ display: "flex", alignItems: "center", borderBottom: 1 }}
@@ -22,7 +40,7 @@ export default function Item(props) {
         }}
       />
       <ListItemText primary={props.user.userName} />
-      {props.del && (
+      {props.del && user && (
         <AlertDialog
           type={"user"}
           del={props.del}

@@ -81,6 +81,7 @@ const SingleSpec = () => {
           content={specData.title}
           onSave={(newTitle) => handleSave("title", newTitle)}
           type="title"
+          authorId={specData.author._id}
         />
       </Box>
 
@@ -89,6 +90,8 @@ const SingleSpec = () => {
           content={specData.description}
           onSave={(newDescription) => handleSave("description", newDescription)}
           type="description"
+          authorId={specData.author._id}
+
         />
       </Box>
 

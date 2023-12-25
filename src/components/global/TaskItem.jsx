@@ -20,6 +20,7 @@ import { DateField, LocalizationProvider } from "@mui/x-date-pickers";
 import axios from "axios";
 
 import AlertDialog from "./AlertDialog";
+import UserProfile from "./UserProfile";
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -30,6 +31,7 @@ export default function TaskItem(props) {
   const [edit, setEdit] = useState(false);
   const [item, setItem] = useState(props.item);
   const [disable, setDisable] = useState(false);
+  const [user, setUser] = useState(false);
 
   useEffect(() => {
     if (item.title === "" || item.content === "") {
@@ -38,6 +40,21 @@ export default function TaskItem(props) {
       setDisable(false);
     }
   }, [item]);
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userData = await UserProfile;
+        if (props.authorId && userData._id === props.authorId) {
+          setUser(true);
+        }
+      } catch (error) {
+        console.error("Error fetching user data: ", error);
+      }
+    };
+    fetchData();
+  }, []);
 
   const handleChangeTitle = (value) => {
     setItem({ ...item, header: value });
@@ -184,64 +201,68 @@ export default function TaskItem(props) {
               )}
             </IconButton>
           ) : (
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <IconButton
-                sx={{ paddingBottom: 0 }}
-                onClick={() => {
-                  setEdit(true);
-                }}
-              >
-                <EditIcon
+            <Box>
+              {!props.authorId || user && (
+                <Box
                   sx={{
-                    color: "primary.main",
-                    border: 2,
-                    padding: 0.5,
-                    width: 40,
-                    height: 35,
-                    borderTopLeftRadius: 4,
-                    borderTopRightRadius: 4,
-                    "&:hover": { bgcolor: "secondary.light" },
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
                   }}
-                />
-              </IconButton>
+                >
+                  <IconButton
+                    sx={{ paddingBottom: 0 }}
+                    onClick={() => {
+                      setEdit(true);
+                    }}
+                  >
+                    <EditIcon
+                      sx={{
+                        color: "primary.main",
+                        border: 2,
+                        padding: 0.5,
+                        width: 40,
+                        height: 35,
+                        borderTopLeftRadius: 4,
+                        borderTopRightRadius: 4,
+                        "&:hover": { bgcolor: "secondary.light" },
+                      }}
+                    />
+                  </IconButton>
 
-              <AlertDialog
-                authorId={props.authorId}
-                type={"task"}
-                del={props.del}
-                index={props.index}
-                iconSx={{ paddingTop: 0 }}
-                btnSx={{
-                  color: "primary.main",
-                  border: 2,
-                  padding: 0.5,
-                  width: 40,
-                  height: 35,
-                  borderBottomLeftRadius: 4,
-                  borderBottomRightRadius: 4,
-                  "&:hover": { bgcolor: "secondary.light" },
-                }}
-                disableIcon={{
-                  paddingTop: 0,
-                  "&:hover": { bgcolor: "secondary.main" },
-                }}
-                disableBtn={{
-                  color: "primary.dark",
-                  border: 2,
-                  padding: 0.5,
-                  width: 40,
-                  height: 35,
-                  borderBottomLeftRadius: 4,
-                  borderBottomRightRadius: 4,
-                  cursor: "not-allowed",
-                }}
-              />
+                  <AlertDialog
+                    authorId={props.authorId}
+                    type={"task"}
+                    del={props.del}
+                    index={props.index}
+                    iconSx={{ paddingTop: 0 }}
+                    btnSx={{
+                      color: "primary.main",
+                      border: 2,
+                      padding: 0.5,
+                      width: 40,
+                      height: 35,
+                      borderBottomLeftRadius: 4,
+                      borderBottomRightRadius: 4,
+                      "&:hover": { bgcolor: "secondary.light" },
+                    }}
+                    disableIcon={{
+                      paddingTop: 0,
+                      "&:hover": { bgcolor: "secondary.main" },
+                    }}
+                    disableBtn={{
+                      color: "primary.dark",
+                      border: 2,
+                      padding: 0.5,
+                      width: 40,
+                      height: 35,
+                      borderBottomLeftRadius: 4,
+                      borderBottomRightRadius: 4,
+                      cursor: "not-allowed",
+                    }}
+                  />
+                </Box>
+              )}
             </Box>
           )}
         </Box>

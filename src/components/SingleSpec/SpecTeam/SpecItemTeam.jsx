@@ -60,6 +60,8 @@ export default function SpecItemTeam(props) {
     fetchData();
   }, []);
 
+ 
+
   useEffect(() => {
     if (user == null) {
       setDisable(true);
