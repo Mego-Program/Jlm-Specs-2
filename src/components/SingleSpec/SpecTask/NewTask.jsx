@@ -10,6 +10,7 @@ import {
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useEffect } from "react";
 import { useState } from "react";
+import { AddButton } from "../../global/btns";
 
 export default function NewTask(props) {
   const [open, setOpen] = useState(false);
@@ -22,28 +23,27 @@ export default function NewTask(props) {
   });
 
   useEffect(() => {
-    if(task.header !== '' && task.content !== '') {
-      setDisable(false)
-    }else{
-      setDisable(true)
+    if (task.header !== "" && task.content !== "") {
+      setDisable(false);
+    } else {
+      setDisable(true);
     }
-  },[task])
+  }, [task]);
 
   function newItem() {
-    const newTasks = [...props.info.task.tasks, task]
-    props.set({...props.info, task: {...props.info.task, tasks: newTasks}})
-    closeDialog()
-    
+    const newTasks = [...props.info.task.tasks, task];
+    props.set({ ...props.info, task: { ...props.info.task, tasks: newTasks } });
+    closeDialog();
   }
 
-  function closeDialog(){
+  function closeDialog() {
     setTask({
       header: "",
       content: "",
       deadline: null,
       sendToBoard: false,
     });
-    setOpen(false)
+    setOpen(false);
   }
 
   const fieldStyle = {
@@ -55,21 +55,9 @@ export default function NewTask(props) {
 
   return (
     <Box>
-      <IconButton
-        sx={{
-          bgcolor: "primary.main",
-          border: 2,
-          borderColor: "secondary.main",
-          borderRadius: 1,
-          paddingX: 2,
-          height: 35,
-          "&:hover": { bgcolor: "primary.light" },
-        }}
-        onClick={() => setOpen(true)}
-      >
-        <AddIcon sx={{ color: "secondary.main" }} />
-      </IconButton>
-      
+      <AddButton func={() => setOpen(true)} authorId={props.info.author._id} />
+
+
       <Dialog open={open} onClose={closeDialog}>
         <Box
           sx={{
@@ -106,7 +94,7 @@ export default function NewTask(props) {
             />
           </LocalizationProvider>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          <IconButton
+            <IconButton
               sx={{
                 paddingX: 1,
                 borderRadius: 1,
@@ -121,37 +109,35 @@ export default function NewTask(props) {
             </IconButton>
             {disable ? (
               <IconButton
-              sx={{
-                bgcolor: "secondary.light",
-                paddingX: 2,
-                borderRadius: 1,
-                height: 35,
-                border: 2,
-                borderColor: "secondary.light",
-                cursor:'not-allowed',
-                "&:hover": { bgcolor: "secondary.light" },
-              }}
-            >
-              <CheckIcon sx={{ color: "secondary.main", fontSize: 24 }} />
-            </IconButton>
-            ): (
+                sx={{
+                  bgcolor: "secondary.light",
+                  paddingX: 2,
+                  borderRadius: 1,
+                  height: 35,
+                  border: 2,
+                  borderColor: "secondary.light",
+                  cursor: "not-allowed",
+                  "&:hover": { bgcolor: "secondary.light" },
+                }}
+              >
+                <CheckIcon sx={{ color: "secondary.main", fontSize: 24 }} />
+              </IconButton>
+            ) : (
               <IconButton
-              sx={{
-                bgcolor: "primary.main",
-                paddingX: 2,
-                borderRadius: 1,
-                height: 35,
-                border: 2,
-                borderColor: "secondary.light",
-                "&:hover": { bgcolor: "primary.dark" },
-              }}
-              onClick={newItem}
-            >
-              <CheckIcon sx={{ color: "secondary.main", fontSize: 24 }} />
-            </IconButton>
+                sx={{
+                  bgcolor: "primary.main",
+                  paddingX: 2,
+                  borderRadius: 1,
+                  height: 35,
+                  border: 2,
+                  borderColor: "secondary.light",
+                  "&:hover": { bgcolor: "primary.dark" },
+                }}
+                onClick={newItem}
+              >
+                <CheckIcon sx={{ color: "secondary.main", fontSize: 24 }} />
+              </IconButton>
             )}
-            
-            
           </Box>
         </Box>
       </Dialog>

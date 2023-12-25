@@ -10,7 +10,11 @@ export default function CommentReply(props) {
     const fetchData = async () => {
       try {
         const userData = await UserProfile;
-        if (userData.userName === props.author.userName) setUser(true);
+        if (
+          userData._id === props.author._id ||
+          userData._id === props.specAuthor._id
+        )
+          setUser(true);
       } catch (error) {
         console.error("Error fetching user data: ", error);
       }
@@ -19,8 +23,6 @@ export default function CommentReply(props) {
   }, []);
 
   const del = (index) => {
-    console.log(user);
-    console.log(props);
     if (props.commentId) props.del(props.commentId, index);
     else props.del(index);
   };
@@ -58,6 +60,7 @@ export default function CommentReply(props) {
       </Box>
       {user && (
         <AlertDialog
+          authorId={props.author._id}
           type={props.type}
           del={del}
           index={props.index}
@@ -74,6 +77,14 @@ export default function CommentReply(props) {
               bgcolor: "secondary.light",
               borderColor: "primary.main",
             },
+          }}
+          disableIcon={{'&:hover':{bgcolor:'secondary.light'}}}
+          disableBtn={{
+            color: "secondary.main",
+            padding: 0.5,
+            width: 70,
+            height: 45,
+            cursor: 'not-allowed',
           }}
         />
       )}

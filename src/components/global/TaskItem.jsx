@@ -86,7 +86,16 @@ export default function TaskItem(props) {
   };
 
   return (
-    <Box key={props.index} sx={{ display: "flex", alignItems: "center", borderBottom:1, paddingY:2, borderColor:'primary.main'}}>
+    <Box
+      key={props.index}
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        borderBottom: 1,
+        paddingY: 2,
+        borderColor: "primary.main",
+      }}
+    >
       <Item
         sx={{
           bgcolor: "secondary.main",
@@ -201,23 +210,38 @@ export default function TaskItem(props) {
                   }}
                 />
               </IconButton>
-                
-                <AlertDialog
-                  type={'task'}
-                  del={props.del}
-                  index={props.index}
-                  iconSx={{paddingTop:0}}
-                  btnSx={{
-                    color: "primary.main",
-                    border: 2,
-                    padding: 0.5,
-                    width: 40,
-                    height: 35,
-                    borderBottomLeftRadius: 4,
-                    borderBottomRightRadius: 4,
-                    "&:hover": { bgcolor: "secondary.light" },
-                  }}
-                />
+
+              <AlertDialog
+                authorId={props.authorId}
+                type={"task"}
+                del={props.del}
+                index={props.index}
+                iconSx={{ paddingTop: 0 }}
+                btnSx={{
+                  color: "primary.main",
+                  border: 2,
+                  padding: 0.5,
+                  width: 40,
+                  height: 35,
+                  borderBottomLeftRadius: 4,
+                  borderBottomRightRadius: 4,
+                  "&:hover": { bgcolor: "secondary.light" },
+                }}
+                disableIcon={{
+                  paddingTop: 0,
+                  "&:hover": { bgcolor: "secondary.main" },
+                }}
+                disableBtn={{
+                  color: "primary.dark",
+                  border: 2,
+                  padding: 0.5,
+                  width: 40,
+                  height: 35,
+                  borderBottomLeftRadius: 4,
+                  borderBottomRightRadius: 4,
+                  cursor: "not-allowed",
+                }}
+              />
             </Box>
           )}
         </Box>
@@ -234,9 +258,7 @@ export default function TaskItem(props) {
           onClick={sendToBoard}
         >
           {props.item.sendToBoard ? (
-            <DoneIcon
-              sx={{ fontSize: 24, color: "primary.main" }}
-            />
+            <DoneIcon sx={{ fontSize: 24, color: "primary.main" }} />
           ) : (
             <ForwardToInboxOutlinedIcon
               sx={{ fontSize: 24, color: "primary.main" }}

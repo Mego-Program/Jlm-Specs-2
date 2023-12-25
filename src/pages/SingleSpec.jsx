@@ -149,6 +149,7 @@ const SingleSpec = () => {
           onReplyAdded={() => {
             console.log("Reply added!");
           }}
+          specAuthor={specData.author}
         />
       </Box>
     </Box>
