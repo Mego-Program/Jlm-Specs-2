@@ -10,16 +10,30 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import dayjs from "dayjs";
 import AlertDialog from "../global/AlertDialog";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserProfile from "../global/UserProfile";
+import DeleteIcon from "@mui/icons-material/Delete";
+
 
 function SpecItem(props) {
-  const users = UserProfile
   const navigate = useNavigate();
 
   const [alert, setAlert] = useState(false);
+  const [user, setUser] = useState(false);
 
-  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userData = await UserProfile;
+        if (userData._id === props.authorId) {
+          setUser(true);
+        }
+      } catch (error) {
+        console.error("Error fetching user data: ", error);
+      }
+    };
+    fetchData();
+  }, []);
 
   const delSpec = () => {
     try {
@@ -114,12 +128,30 @@ function SpecItem(props) {
             justifyContent: "center",
           }}
         ></Box>
-          <AvatarGroup max={4} spacing={20} sx={{'& .MuiAvatar-root':{bgcolor:'secondary.light', width: 48, height: 48}, '& .css-sxh3gq-MuiAvatar-root-MuiAvatarGroup-avatar':{color:'primary.main', borderColor:'primary.main'}}}>
-            {props.team.map((user, index) => (
-              <Avatar key={index} alt={user.userName} src={user.img} sx={{ bgcolor: "primary.main"}}/>
-            ))}
-          </AvatarGroup>
-  
+        <AvatarGroup
+          max={4}
+          spacing={20}
+          sx={{
+            "& .MuiAvatar-root": {
+              bgcolor: "secondary.light",
+              width: 48,
+              height: 48,
+            },
+            "& .css-sxh3gq-MuiAvatar-root-MuiAvatarGroup-avatar": {
+              color: "primary.main",
+              borderColor: "primary.main",
+            },
+          }}
+        >
+          {props.team.map((user, index) => (
+            <Avatar
+              key={index}
+              alt={user.userName}
+              src={user.img}
+              sx={{ bgcolor: "primary.main" }}
+            />
+          ))}
+        </AvatarGroup>
       </Button>
 
       <Box
@@ -130,31 +162,34 @@ function SpecItem(props) {
           height: "100%",
         }}
       >
-        {/* <DeleteIcon
-          sx={{
-            color: "primary.main",
-            boxSizing: "border-box",
-            "&:hover": { border: 1, borderColor: "primary.main" },
-            padding: 1,
-            borderRadius: "50%",
-            fontSize: 48,
-          }}
-          onClick={() => setAlert(true)}
-        /> */}
-        <AlertDialog
-          open={alert}
-          setOpen={setAlert}
-          del={delSpec}
-          index={props.id}
-          btnSx={{
-            color: "primary.main",
-            boxSizing: "border-box",
-            "&:hover": { border: 1, borderColor: "primary.main" },
-            padding: 1,
-            borderRadius: "50%",
-            fontSize: 48,
-          }}
-        />
+        {user ? (
+          <AlertDialog
+            open={alert}
+            setOpen={setAlert}
+            del={delSpec}
+            index={props.id}
+            btnSx={{
+              color: "primary.main",
+              boxSizing: "border-box",
+              "&:hover": { border: 1, borderColor: "primary.main" },
+              padding: 1,
+              borderRadius: "50%",
+              fontSize: 48,
+            }}
+          />
+        ) : (
+          <Box marginLeft={1}>
+            <DeleteIcon sx={{
+              color: "secondary.light",
+              boxSizing: "border-box",
+              "&:hover": { border: 1, borderColor: "secondary.light" },
+              padding: 1,
+              borderRadius: "50%",
+              fontSize: 48,
+              cursor:'not-allowed'
+            }}/>
+          </Box>
+        )}
       </Box>
     </ListItem>
   );

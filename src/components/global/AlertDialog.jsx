@@ -8,7 +8,6 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 import { Box, IconButton } from "@mui/material";
-import UserProfile from "./UserProfile";
 
 export default function AlertDialog(props) {
   const [open, setOpen] = React.useState(false);
