@@ -47,26 +47,6 @@ const SingleSpec = () => {
       .catch((error) => console.error("Error updating spec data :", error));
   }, [id, specData]);
 
-  const updateSpecData = (field, newValue) => {
-    setSpecData((prevData) => ({ ...prevData, [field]: newValue }));
-  };
-
-  const handleSave = async (field, newValue) => {
-    try {
-      await axios.put(`${import.meta.env.VITE_API_URL}/specs/${id}`, {
-        [field]: newValue,
-      });
-      updateSpecData(field, newValue);
-      setIsEditing(false);
-    } catch (error) {
-      console.error(`Error saving ${field}:`, error);
-    }
-  };
-
-  const handleEditClick = (field) => {
-    setIsEditing({ ...isEditing, [field]: true });
-  };
-
   if (!specData) {
     return (
       <Backdrop
@@ -96,7 +76,7 @@ const SingleSpec = () => {
           }}
         />
       </NavLink>
-      <Box sx={componentStyle}>
+      <Box sx={{...componentStyle, marginBottom:0}}>
         <SpecInfo
           content={specData.title}
           onSave={(newTitle) => handleSave("title", newTitle)}
