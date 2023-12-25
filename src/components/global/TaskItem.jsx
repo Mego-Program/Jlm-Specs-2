@@ -5,9 +5,7 @@ import { useState, useEffect } from "react";
 
 import EditIcon from "@mui/icons-material/Edit";
 import DoneIcon from "@mui/icons-material/Done";
-import DeleteIcon from "@mui/icons-material/Delete";
 import ForwardToInboxOutlinedIcon from "@mui/icons-material/ForwardToInboxOutlined";
-import MarkEmailReadOutlinedIcon from "@mui/icons-material/MarkEmailReadOutlined";
 
 import styled from "@emotion/styled";
 import {
@@ -32,7 +30,6 @@ export default function TaskItem(props) {
   const [edit, setEdit] = useState(false);
   const [item, setItem] = useState(props.item);
   const [disable, setDisable] = useState(false);
-  const [alert, setAlert] = useState(false);
 
   useEffect(() => {
     if (item.title === "" || item.content === "") {
@@ -144,7 +141,6 @@ export default function TaskItem(props) {
         ) : (
           <Box>
             <Typography variant="h5" sx={{ fontWeight: 700 }}>
-              {" "}
               {props.item.header}
             </Typography>
             <Typography> {props.item.content}</Typography>
@@ -226,7 +222,7 @@ export default function TaskItem(props) {
           )}
         </Box>
       </Item>
-      {props.board !== "" && (
+      {props.board !== null && (
         <Fab
           size="medium"
           sx={{

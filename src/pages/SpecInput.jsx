@@ -35,8 +35,8 @@ export default function SpecInput() {
   const [error, setError] = useState(null);
   const [alert, setAlert] = useState(false);
 
-  const [disabled, setDisabled] = useState(false);
-  const [fillPage, setfillPage] = useState(true);
+  const [disabled, setDisabled] = useState(true);
+  // const [fillPage, setfillPage] = useState(true);
 
 
   const [activeStep, setActiveStep] = React.useState(0);
@@ -48,7 +48,7 @@ export default function SpecInput() {
     content: { blocks: [] },
     startDate: null,
     endDate: null,
-    task: { projectName: "", tasks: [] },
+    task: { projectName: null, tasks: [] },
     team: [],
   });
 
@@ -69,7 +69,7 @@ export default function SpecInput() {
 
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setSkipped(newSkipped);
-    setfillPage(true)
+    setDisabled(true)
   };
 
   const handleBack = () => {
@@ -213,13 +213,13 @@ export default function SpecInput() {
               marginTop: 5,
             }}
           >
-            {activeStep === 0 && <FormDetails fillPage={setfillPage} info={item} set={setItem} />}
-            {activeStep === 1 && <FormKpi fillPage={setfillPage} info={item} set={setItem} />}
-            {activeStep === 2 && <FormTask fillPage={setfillPage} info={item} set={setItem} />}
+            {activeStep === 0 && <FormDetails disabled={setDisabled} info={item} set={setItem} />}
+            {activeStep === 1 && <FormKpi disabled={setDisabled} info={item} set={setItem} />}
+            {activeStep === 2 && <FormTask disabled={setDisabled} info={item} set={setItem} />}
 
-            {activeStep === 3 && <FormTeam fillPage={setfillPage} info={item} set={setItem} />}
+            {activeStep === 3 && <FormTeam disabled={setDisabled} info={item} set={setItem} />}
             {activeStep === 4 && (
-              <FormSubmit info={item} set={setItem} disabled={setDisabled} />
+              <FormSubmit info={item} set={setItem}/>
             )}
           </Box>
           <Box
@@ -273,7 +273,7 @@ export default function SpecInput() {
                 size="small"
                 startIcon={<DoneSharpIcon />}
                 loading={loading}
-                disabled={disabled}
+                // disabled={disabled}
               >
                 Create
                 {error && (
@@ -291,7 +291,7 @@ export default function SpecInput() {
                 )}
               </LoadingButton>
             ) : (
-              <Button sx={{'&.Mui-disabled':{color:'secondary.light', cursor:'not-allowed', pointerEvents:'unset'}}} disabled={fillPage}  onClick={handleNext}>
+              <Button sx={{'&.Mui-disabled':{color:'secondary.light', cursor:'not-allowed', pointerEvents:'unset'}}} disabled={disabled}  onClick={handleNext}>
                 Next
                 <ArrowForwardIosSharpIcon />
               </Button>

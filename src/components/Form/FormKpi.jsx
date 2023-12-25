@@ -26,9 +26,9 @@ export default function FormKpi(props) {
 
       if (props.info.startDate.$d == 'Invalid Date' || props.info.endDate.$d == 'Invalid Date') {
         if (props.info.startDate > props.info.endDate);
-        props.fillPage(true);
+        props.disabled(true);
       } else {
-        props.fillPage(false);
+        props.disabled(false);
       }
     }
   }, [props.info.startDate, props.info.endDate]);

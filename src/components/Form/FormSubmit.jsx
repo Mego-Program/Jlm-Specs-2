@@ -1,9 +1,7 @@
-import { List, ListItem, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import dayjs from "dayjs";
 import { Editor, EditorState, convertFromRaw } from "draft-js";
-import { stateToHTML } from "draft-js-export-html";
-import { useState } from "react";
 
 
 const boxStyle = {
@@ -21,17 +19,6 @@ const boxStyle = {
 export default function FormSubmit(props) {
   return (
     <Box>
-      {props.info.title === "" ||
-      props.info.content.blocks[0].text === "" ||
-      props.info.team.length == 0 ||
-      props.info.task.tasks.length == 0 ||
-      props.info.startDate === null ||
-      props.info.endDate === null ? (
-        <Typography sx={{ fontFamily: "monospace" }}>
-          Please fill up the form
-          {props.disabled(true)}
-        </Typography>
-      ) : (
         <Box
           sx={{
             overflowY: "scroll",
@@ -50,7 +37,6 @@ export default function FormSubmit(props) {
             },
           }}
         >
-          {props.disabled(false)}
           <Typography>Title</Typography>
           <Box sx={boxStyle}>
             <Typography sx={{ fontFamily: "monospace" }}>
@@ -67,6 +53,8 @@ export default function FormSubmit(props) {
           <Box
             sx={{
               ...boxStyle,
+              padding:2,
+              minHeight:200,
               maxHeight: "350px",
               overflowY: "scroll",
               "&::-webkit-scrollbar": {
@@ -89,11 +77,11 @@ export default function FormSubmit(props) {
           </Box>
           <Typography>Team</Typography>
           <Box sx={boxStyle}>
-            <Typography sx={{ fontFamily: "monospace" }}>
-              {props.info.team.map((users, i) => (
-                <Box sx={{color: "#f6c927", Height: "10px"}} key={i}>{users.userName}</Box>
+            <Box >
+              {props.info.team.map((user, index) => (
+                <Typography sx={{color: "primary.main", fontSize:18, fontWeight:700, fontFamily:'monospace'}} key={index}>{user.userName}</Typography>
               ))}
-            </Typography>
+            </Box>
           </Box>
 
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -162,7 +150,6 @@ export default function FormSubmit(props) {
             </Typography>
           </Box>
         </Box>
-      )}
     </Box>
   );
 }
