@@ -5,9 +5,7 @@ import { useState, useEffect } from "react";
 
 import EditIcon from "@mui/icons-material/Edit";
 import DoneIcon from "@mui/icons-material/Done";
-import DeleteIcon from "@mui/icons-material/Delete";
 import ForwardToInboxOutlinedIcon from "@mui/icons-material/ForwardToInboxOutlined";
-import MarkEmailReadOutlinedIcon from "@mui/icons-material/MarkEmailReadOutlined";
 
 import styled from "@emotion/styled";
 import {
@@ -22,6 +20,7 @@ import { DateField, LocalizationProvider } from "@mui/x-date-pickers";
 import axios from "axios";
 
 import AlertDialog from "./AlertDialog";
+import UserProfile from "./UserProfile";
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -32,7 +31,7 @@ export default function TaskItem(props) {
   const [edit, setEdit] = useState(false);
   const [item, setItem] = useState(props.item);
   const [disable, setDisable] = useState(false);
-  const [alert, setAlert] = useState(false);
+  const [user, setUser] = useState(false);
 
   useEffect(() => {
     if (item.title === "" || item.content === "") {
@@ -41,6 +40,21 @@ export default function TaskItem(props) {
       setDisable(false);
     }
   }, [item]);
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userData = await UserProfile;
+        if (props.authorId && userData._id === props.authorId) {
+          setUser(true);
+        }
+      } catch (error) {
+        console.error("Error fetching user data: ", error);
+      }
+    };
+    fetchData();
+  }, []);
 
   const handleChangeTitle = (value) => {
     setItem({ ...item, header: value });
@@ -89,7 +103,16 @@ export default function TaskItem(props) {
   };
 
   return (
-    <Box key={props.index} sx={{ display: "flex", alignItems: "center", borderBottom:1, paddingY:2, borderColor:'primary.main'}}>
+    <Box
+      key={props.index}
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        borderBottom: 1,
+        paddingY: 2,
+        borderColor: "primary.main",
+      }}
+    >
       <Item
         sx={{
           bgcolor: "secondary.main",
@@ -144,7 +167,6 @@ export default function TaskItem(props) {
         ) : (
           <Box>
             <Typography variant="h5" sx={{ fontWeight: 700 }}>
-              {" "}
               {props.item.header}
             </Typography>
             <Typography> {props.item.content}</Typography>
@@ -179,54 +201,73 @@ export default function TaskItem(props) {
               )}
             </IconButton>
           ) : (
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <IconButton
-                sx={{ paddingBottom: 0 }}
-                onClick={() => {
-                  setEdit(true);
-                }}
-              >
-                <EditIcon
+            <Box>
+              {!props.authorId || user && (
+                <Box
                   sx={{
-                    color: "primary.main",
-                    border: 2,
-                    padding: 0.5,
-                    width: 40,
-                    height: 35,
-                    borderTopLeftRadius: 4,
-                    borderTopRightRadius: 4,
-                    "&:hover": { bgcolor: "secondary.light" },
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
                   }}
-                />
-              </IconButton>
-                
-                <AlertDialog
-                  type={'task'}
-                  del={props.del}
-                  index={props.index}
-                  iconSx={{paddingTop:0}}
-                  btnSx={{
-                    color: "primary.main",
-                    border: 2,
-                    padding: 0.5,
-                    width: 40,
-                    height: 35,
-                    borderBottomLeftRadius: 4,
-                    borderBottomRightRadius: 4,
-                    "&:hover": { bgcolor: "secondary.light" },
-                  }}
-                />
+                >
+                  <IconButton
+                    sx={{ paddingBottom: 0 }}
+                    onClick={() => {
+                      setEdit(true);
+                    }}
+                  >
+                    <EditIcon
+                      sx={{
+                        color: "primary.main",
+                        border: 2,
+                        padding: 0.5,
+                        width: 40,
+                        height: 35,
+                        borderTopLeftRadius: 4,
+                        borderTopRightRadius: 4,
+                        "&:hover": { bgcolor: "secondary.light" },
+                      }}
+                    />
+                  </IconButton>
+
+                  <AlertDialog
+                    authorId={props.authorId}
+                    type={"task"}
+                    del={props.del}
+                    index={props.index}
+                    iconSx={{ paddingTop: 0 }}
+                    btnSx={{
+                      color: "primary.main",
+                      border: 2,
+                      padding: 0.5,
+                      width: 40,
+                      height: 35,
+                      borderBottomLeftRadius: 4,
+                      borderBottomRightRadius: 4,
+                      "&:hover": { bgcolor: "secondary.light" },
+                    }}
+                    disableIcon={{
+                      paddingTop: 0,
+                      "&:hover": { bgcolor: "secondary.main" },
+                    }}
+                    disableBtn={{
+                      color: "primary.dark",
+                      border: 2,
+                      padding: 0.5,
+                      width: 40,
+                      height: 35,
+                      borderBottomLeftRadius: 4,
+                      borderBottomRightRadius: 4,
+                      cursor: "not-allowed",
+                    }}
+                  />
+                </Box>
+              )}
             </Box>
           )}
         </Box>
       </Item>
-      {props.board !== "" && (
+      {props.board !== null && (
         <Fab
           size="medium"
           sx={{
@@ -238,9 +279,7 @@ export default function TaskItem(props) {
           onClick={sendToBoard}
         >
           {props.item.sendToBoard ? (
-            <DoneIcon
-              sx={{ fontSize: 24, color: "primary.main" }}
-            />
+            <DoneIcon sx={{ fontSize: 24, color: "primary.main" }} />
           ) : (
             <ForwardToInboxOutlinedIcon
               sx={{ fontSize: 24, color: "primary.main" }}

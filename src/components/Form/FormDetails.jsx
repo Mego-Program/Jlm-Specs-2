@@ -21,12 +21,12 @@ const inputStyle = {
 export default function FormDetails(props) {
   useEffect(() => {
     if (props.info.title === "" || props.info.content.blocks.length === 0) {
-      props.fillPage(true);
+      props.disabled(true);
     } else {
       if (props.info.content.blocks[0].text !== "") {
-        props.fillPage(false);
+        props.disabled(false);
       }else{
-        props.fillPage(true)
+        props.disabled(true)
       }
     }
   }, [props.info.title, props.info.content]);

@@ -11,7 +11,7 @@ import UserProfile from "../global/UserProfile";
 import CommentReply from "./SpecComments/CommentReply";
 
 
-const SpecComments =  ({ specId }) => {
+const SpecComments =  ({ specId , specAuthor}) => {
   const [comments, setComments] = useState([]);
   const [replyFormOpen, setReplyFormOpen] = useState(null);
   const [newComment, setNewComment] = useState({
@@ -131,6 +131,8 @@ const SpecComments =  ({ specId }) => {
               index={comment._id}
               content={comment.content}
               author={comment.author}
+              specAuthor= {specAuthor}
+
             />
 
             <Box sx={{ marginTop: "8px" }}>
@@ -228,6 +230,7 @@ const SpecComments =  ({ specId }) => {
                         content={reply.content}
                         author={reply.author}
                         del={replyDel}
+                        specAuthor= {specAuthor}
                       />
                     </Box>
                   ))}

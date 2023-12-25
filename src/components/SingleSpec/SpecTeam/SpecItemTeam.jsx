@@ -14,6 +14,7 @@ import {
 import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
+import { AddButton } from "../../global/btns";
 
 export default function SpecItemTeam(props) {
   const [open, setOpen] = useState(false);
@@ -51,7 +52,7 @@ export default function SpecItemTeam(props) {
         const response = await axios.get(
           `${import.meta.env.VITE_API_URL}/team`
         );
-        setTeam(response.data)
+        setTeam(response.data);
       } catch (error) {
         console.error(error);
       }
@@ -59,13 +60,15 @@ export default function SpecItemTeam(props) {
     fetchData();
   }, []);
 
+ 
+
   useEffect(() => {
     if (user == null) {
-      setDisable(true)
-    } else{
-      setDisable(false)
+      setDisable(true);
+    } else {
+      setDisable(false);
     }
-  },[user])
+  }, [user]);
 
   function newItem() {
     props.set({ ...props.info, team: [...props.info.team, user] });
@@ -73,26 +76,16 @@ export default function SpecItemTeam(props) {
   }
 
   function closeDialog() {
-    setUser(null)
+    setUser(null);
     setOpen(false);
   }
 
   return (
     <Box>
-      <IconButton
-        sx={{
-          bgcolor: "primary.main",
-          border: 2,
-          borderColor: "secondary.light",
-          borderRadius: 1,
-          paddingX: 2,
-          height: 35,
-          "&:hover": { bgcolor: "primary.light" },
-        }}
-        onClick={() => setOpen(true)}
-      >
-        <AddIcon sx={{ color: "secondary.main" }} />
-      </IconButton>
+      <Box sx={{border:2, borderRadius:1, borderColor:'secondary.light'}}>
+              <AddButton func={() => setOpen(true)} authorId={props.info.author._id} />
+
+      </Box>
 
       <Dialog open={open} onClose={closeDialog}>
         <Box
@@ -123,12 +116,16 @@ export default function SpecItemTeam(props) {
               },
               "& svg": { color: "primary.main" },
             }}
-            options={team.filter(user => !props.info.team.some(teamUser => teamUser.userName === user.userName))}
-
+            options={team.filter(
+              (user) =>
+                !props.info.team.some(
+                  (teamUser) => teamUser.userName === user.userName
+                )
+            )}
             getOptionLabel={(option) => option.userName}
             PaperComponent={CustomPaper}
             onChange={(event, user) => {
-              setUser(user)
+              setUser(user);
             }}
             renderInput={(params) => {
               return (
@@ -173,15 +170,16 @@ export default function SpecItemTeam(props) {
             />
           </IconButton>
           {disable ? (
-            <IconButton sx={{
+            <IconButton
+              sx={{
                 bgcolor: "secondary.light",
                 borderRadius: 1,
                 paddingX: 2,
                 height: 35,
                 marginRight: 1,
-                cursor:'not-allowed',
+                cursor: "not-allowed",
                 borderColor: "secondary.light",
-                '&:hover':{bgcolor:'secondary.light'}
+                "&:hover": { bgcolor: "secondary.light" },
               }}
             >
               <CheckIcon sx={{ fontSize: 30, color: "secondary.main" }} />

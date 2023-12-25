@@ -105,7 +105,7 @@ export default function SpecTask(props) {
                 LinkTo: {props.info.task.projectName}
               </Typography>
             </Tooltip>
-            <NewTask info={props.info} set={props.set}/>
+            <NewTask info={props.info} set={props.set} authorId={props.info.author._id}/>
           </Box>
           {props.info.task.tasks.map((item, index) => {
             return (
@@ -118,6 +118,7 @@ export default function SpecTask(props) {
                 del={delItem}
                 spec={{ title: props.info.title, id: props.info._id }}
                 new={false}
+                authorId={props.info.author._id}
               />
             );
           })}

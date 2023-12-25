@@ -12,6 +12,7 @@ import { useState } from "react";
 import DescEditor from "../global/Editor/DescEditor";
 import EditIcon from "@mui/icons-material/Edit";
 import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined";
+import { EditButton } from "../global/btns";
 
 export default function SpecContent(props) {
   const [edit, setEdit] = useState(false);
@@ -38,24 +39,7 @@ export default function SpecContent(props) {
             Save
           </Button>
         ) : (
-          <IconButton
-            onClick={() => setEdit(true)}
-            sx={{
-              border: 1,
-              borderRadius: 1,
-              borderColor: "primary.main",
-              height: 30,
-              paddingX: 2,
-              "&:hover": {
-                bgcolor: "secondary.light",
-                border: 2,
-                borderColor: "primary.main",
-                translate: "1px",
-              },
-            }}
-          >
-            <EditIcon sx={{ color: "primary.main" }} />
-          </IconButton>
+          <EditButton func={() => setEdit(true)} authorId = {props.info.author._id}/>
         )}
       </Box>
       <Box
@@ -72,20 +56,20 @@ export default function SpecContent(props) {
             <DescEditor set={props.set} info={props.info} />
           </Box>
         ) : (
-          <Box sx={{minHeight:150}}>
-          <Editor
-            editorState={
-              props.info && props.info.content
-                ? EditorState.createWithContent(
-                    convertFromRaw({
-                      blocks: props.info.content.blocks,
-                      entityMap: {},
-                    })
-                  )
-                : EditorState.createEmpty()
-            }
-            readOnly
-          />
+          <Box sx={{ minHeight: 150 }}>
+            <Editor
+              editorState={
+                props.info && props.info.content
+                  ? EditorState.createWithContent(
+                      convertFromRaw({
+                        blocks: props.info.content.blocks,
+                        entityMap: {},
+                      })
+                    )
+                  : EditorState.createEmpty()
+              }
+              readOnly
+            />
           </Box>
         )}
       </Box>

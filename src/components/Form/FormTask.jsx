@@ -15,7 +15,7 @@ import TaskItem from "../global/TaskItem";
 export default function FormTask(props) {
   // connect board and send task to project team
   // board connected only after spec submit
-  const [project, setProject] = useState("");
+  // const [project, setProject] = useState(null);
   const [projectList, setProjectList] = useState([]);
 
   const CustomPaper = (props) => {
@@ -55,20 +55,25 @@ export default function FormTask(props) {
   }, []);
 
   // connect board
-  useEffect(() => {
-    props.set({
-      ...props.info,
-      task: { ...props.info.task, projectName: project },
-    });
-  }, [project]);
+  // useEffect(() => {
+ 
+  // }, [project]);
 
   useEffect(() => {
-    if (props.info.task.tasks.length == 0) {
-      props.fillPage(true);
-    } else {
-      props.fillPage(false);
-    }
+    props.disabled(false)
+    // if (props.info.task.tasks.length == 0) {
+    //   props.disabled(true);
+    // } else {
+    //   props.disabled(false);
+    // }
   }, [props.info.task]);
+
+  function setBoard(event, board) {
+    props.set({
+      ...props.info,
+      task: { ...props.info.task, projectName: board },
+    });
+  }
 
   function delItem(index) {
     const newlist = props.info.task.tasks.filter((item, id) => id !== index);
@@ -102,11 +107,11 @@ export default function FormTask(props) {
             },
             '& svg':{color:'primary.main'}
           }}
-          defaultValue={props.info.task.projectName}
+          value={props.info.task.projectName}
           options={projectList}
           PaperComponent={CustomPaper}
+          onChange={setBoard}
           renderInput={(params) => {
-            setProject(params.inputProps.value);
             return (
               <TextField
                 sx={{
@@ -158,6 +163,7 @@ export default function FormTask(props) {
                     save={saveItem}
                     del={delItem}
                     new={true}
+                    key={index}
                   />
                 );
               })}

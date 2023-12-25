@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { Box, Typography, TextField, Button, IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined";
+import { EditButton } from "../global/btns";
 
 
-function SpecInfo({ content, onSave, type }) {
+function SpecInfo({ content, onSave, type, authorId}) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState(content);
 
@@ -76,24 +77,8 @@ return (
           Save
         </Button>
       ) : (
-        <IconButton
-          onClick={() => setIsEditing(true)}
-          sx={{
-            border: 1,
-            borderRadius: 1,
-            borderColor: "primary.main",
-            height: 30,
-            paddingX: 2,
-            "&:hover": {
-              bgcolor: "secondary.light",
-              border: 2,
-              borderColor: "primary.main",
-              translate: "1px",
-            },
-          }}
-        >
-          <EditIcon sx={{ color: "primary.main" }} />
-        </IconButton>
+        <EditButton func={() => setIsEditing(true)} authorId = {authorId}/>
+
       )}
     </Box>
     <Box
@@ -109,6 +94,8 @@ return (
           value={editedContent}
           onChange={(e) => setEditedContent(e.target.value)}
           fullWidth
+          autoFocus
+          sx={{'& .MuiOutlinedInput-notchedOutline':{border:1}}}
         />
       ) : (
         <Typography>{content}</Typography>

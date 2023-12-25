@@ -34,11 +34,12 @@ export default function FormTeam(props) {
   const [users, setUsers] = React.useState([]);
 
   React.useEffect(() => {
-    if(props.info.team.length == 0 ){
-      props.fillPage(true)
-    }else{
-      props.fillPage(false)
-    }
+    props.disabled(false)
+    // if(props.info.team.length == 0 ){
+    //   props.disabled(true)
+    // }else{
+    //   props.disabled(false)
+    // }
   },[props.info.team])
 
   React.useEffect(() => {
@@ -65,11 +66,11 @@ export default function FormTeam(props) {
         PaperComponent={CustomPaper}
         onChange={enterUser}
         multiple
-        options={users}
+        options={users.filter(user => !props.info.team.some(teamUser => teamUser.userName === user.userName))}
         getOptionLabel={(option) => option.userName} 
         freeSolo
         filterSelectedOptions
-        defaultValue={props.info.team}
+        value={props.info.team}
         renderInput={(params) => (
           <TextField
             sx={{

@@ -6,6 +6,7 @@ import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { MultiInputDateRangeField } from "@mui/x-date-pickers-pro";
+import { EditButton } from "../global/btns";
 
 export default function SpecKpi(props) {
   const [edit, setEdit] = useState(false);
@@ -44,26 +45,9 @@ export default function SpecKpi(props) {
             Save
           </Button>
         ) : (
-          <IconButton
-            onClick={() => {
-              setEdit(true);
-            }}
-            sx={{
-              border: 1,
-              borderRadius: 1,
-              borderColor: "primary.main",
-              height: 30,
-              paddingX: 2,
-              "&:hover": {
-                bgcolor: "secondary.light",
-                border: 2,
-                borderColor: "primary.main",
-                translate: "1px",
-              },
-            }}
-          >
-            <EditIcon sx={{ color: "primary.main" }} />
-          </IconButton>
+        
+          <EditButton func={() => setEdit(true)} authorId = {props.info.author._id}/>
+
         )}
       </Box>
       <Box
