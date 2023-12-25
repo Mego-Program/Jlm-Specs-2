@@ -21,7 +21,7 @@ export default function LinkTask(props) {
     spec:{ title: props.info.title, id: props.info._id },
     boardName: props.info.task.projectName,
     tasks: [],
-    newSpec: false,
+    newSpec: true,
   });
   const oldName = props.info.task.projectName
 
