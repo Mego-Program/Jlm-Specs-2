@@ -71,6 +71,7 @@ function SpecsList() {
                 title={spec.title}
                 info={spec.description}
                 team={spec.team}
+                authorId={spec.author._id}
                 key={spec._id}
                 id={spec._id}
                 del={delSpec}

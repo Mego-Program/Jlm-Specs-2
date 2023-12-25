@@ -44,15 +44,6 @@ export default function SpecTask(props) {
     update();
   }
 
-  function newItem() {}
-  const [open, setOpen] = useState(false);
-  const [task, setTask] = useState({
-    header: "",
-    content: "",
-    deadline: null,
-    sendToBoard: false,
-  });
-
   return (
     <Box sx={{ width: "100%" }}>
       <Typography variant="h5">Tasks:</Typography>
