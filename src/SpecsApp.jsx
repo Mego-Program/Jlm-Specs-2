@@ -30,7 +30,7 @@ export function SpecsApp() {
   return (
     <Router>
       <Routes>
-        <Route path="/*">{specsRoutes}</Route>
+        <Route path="/">{specsRoutes}</Route>
       </Routes>
     </Router>
   );
