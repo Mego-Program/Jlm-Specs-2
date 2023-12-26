@@ -31,7 +31,7 @@ export const EditButton = (props) => {
 
   const handleClick = () => {
     if (user) {
-      props.func(); 
+      props.func();
     }
   };
 
@@ -74,7 +74,7 @@ export const AddButton = (props) => {
 
   const handleClick = () => {
     if (user) {
-      props.func(); 
+      props.func();
     }
   };
 
@@ -82,13 +82,13 @@ export const AddButton = (props) => {
     <IconButton
       onClick={handleClick}
       sx={{
-        bgcolor: user ? "primary.main" : 'secondary.light',
+        bgcolor: user ? "primary.main" : "secondary.light",
         border: 2,
         borderColor: "secondary.main",
         borderRadius: 1,
         paddingX: 2,
         height: 35,
-        cursor: !user && 'not-allowed',
+        cursor: !user && "not-allowed",
         "&:hover": user && { bgcolor: "primary.light" },
       }}
     >

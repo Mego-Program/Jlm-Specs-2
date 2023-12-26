@@ -30,7 +30,6 @@ const componentStyle = {
 const SingleSpec = () => {
   const { id } = useParams();
   const [specData, setSpecData] = useState(null);
-  const [isEditing, setIsEditing] = useState({});
 
   useEffect(() => {
     axios
@@ -76,22 +75,28 @@ const SingleSpec = () => {
           }}
         />
       </NavLink>
-      <Box sx={{...componentStyle, marginBottom:0}}>
-        <SpecInfo
-          content={specData.title}
-          onSave={(newTitle) => handleSave("title", newTitle)}
-          type="title"
-          authorId={specData.author._id}
-        />
+      <Box
+        sx={{
+          ...componentStyle,
+          marginBottom: 0,
+          borderBottomLeftRadius: 0,
+          borderBottomRightRadius: 0,
+        }}
+      >
+        <SpecInfo content={specData.title} type="title" set={setSpecData} />
       </Box>
 
-      <Box sx={componentStyle}>
+      <Box
+        sx={{
+          ...componentStyle,
+          borderTopLeftRadius: 0,
+          borderTopRightRadius: 0,
+        }}
+      >
         <SpecInfo
           content={specData.description}
-          onSave={(newDescription) => handleSave("description", newDescription)}
           type="description"
-          authorId={specData.author._id}
-
+          set={setSpecData}
         />
       </Box>
 
@@ -135,7 +140,6 @@ const SingleSpec = () => {
           onReplyAdded={() => {
             console.log("Reply added!");
           }}
-          specAuthor={specData.author}
         />
       </Box>
     </Box>

@@ -1,16 +1,7 @@
-import { Editor, EditorState, ContentState, convertFromRaw } from "draft-js";
-import {
-  Box,
-  Button,
-  IconButton,
-  List,
-  ListItem,
-  Typography,
-} from "@mui/material";
-import dayjs from "dayjs";
+import { Editor, EditorState, convertFromRaw } from "draft-js";
+import { Box, Button, Typography } from "@mui/material";
 import { useState } from "react";
 import DescEditor from "../global/Editor/DescEditor";
-import EditIcon from "@mui/icons-material/Edit";
 import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined";
 import { EditButton } from "../global/btns";
 
@@ -39,7 +30,10 @@ export default function SpecContent(props) {
             Save
           </Button>
         ) : (
-          <EditButton func={() => setEdit(true)} authorId = {props.info.author._id}/>
+          <EditButton
+            func={() => setEdit(true)}
+            authorId={props.info.author._id}
+          />
         )}
       </Box>
       <Box

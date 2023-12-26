@@ -1,7 +1,6 @@
 import React from "react";
-import { Box, Button, List, ListItem, Typography } from "@mui/material";
+import { Box, List, Typography } from "@mui/material";
 import Item from "../global/FormUser";
-import { Edit } from "@mui/icons-material";
 import SpecItemTeam from "./SpecTeam/SpecItemTeam";
 
 function SpecTeam(props) {
