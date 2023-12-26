@@ -83,7 +83,12 @@ const SingleSpec = () => {
           borderBottomRightRadius: 0,
         }}
       >
-        <SpecInfo content={specData.title} type="title" set={setSpecData} />
+        <SpecInfo
+          content={specData.title}
+          type="title"
+          set={setSpecData}
+          authorId={specData.author._id}
+        />
       </Box>
 
       <Box
@@ -97,6 +102,7 @@ const SingleSpec = () => {
           content={specData.description}
           type="description"
           set={setSpecData}
+          authorId={specData.author._id}
         />
       </Box>
 
