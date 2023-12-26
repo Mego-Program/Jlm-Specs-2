@@ -1,14 +1,9 @@
-* {
-  margin: 0px;
-  box-sizing: border-box;
-  font-family: sans-serif;
-}
-
 .editor-wrapper {
   width: 100%;
   border: 1px solid #f6c927;
   padding: 10px;
   border-radius: 4px;
+  box-sizing: border-box;
 }
 .editor-wrapper:hover{
   border-color: #fff;
@@ -31,7 +26,7 @@
   overflow-y: scroll;
   background-color: #3d3d55;
   border: 4px solid #3d3d55;
-
+  box-sizing: border-box;
   
 }
 ::-webkit-scrollbar {
