@@ -167,7 +167,7 @@ const SpecComments =  ({ specId , specAuthor}) => {
               <Box sx={{ paddingTop: 2, paddingLeft: 2 }}>
                 <TextField
                   value={newReply.content}
-                  placeholder="Your Comment"
+                  placeholder="Your Reply"
                   multiline
                   rows={4}
                   onChange={(e) =>
