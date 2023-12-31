@@ -11,6 +11,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
+import UserProfile from "../../global/UserProfile";
 // import CheckIcon from "@mui/icons-material/Check";
 // import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 
@@ -26,15 +27,18 @@ export default function LinkTask(props) {
   const oldName = props.info.task.projectName
 
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_API_URL}/project/boards`)
-      .then((response) => {
+    const fetchData = async () => {
+      try {
+        const userData = await UserProfile;
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/project/boards/${userData.userName}`);
         setProjectList(response.data);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error fetching data:", error);
-      });
-  }, []);
+      }
+    };
+
+    fetchData();
+  }, []); 
 
   const newItem = async () => {
     try {

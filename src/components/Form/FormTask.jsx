@@ -11,11 +11,11 @@ import axios from "axios";
 
 import FormDialog from "./FormDialog";
 import TaskItem from "../global/TaskItem";
+import UserProfile from "../global/UserProfile";
 
 export default function FormTask(props) {
   // connect board and send task to project team
   // board connected only after spec submit
-  // const [project, setProject] = useState(null);
   const [projectList, setProjectList] = useState([]);
 
   const CustomPaper = (props) => {
@@ -41,18 +41,22 @@ export default function FormTask(props) {
       />
     );
   };
+ 
 
   // get list of boards
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_API_URL}/project/boards`)
-      .then((response) => {
+    const fetchData = async () => {
+      try {
+        const userData = await UserProfile;
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/project/boards/${userData.userName}`);
         setProjectList(response.data);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error fetching data:", error);
-      });
-  }, []);
+      }
+    };
+
+    fetchData();
+  }, []); 
 
   // connect board
   // useEffect(() => {
