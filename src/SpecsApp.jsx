@@ -10,6 +10,7 @@ import {
   Outlet,
 } from "react-router-dom";
 
+
 function ThemeWrapper() {
   return (
     <ThemeProvider theme={theme}>
